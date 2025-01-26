@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import NoLayout from '@/Layouts/NoLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
+
+defineOptions({ layout: NoLayout });
 
 defineProps<{
     canLogin?: boolean;
