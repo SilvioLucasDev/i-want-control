@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import NavLink from '@/Components/NavLink.vue';
+import SideDropdown from '@/Components/SideDropdown.vue';
 import { applyDarkMode } from '@/dark-mode';
-import ArrowIcon from '@/Icons/ArrowIcon.vue';
 import BarsIcon from '@/Icons/BarsIcon.vue';
-import ControlIcon from '@/Icons/ControlIcon.vue';
 import DashboardIcon from '@/Icons/DashboardIcon.vue';
 import LogoutIcon from '@/Icons/LogoutIcon.vue';
 import MoonIcon from '@/Icons/MoonIcon.vue';
@@ -39,26 +38,11 @@ const getFirstName = (fullName: string): string => {
 
 const firstName = computed(() => getFirstName(props.auth.user.name));
 
-const initializeInteractiveElements = () => {
-    document.querySelectorAll('[data-collapse-toggle]').forEach((button) => {
-        button.addEventListener('click', () => {
-            const targetId = button.getAttribute('aria-controls');
-            if (targetId) {
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.classList.toggle('hidden');
-                }
-            }
-        });
-    });
-};
-
 onMounted(() => {
     updateIsMobile();
     window.addEventListener('resize', updateIsMobile);
 
     applyDarkMode();
-    initializeInteractiveElements();
 });
 
 onUnmounted(() => {
@@ -98,26 +82,13 @@ onUnmounted(() => {
                             </NavLink>
                         </li>
 
-                        <li>
-                            <button
-                                type="button"
-                                class="group flex w-full items-center rounded-lg p-2 text-base text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                                aria-controls="control-dropdown"
-                                data-collapse-toggle="control-dropdown"
-                            >
-                                <ControlIcon :active="false" />
-                                <span class="ms-3 flex-1 whitespace-nowrap text-left rtl:text-right">Controles</span>
-                                <ArrowIcon :active="false" />
-                            </button>
-                            <ul id="control-dropdown" class="hidden space-y-2 py-2">
-                                <li>
-                                    <NavLink :href="'#'" :active="false" class="group flex w-full items-center rounded-lg p-2 pl-11 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Gastos</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink :href="'#'" :active="false" class="group flex w-full items-center rounded-lg p-2 pl-11 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Serviços</NavLink>
-                                </li>
-                            </ul>
-                        </li>
+                        <SideDropdown
+                            title="Controles"
+                            :links="[
+                                { label: 'Gastos', routeName: 'dashboard' },
+                                { label: 'Serviços', routeName: 'profile.edit' },
+                            ]"
+                        />
                     </ul>
 
                     <ul v-show="isSidebarOpen" class="mt-auto space-y-2 border-t border-gray-200 pt-4 font-medium dark:border-gray-700">
@@ -132,7 +103,7 @@ onUnmounted(() => {
                                 <label class="inline-flex cursor-pointer items-center">
                                     <input id="theme-toggle-checkbox-mobile" type="checkbox" value="" class="peer sr-only" />
                                     <div
-                                        class="peer relative h-5 w-9 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800 rtl:peer-checked:after:-translate-x-full"
+                                        class="peer relative h-5 w-9 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
                                     ></div>
                                 </label>
                             </div>
@@ -179,26 +150,13 @@ onUnmounted(() => {
                             </NavLink>
                         </li>
 
-                        <li>
-                            <button
-                                type="button"
-                                class="group flex w-full items-center rounded-lg p-2 text-base text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                                aria-controls="control-dropdown-mobile"
-                                data-collapse-toggle="control-dropdown-mobile"
-                            >
-                                <ControlIcon :active="false" />
-                                <span class="ms-3 flex-1 whitespace-nowrap text-left rtl:text-right">Controles</span>
-                                <ArrowIcon :active="false" />
-                            </button>
-                            <ul id="control-dropdown-mobile" class="hidden space-y-2 py-2">
-                                <li>
-                                    <NavLink :href="'#'" :active="false" class="group flex w-full items-center rounded-lg p-2 pl-11 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Gastos</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink :href="'#'" :active="false" class="group flex w-full items-center rounded-lg p-2 pl-11 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Serviços</NavLink>
-                                </li>
-                            </ul>
-                        </li>
+                        <SideDropdown
+                            title="Controles"
+                            :links="[
+                                { label: 'Gastos', routeName: 'dashboard' },
+                                { label: 'Serviços', routeName: 'profile.edit' },
+                            ]"
+                        />
                     </ul>
 
                     <ul v-show="isSidebarOpen" class="mt-auto space-y-2 border-t border-gray-200 pt-4 font-medium dark:border-gray-700">
@@ -213,15 +171,15 @@ onUnmounted(() => {
                                 <label class="inline-flex cursor-pointer items-center">
                                     <input id="theme-toggle-checkbox" type="checkbox" value="" class="peer sr-only" />
                                     <div
-                                        class="peer relative h-5 w-9 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800 rtl:peer-checked:after:-translate-x-full"
+                                        class="peer relative h-5 w-9 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
                                     ></div>
                                 </label>
                             </div>
                         </li>
 
                         <li>
-                            <div class="ext-gray-900 flex items-center justify-between p-2 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                <NavLink :href="route('profile.edit')" class="group flex items-center rounded-lg">
+                            <div class="flex items-center justify-between rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <NavLink :href="route('profile.edit')" class="group flex items-center">
                                     <img class="h-8 w-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
                                     <span class="ms-3 flex-1 whitespace-nowrap">{{ firstName }}</span>
                                 </NavLink>

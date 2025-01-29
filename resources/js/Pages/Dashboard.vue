@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const selectedMonthYear = ref(''); // Valor inicial
@@ -49,6 +50,8 @@ setMonthYear();
 </script>
 
 <template>
+    <Head title="Dashboard" />
+
     <!-- Botão com setas para exibir o modal -->
     <div class="inline-flex w-80 items-center justify-between rounded-lg border border-gray-200 bg-white text-center text-sm font-medium text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
         <button class="px-4 py-2 text-gray-900 transition duration-75 dark:text-white" @click="previousMonth">
