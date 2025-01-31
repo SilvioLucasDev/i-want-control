@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import NavLink from '@/Components/NavLink.vue';
-import SideDropdown from '@/Components/SideDropdown.vue';
+import BarsIcon from '@/Components/Icons/BarsIcon.vue';
+import DashboardIcon from '@/Components/Icons/DashboardIcon.vue';
+import LogoutIcon from '@/Components/Icons/LogoutIcon.vue';
+import MoonIcon from '@/Components/Icons/MoonIcon.vue';
+import SunIcon from '@/Components/Icons/SunIcon.vue';
+import NavLink from '@/Components/Navigation/NavLink.vue';
+import SideDropdown from '@/Components/Navigation/SideDropdown.vue';
 import { applyDarkMode } from '@/dark-mode';
-import BarsIcon from '@/Icons/BarsIcon.vue';
-import DashboardIcon from '@/Icons/DashboardIcon.vue';
-import LogoutIcon from '@/Icons/LogoutIcon.vue';
-import MoonIcon from '@/Icons/MoonIcon.vue';
-import SunIcon from '@/Icons/SunIcon.vue';
 import { Link } from '@inertiajs/vue3';
 
 import { computed, onMounted, onUnmounted, ref } from 'vue';
@@ -103,7 +103,7 @@ onUnmounted(() => {
                                 <label class="inline-flex cursor-pointer items-center">
                                     <input id="theme-toggle-checkbox-mobile" type="checkbox" value="" class="peer sr-only" />
                                     <div
-                                        class="peer relative h-5 w-9 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
+                                        class="peer relative h-5 w-9 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800 rtl:peer-checked:after:-translate-x-full"
                                     ></div>
                                 </label>
                             </div>
@@ -171,7 +171,7 @@ onUnmounted(() => {
                                 <label class="inline-flex cursor-pointer items-center">
                                     <input id="theme-toggle-checkbox" type="checkbox" value="" class="peer sr-only" />
                                     <div
-                                        class="peer relative h-5 w-9 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
+                                        class="peer relative h-5 w-9 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800 rtl:peer-checked:after:-translate-x-full"
                                     ></div>
                                 </label>
                             </div>

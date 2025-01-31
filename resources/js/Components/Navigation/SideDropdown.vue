@@ -1,8 +1,8 @@
 <script setup>
-import NavLink from '@/Components/NavLink.vue';
-import ArrowDownIcon from '@/Icons/ArrowDownIcon.vue';
-import ArrowUpIcon from '@/Icons/ArrowUpIcon.vue';
-import ControlIcon from '@/Icons/ControlIcon.vue';
+import ArrowDownIcon from '@/Components/Icons/ArrowDownIcon.vue';
+import ArrowUpIcon from '@/Components/Icons/ArrowUpIcon.vue';
+import ControlIcon from '@/Components/Icons/ControlIcon.vue';
+import NavLink from '@/Components/Navigation/NavLink.vue';
 import { ref } from 'vue';
 
 defineProps({

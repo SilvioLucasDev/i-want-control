@@ -2,17 +2,17 @@
 import debounce from 'lodash/debounce';
 
 import { onMounted, ref } from 'vue';
-import PrimaryButton from './PrimaryButton.vue';
-import SecondaryButton from './SecondaryButton.vue';
-import Select from './Select.vue';
+import PrimaryButton from './Buttons/PrimaryButton.vue';
+import SecondaryButton from './Buttons/SecondaryButton.vue';
+import Select from './Inputs/Select.vue';
 
 const showModal = ref(false);
-
-const currentMonth = ref();
-const currentYear = ref();
 const selectedMonthYear = ref('');
-const months = ref<string[]>([]);
-const years = ref<number[]>([]);
+
+const currentMonth = ref<number>(new Date().getMonth());
+const currentYear = ref<number>(new Date().getFullYear());
+const months = ref<string[]>(['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']);
+const years = ref<number[]>(Array.from({ length: 51 }, (_, i) => 2025 + i));
 
 const nextMonth = () => {
     if (currentMonth.value === 11) {
@@ -40,17 +40,6 @@ const previousMonth = () => {
     fetchData();
 };
 
-const setDate = () => {
-    months.value = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-    years.value = Array.from({ length: 51 }, (_, i) => 2025 + i);
-
-    const now = new Date();
-    currentMonth.value = now.getMonth();
-    currentYear.value = now.getFullYear();
-
-    setMonthYear();
-};
-
 const setMonthYear = () => {
     selectedMonthYear.value = `${months.value[currentMonth.value]} / ${currentYear.value}`;
 };
@@ -60,7 +49,7 @@ const fetchData = debounce(() => {
 }, 500);
 
 onMounted(() => {
-    setDate();
+    setMonthYear();
     fetchData();
 });
 </script>
