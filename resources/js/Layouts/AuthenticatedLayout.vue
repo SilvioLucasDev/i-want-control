@@ -85,8 +85,8 @@ onUnmounted(() => {
                         <SideDropdown
                             title="Controles"
                             :links="[
-                                { label: 'Gastos', routeName: 'dashboard' },
-                                { label: 'Serviços', routeName: 'profile.edit' },
+                                { label: 'Gastos', routeName: 'expenses' },
+                                { label: 'Serviços', routeName: 'services' },
                             ]"
                         />
                     </ul>
@@ -153,8 +153,8 @@ onUnmounted(() => {
                         <SideDropdown
                             title="Controles"
                             :links="[
-                                { label: 'Gastos', routeName: 'dashboard' },
-                                { label: 'Serviços', routeName: 'profile.edit' },
+                                { label: 'Gastos', routeName: 'expenses' },
+                                { label: 'Serviços', routeName: 'services' },
                             ]"
                         />
                     </ul>
