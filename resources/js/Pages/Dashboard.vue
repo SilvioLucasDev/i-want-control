@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import Calendar from '@/Components/Calendar.vue';
+import Calendar, { SelectDate } from '@/Components/Calendar.vue';
 import { Head } from '@inertiajs/vue3';
+
+const fetchData = ({ month, year }: SelectDate) => {
+    console.log(`DASHBOARD :: Fetching data for: ${month} / ${year}`);
+};
 </script>
 
 <template>
     <Head title="Dashboard" />
 
-    <Calendar />
+    <Calendar @select-date="fetchData" />
 </template>

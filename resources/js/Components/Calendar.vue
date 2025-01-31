@@ -6,6 +6,15 @@ import SecondaryButton from './Buttons/SecondaryButton.vue';
 import Select from './Inputs/Select.vue';
 import Modal from './Modal.vue';
 
+export type SelectDate = {
+    month: number;
+    year: number;
+};
+
+const emit = defineEmits<{
+    selectDate: [SelectDate];
+}>();
+
 const showModal = ref(false);
 const selectedMonthYear = ref('');
 
@@ -24,7 +33,7 @@ const nextMonth = () => {
         currentMonth.value++;
     }
     setMonthYear();
-    fetchData();
+    selectDate();
 };
 
 const previousMonth = () => {
@@ -37,20 +46,23 @@ const previousMonth = () => {
     }
 
     setMonthYear();
-    fetchData();
+    selectDate();
 };
 
 const setMonthYear = () => {
     selectedMonthYear.value = `${months.value[currentMonth.value]} / ${currentYear.value}`;
 };
 
-const fetchData = debounce(() => {
-    console.log(`Fetching data for: ${months.value[currentMonth.value]} / ${currentYear.value}`);
+const selectDate = debounce(() => {
+    emit('selectDate', {
+        month: currentMonth.value + 1,
+        year: currentYear.value,
+    });
 }, 500);
 
 onMounted(() => {
     setMonthYear();
-    fetchData();
+    selectDate();
 });
 </script>
 
@@ -86,7 +98,7 @@ onMounted(() => {
                     @click="
                         () => {
                             setMonthYear();
-                            fetchData();
+                            selectDate();
                             showModal = false;
                         }
                     "
