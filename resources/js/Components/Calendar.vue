@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import debounce from 'lodash/debounce';
-
 import { onMounted, ref } from 'vue';
 import PrimaryButton from './Buttons/PrimaryButton.vue';
 import SecondaryButton from './Buttons/SecondaryButton.vue';
 import Select from './Inputs/Select.vue';
+import Modal from './Modal.vue';
 
 const showModal = ref(false);
 const selectedMonthYear = ref('');
@@ -73,47 +73,29 @@ onMounted(() => {
         </button>
     </div>
 
-    <div v-show="showModal" class="fixed inset-0 z-50 bg-black bg-opacity-50"></div>
+    <Modal :show="showModal" @close="showModal = false" max-width="sm">
+        <div class="p-6">
+            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Selecione o mês e ano</h3>
 
-    <div v-show="showModal" id="timepicker-modal" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden">
-        <div class="relative max-h-full w-full max-w-[23rem] p-4">
-            <div class="relative rounded-lg bg-white shadow-sm dark:bg-gray-800">
-                <div class="flex items-center justify-between rounded-t border-b border-gray-200 p-4 dark:border-gray-700">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Selecione o mês e ano</h3>
-                    <button
-                        type="button"
-                        class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
-                        @click="showModal = false"
-                    >
-                        <svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                        <span class="sr-only">Fechar</span>
-                    </button>
-                </div>
+            <Select id="year-select" class="mb-4" v-model="currentYear" label="Ano" :options="years.map((year) => ({ value: year, label: year.toString() }))" />
 
-                <div class="p-4">
-                    <Select id="year-select" class="mb-4" v-model="currentYear" label="Ano" :options="years.map((year) => ({ value: year, label: year.toString() }))" />
+            <Select id="month-select" class="mb-4" v-model="currentMonth" label="Mês" :options="months.map((month, index) => ({ value: index, label: month }))" />
 
-                    <Select id="month-select" class="mb-4" v-model="currentMonth" label="Mês" :options="months.map((month, index) => ({ value: index, label: month }))" />
+            <div class="mt-4 grid grid-cols-2 gap-2">
+                <PrimaryButton
+                    @click="
+                        () => {
+                            setMonthYear();
+                            fetchData();
+                            showModal = false;
+                        }
+                    "
+                >
+                    Salvar
+                </PrimaryButton>
 
-                    <div class="grid grid-cols-2 gap-2">
-                        <PrimaryButton
-                            @click="
-                                () => {
-                                    setMonthYear();
-                                    fetchData();
-                                    showModal = false;
-                                }
-                            "
-                        >
-                            Salvar
-                        </PrimaryButton>
-
-                        <SecondaryButton @click="showModal = false"> Cancel </SecondaryButton>
-                    </div>
-                </div>
+                <SecondaryButton @click="showModal = false"> Cancelar </SecondaryButton>
             </div>
         </div>
-    </div>
+    </Modal>
 </template>
