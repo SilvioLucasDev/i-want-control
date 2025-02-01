@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import TrFoot from '@/Components/Table/TFoot/Tr.vue';
+
 import TrHead from '@/Components/Table/THead/Tr.vue';
 import { useSlots } from 'vue';
 
@@ -21,6 +23,12 @@ const slots = useSlots();
             <tbody>
                 <slot name="tbody"></slot>
             </tbody>
+
+            <tfoot>
+                <TrFoot>
+                    <slot name="tfoot"></slot>
+                </TrFoot>
+            </tfoot>
         </table>
     </div>
 </template>
