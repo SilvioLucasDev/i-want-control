@@ -19,5 +19,6 @@ class ExpenseServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        //
     }
 }

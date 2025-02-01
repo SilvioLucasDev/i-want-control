@@ -7,23 +7,15 @@ use Illuminate\Support\Facades\Route;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         using: function () {
-            Route::middleware('web')
-            ->group(base_path('app/Common/routes/common-routes.php'));
+            $basePath = base_path('app');
 
             Route::middleware('web')
-                ->group(base_path('app/Auth/routes/auth-routes.php'));
-
-            Route::middleware('web')
-                ->group(base_path('app/Dashboard/routes/dashboard-routes.php'));
-
-            Route::middleware('web')
-                ->group(base_path('app/Expense/routes/expense-routes.php'));
-
-            Route::middleware('web')
-                ->group(base_path('app/Service/routes/service-routes.php'));
-
-            Route::middleware('web')
-                ->group(base_path('app/User/routes/user-routes.php'));
+                ->group($basePath . '/Common/routes/common-routes.php')
+                ->group($basePath . '/Auth/routes/auth-routes.php')
+                ->group($basePath . '/Dashboard/routes/dashboard-routes.php')
+                ->group($basePath . '/Expense/routes/expense-routes.php')
+                ->group($basePath . '/Service/routes/service-routes.php')
+                ->group($basePath . '/User/routes/user-routes.php');
         }
     )
     ->withMiddleware(function (Middleware $middleware) {
