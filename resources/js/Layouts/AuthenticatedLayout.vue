@@ -193,7 +193,7 @@ onUnmounted(() => {
             </aside>
 
             <main :class="[isMobile ? (isSidebarOpen ? 'w-0' : 'w-full') : isSidebarOpen ? 'ml-64' : 'ml-16', 'flex-1 pt-12 transition-all']">
-                <div class="max-w-8xl mx-auto flex items-center justify-center md:px-6 lg:px-8">
+                <div class="max-w-8xl mx-auto flex flex-col items-center justify-center gap-y-4 md:px-6 lg:px-8">
                     <slot />
                 </div>
             </main>
