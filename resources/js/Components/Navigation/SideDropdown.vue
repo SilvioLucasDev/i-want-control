@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import ArrowDownIcon from '@/Components/Icons/ArrowDownIcon.vue';
 import ArrowUpIcon from '@/Components/Icons/ArrowUpIcon.vue';
 import ControlIcon from '@/Components/Icons/ControlIcon.vue';
@@ -7,7 +7,7 @@ import { ref } from 'vue';
 
 defineProps({
     title: String,
-    links: Array,
+    links: Array as PropType<{ label: string; routeName: string }[]>,
 });
 
 const isOpen = ref(false);

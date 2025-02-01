@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
+import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
+import Select from '@/Components/Inputs/Select.vue';
+import Modal from '@/Components/Modal.vue';
+
 import debounce from 'lodash/debounce';
 import { onMounted, ref } from 'vue';
-import PrimaryButton from './Buttons/PrimaryButton.vue';
-import SecondaryButton from './Buttons/SecondaryButton.vue';
-import Select from './Inputs/Select.vue';
-import Modal from './Modal.vue';
 
 export type SelectDate = {
     month: number;
@@ -15,15 +16,15 @@ const emit = defineEmits<{
     selectDate: [SelectDate];
 }>();
 
-const showModal = ref(false);
-const selectedMonthYear = ref('');
+const showModal = ref<boolean>(false);
+const selectedMonthYear = ref<string>('');
 
 const currentMonth = ref<number>(new Date().getMonth());
 const currentYear = ref<number>(new Date().getFullYear());
 const months = ref<string[]>(['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']);
 const years = ref<number[]>(Array.from({ length: 51 }, (_, i) => 2025 + i));
 
-const nextMonth = () => {
+const nextMonth = (): void => {
     if (currentMonth.value === 11) {
         if (currentYear.value === years.value[years.value.length - 1]) return;
 
@@ -36,9 +37,10 @@ const nextMonth = () => {
     selectDate();
 };
 
-const previousMonth = () => {
+const previousMonth = (): void => {
     if (currentMonth.value === 0) {
         if (currentYear.value === years.value[0]) return;
+
         currentYear.value--;
         currentMonth.value = 11;
     } else {
@@ -49,11 +51,11 @@ const previousMonth = () => {
     selectDate();
 };
 
-const setMonthYear = () => {
+const setMonthYear = (): void => {
     selectedMonthYear.value = `${months.value[currentMonth.value]} / ${currentYear.value}`;
 };
 
-const selectDate = debounce(() => {
+const selectDate: () => void = debounce(() => {
     emit('selectDate', {
         month: currentMonth.value + 1,
         year: currentYear.value,

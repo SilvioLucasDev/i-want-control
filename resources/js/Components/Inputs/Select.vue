@@ -11,11 +11,11 @@ onMounted(() => {
     }
 });
 
-defineProps<{
-    label?: string;
-    id?: string;
-    options: { value: string | number; label: string }[];
-}>();
+defineProps({
+    label: String,
+    id: String,
+    options: Array as PropType<{ value: string | number; label: string }[]>,
+});
 
 defineExpose({ focus: () => selectRef.value?.focus() });
 </script>

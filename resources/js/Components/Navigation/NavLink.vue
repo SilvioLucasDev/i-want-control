@@ -2,10 +2,10 @@
 import { Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
-const props = defineProps<{
-    href: string;
-    active?: boolean;
-}>();
+const props = defineProps({
+    href: String,
+    active: Boolean,
+});
 
 const classes = computed(() => (props.active ? 'dark:bg-gray-600 dark:text-white bg-gray-200 text-gray-900' : ''));
 </script>
