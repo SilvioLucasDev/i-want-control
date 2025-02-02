@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import Avatar from '@/Components/Avatar.vue';
 import BarsIcon from '@/Components/Icons/BarsIcon.vue';
 import DashboardIcon from '@/Components/Icons/DashboardIcon.vue';
 import LogoutIcon from '@/Components/Icons/LogoutIcon.vue';
@@ -103,14 +104,14 @@ onUnmounted(() => {
                                 <label class="inline-flex cursor-pointer items-center">
                                     <input id="theme-toggle-checkbox-mobile" type="checkbox" value="" class="peer sr-only" />
                                     <div
-                                        class="peer relative h-5 w-9 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800 rtl:peer-checked:after:-translate-x-full"
+                                        class="peer relative h-5 w-9 rounded-full bg-gray-900 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-900 after:bg-white after:transition-all after:content-[''] peer-checked:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gray-300 dark:peer-checked:bg-gray-600 dark:peer-focus:ring-gray-800 rtl:peer-checked:after:-translate-x-full"
                                     ></div>
                                 </label>
                             </div>
                         </li>
 
                         <li>
-                            <div class="ext-gray-900 flex items-center justify-between p-2 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <div class="flex items-center justify-between p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <NavLink :href="route('profile.edit')" class="group flex items-center rounded-lg">
                                     <img class="h-8 w-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
                                     <span class="ms-3 flex-1 whitespace-nowrap">{{ firstName }}</span>
@@ -171,7 +172,7 @@ onUnmounted(() => {
                                 <label class="inline-flex cursor-pointer items-center">
                                     <input id="theme-toggle-checkbox" type="checkbox" value="" class="peer sr-only" />
                                     <div
-                                        class="peer relative h-5 w-9 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800 rtl:peer-checked:after:-translate-x-full"
+                                        class="peer relative h-5 w-9 rounded-full bg-gray-900 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-900 after:bg-white after:transition-all after:content-[''] peer-checked:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gray-300 dark:peer-checked:bg-gray-600 dark:peer-focus:ring-gray-800 rtl:peer-checked:after:-translate-x-full"
                                     ></div>
                                 </label>
                             </div>
@@ -180,7 +181,7 @@ onUnmounted(() => {
                         <li>
                             <div class="flex items-center justify-between rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <NavLink :href="route('profile.edit')" class="group flex items-center">
-                                    <img class="h-8 w-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
+                                    <Avatar :name="props.auth.user.name" :image="props.auth.user.profile_picture" />
                                     <span class="ms-3 flex-1 whitespace-nowrap">{{ firstName }}</span>
                                 </NavLink>
                                 <NavLink :href="route('logout')" method="post" as="button">
