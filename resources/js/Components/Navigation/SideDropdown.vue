@@ -3,7 +3,7 @@ import ArrowDownIcon from '@/Components/Icons/ArrowDownIcon.vue';
 import ArrowUpIcon from '@/Components/Icons/ArrowUpIcon.vue';
 import ControlIcon from '@/Components/Icons/ControlIcon.vue';
 import NavLink from '@/Components/Navigation/NavLink.vue';
-import { ref } from 'vue';
+import { PropType, ref } from 'vue';
 
 defineProps({
     title: String,

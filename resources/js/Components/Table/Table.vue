@@ -8,7 +8,7 @@ const slots = useSlots();
 </script>
 
 <template>
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="relative h-min overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
             <caption v-if="slots.header" class="bg-white p-5 text-left text-lg font-semibold text-gray-900 dark:bg-gray-800 dark:text-white rtl:text-right">
                 <slot name="header"></slot>

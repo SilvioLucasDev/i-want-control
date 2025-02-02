@@ -13,7 +13,7 @@ export type SelectDate = {
 };
 
 const emit = defineEmits<{
-    selectDate: [SelectDate];
+    (event: 'selectDate', value: SelectDate): void;
 }>();
 
 const showModal = ref<boolean>(false);
