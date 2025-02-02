@@ -12,9 +12,10 @@ onMounted(() => {
 });
 
 defineProps({
-    label: String,
-    id: String,
     options: Array as PropType<{ value: string | number; label: string }[]>,
+    id: String,
+    label: String,
+    screenReaderOnly: Boolean,
 });
 
 defineExpose({ focus: () => selectRef.value?.focus() });
@@ -22,11 +23,11 @@ defineExpose({ focus: () => selectRef.value?.focus() });
 
 <template>
     <div>
-        <label v-if="label" :for="id" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+        <label v-if="label" :for="id" :class="['mb-2 block text-sm font-medium text-gray-900 dark:text-white', { 'sr-only': screenReaderOnly }]">
             {{ label }}
         </label>
 
-        <select :id="id" v-model="model" ref="selectRef" class="block w-full rounded-lg border border-gray-300 p-2 dark:bg-gray-700 dark:text-white">
+        <select :id="id" v-model="model" ref="selectRef" class="block w-full rounded-lg border border-gray-300 dark:bg-gray-700 dark:text-white">
             <option v-for="option in options" :key="option.value" :value="option.value">
                 {{ option.label }}
             </option>
