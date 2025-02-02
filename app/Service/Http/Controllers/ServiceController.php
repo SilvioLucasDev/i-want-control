@@ -9,6 +9,6 @@ class ServiceController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Control/Service');
+        return Inertia::render('Service/Index');
     }
 }

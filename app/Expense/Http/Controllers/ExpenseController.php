@@ -9,6 +9,6 @@ class ExpenseController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Control/Expense');
+        return Inertia::render('Expense/Index');
     }
 }
