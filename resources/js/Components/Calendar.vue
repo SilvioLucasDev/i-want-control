@@ -2,7 +2,7 @@
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
 import Select from '@/Components/Inputs/Select.vue';
-import Modal from '@/Components/Modal.vue';
+import Modal from '@/Components/Modal/Modal.vue';
 
 import debounce from 'lodash/debounce';
 import { onMounted, ref } from 'vue';
