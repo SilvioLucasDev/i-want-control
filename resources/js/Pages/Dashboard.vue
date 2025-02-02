@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 import DarkBadge from '@/Components/Badges/DarkBadge.vue';
+import PlusButton from '@/Components/Buttons/PlusButton.vue';
 import Calendar, { SelectDate } from '@/Components/Calendar.vue';
 import Tabs from '@/Components/Navigation/Tabs.vue';
 import PieChart from '@/Components/PieChart.vue';
@@ -22,6 +23,10 @@ const activeTab = ref('entries');
 
 const setActiveTab = (tab: string): void => {
     activeTab.value = tab;
+};
+
+const addRecurrent = (): void => {
+    console.log('DASHBOARD :: Add Recurrence');
 };
 </script>
 
@@ -43,8 +48,15 @@ const setActiveTab = (tab: string): void => {
     <div v-show="activeTab === 'entries'" class="grid w-full gap-10 md:grid-cols-3">
         <Table>
             <template #header>
-                Recorrentes
-                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores fixos que eu recebo todos os meses</p>
+                <div class="flex justify-between">
+                    <div>
+                        Recorrentes
+                        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores fixos que eu recebo todos os meses</p>
+                    </div>
+                    <div>
+                        <PlusButton @click="addRecurrent" />
+                    </div>
+                </div>
             </template>
 
             <template #thead>
