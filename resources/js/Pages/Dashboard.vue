@@ -1,16 +1,27 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 import Calendar, { SelectDate } from '@/Components/Calendar.vue';
+import Tabs from '@/Components/Navigation/Tabs.vue';
 
+import PieChart from '@/Components/PieChart.vue';
 import Table from '@/Components/Table/Table.vue';
 import TdBody from '@/Components/Table/TBody/Td.vue';
 import ThBody from '@/Components/Table/TBody/Th.vue';
 import TrBody from '@/Components/Table/TBody/Tr.vue';
+import TdFoot from '@/Components/Table/TFoot/Td.vue';
+import ThFoot from '@/Components/Table/TFoot/Th.vue';
 import ThHead from '@/Components/Table/THead/Th.vue';
 
-const fetchData = ({ month, year }: SelectDate) => {
+const fetchData = ({ month, year }: SelectDate): void => {
     console.log(`DASHBOARD :: Fetching data for: ${month} / ${year}`);
+};
+
+const activeTab = ref('entries');
+
+const setActiveTab = (tab: string): void => {
+    activeTab.value = tab;
 };
 </script>
 
@@ -19,102 +30,590 @@ const fetchData = ({ month, year }: SelectDate) => {
 
     <Calendar @select-date="fetchData" />
 
-    <div class="flex flex-col gap-4 md:flex-row">
-        <div class="w-full">
+    <Tabs
+        :tabs="[
+            { key: 'entries', label: 'Entradas' },
+            { key: 'outputs', label: 'Saídas' },
+            { key: 'investments', label: 'Investimentos' },
+            { key: 'results', label: 'Resultados' },
+        ]"
+        @set-active-tab="setActiveTab"
+    />
+
+    <div v-show="activeTab === 'entries'" class="grid w-full gap-10 md:grid-cols-3">
+        <Table>
+            <template #header>
+                Recorrentes
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores fixos que eu recebo todos os meses</p>
+            </template>
+
+            <template #thead>
+                <ThHead>Tipo</ThHead>
+                <ThHead>Valor</ThHead>
+                <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
+            </template>
+
+            <template #tbody>
+                <TrBody withBorder>
+                    <ThBody>Salário</ThBody>
+                    <TdBody>1.000,00</TdBody>
+                    <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Vale Refeição</ThBody>
+                    <TdBody>1.000,00</TdBody>
+                    <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Auxilio</ThBody>
+                    <TdBody>1.000,00</TdBody>
+                    <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                </TrBody>
+            </template>
+
+            <template #tfoot>
+                <ThFoot>Total</ThFoot>
+                <TdFoot>3.000,00</TdFoot>
+                <!-- <TdFoot></TdFoot> -->
+            </template>
+        </Table>
+
+        <Table>
+            <template #header>
+                Á receber
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores dinâmicos que eu irei receber esse mês</p>
+            </template>
+
+            <template #thead>
+                <ThHead>Tipo</ThHead>
+                <ThHead>Valor</ThHead>
+                <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
+            </template>
+
+            <template #tbody>
+                <TrBody withBorder>
+                    <ThBody>João</ThBody>
+                    <TdBody>434,00</TdBody>
+                    <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Freelas</ThBody>
+                    <TdBody>1.000,00</TdBody>
+                    <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                </TrBody>
+            </template>
+
+            <template #tfoot>
+                <ThFoot>Total</ThFoot>
+                <TdFoot>1.434,00</TdFoot>
+                <!-- <TdFoot></TdFoot> -->
+            </template>
+        </Table>
+
+        <Table>
+            <template #header>
+                Investimentos
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores que saquei dos meus investimentos</p>
+            </template>
+
+            <template #thead>
+                <ThHead>Tipo</ThHead>
+                <ThHead>Valor</ThHead>
+            </template>
+
+            <template #tbody>
+                <TrBody withBorder>
+                    <ThBody>FII</ThBody>
+                    <TdBody>500,00</TdBody>
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Criptomoeda</ThBody>
+                    <TdBody>500,00</TdBody>
+                </TrBody>
+            </template>
+
+            <template #tfoot>
+                <ThFoot>Total</ThFoot>
+                <TdFoot>1.000,00</TdFoot>
+            </template>
+        </Table>
+    </div>
+
+    <div v-show="activeTab === 'outputs'" class="grid w-full gap-10 xl:col-span-3">
+        <div class="grid gap-10 xl:grid-cols-2">
             <Table>
                 <template #header>
-                    Our products
-                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Browse a list of Flowbite products designed to help you work and play, stay organized, get answers, keep in touch, grow your business, and more.</p>
+                    Necessidades
+                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Gastos necessários de todo mês</p>
                 </template>
 
                 <template #thead>
-                    <ThHead>Product name</ThHead>
-                    <ThHead>Color</ThHead>
-                    <ThHead>Category</ThHead>
-                    <ThHead>Price</ThHead>
-                    <ThHead screenReaderOnly> Edit </ThHead>
+                    <ThHead>Tipo</ThHead>
+                    <ThHead>Forma de Pagamento</ThHead>
+                    <ThHead>Valor</ThHead>
+                    <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
                 </template>
 
                 <template #tbody>
                     <TrBody withBorder>
-                        <ThBody>Apple MacBook Pro 17"</ThBody>
-                        <TdBody>Silver</TdBody>
-                        <TdBody>Laptop</TdBody>
-                        <TdBody>$2999</TdBody>
-                        <TdBody class="text-right">
+                        <ThBody>Luz</ThBody>
+                        <TdBody>(Dinheiro)</TdBody>
+                        <TdBody>200,00</TdBody>
+                        <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody>
+                        </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
-                        <ThBody>Microsoft Surface Pro</ThBody>
-                        <TdBody>White</TdBody>
-                        <TdBody>Laptop PC</TdBody>
-                        <TdBody>$1999</TdBody>
-                        <TdBody class="text-right">
+                        <ThBody>Aluguel</ThBody>
+                        <TdBody>(Dinheiro)</TdBody>
+                        <TdBody>1.500,00</TdBody>
+                        <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody>
+                        </TdBody> -->
                     </TrBody>
 
-                    <TrBody>
-                        <ThBody>Magic Mouse 2</ThBody>
-                        <TdBody>Black</TdBody>
-                        <TdBody>Accessories</TdBody>
-                        <TdBody>$99</TdBody>
-                        <TdBody class="text-right">
+                    <TrBody withBorder>
+                        <ThBody>Internet</ThBody>
+                        <TdBody>(Dinheiro)</TdBody>
+                        <TdBody>120,00</TdBody>
+                        <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody>
+                        </TdBody> -->
                     </TrBody>
+                </template>
+
+                <template #tfoot>
+                    <ThFoot>Total</ThFoot>
+                    <TdFoot></TdFoot>
+                    <TdFoot>1.820,00</TdFoot>
+                    <!-- <TdFoot></TdFoot> -->
+                </template>
+            </Table>
+
+            <Table>
+                <template #header>
+                    Recorrentes
+                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras realizadas todos os meses (Streamers...)</p>
+                </template>
+
+                <template #thead>
+                    <ThHead>Tipo</ThHead>
+                    <ThHead>Forma de Pagamento</ThHead>
+                    <ThHead>Valor</ThHead>
+                    <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
+                </template>
+
+                <template #tbody>
+                    <TrBody withBorder>
+                        <ThBody>ChatGPT</ThBody>
+                        <TdBody>(Nubank/Crédito)</TdBody>
+                        <TdBody>115,24</TdBody>
+                        <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                    </TrBody>
+
+                    <TrBody withBorder>
+                        <ThBody>Youtube Premium</ThBody>
+                        <TdBody>(Nubank/Crédito)</TdBody>
+                        <TdBody>41,90</TdBody>
+                        <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                    </TrBody>
+
+                    <TrBody withBorder>
+                        <ThBody>PetLove</ThBody>
+                        <TdBody>(Nubank/Crédito)</TdBody>
+                        <TdBody>75,00</TdBody>
+                        <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                    </TrBody>
+
+                    <TrBody withBorder>
+                        <ThBody>Cabeleireiro</ThBody>
+                        <TdBody>(Dinheiro)</TdBody>
+                        <TdBody>120,00</TdBody>
+                        <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                    </TrBody>
+                </template>
+
+                <template #tfoot>
+                    <ThFoot>Total</ThFoot>
+                    <TdFoot></TdFoot>
+                    <TdFoot>353,14</TdFoot>
+                    <!-- <TdFoot></TdFoot> -->
                 </template>
             </Table>
         </div>
-        <div class="w-full">
+
+        <div class="grid gap-10 xl:grid-cols-2">
             <Table>
                 <template #header>
-                    Our products
-                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Browse a list of Flowbite products designed to help you work and play, stay organized, get answers, keep in touch, grow your business, and more.</p>
+                    Á vista
+                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras á vista</p>
                 </template>
 
                 <template #thead>
-                    <ThHead>Product name</ThHead>
-                    <ThHead>Color</ThHead>
-                    <ThHead>Category</ThHead>
-                    <ThHead>Price</ThHead>
-                    <ThHead screenReaderOnly> Edit </ThHead>
+                    <ThHead>Tipo</ThHead>
+                    <ThHead>Forma de Pagamento</ThHead>
+                    <ThHead>Valor</ThHead>
+                    <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
                 </template>
 
                 <template #tbody>
                     <TrBody withBorder>
-                        <ThBody>Apple MacBook Pro 17"</ThBody>
-                        <TdBody>Silver</TdBody>
-                        <TdBody>Laptop</TdBody>
-                        <TdBody>$2999</TdBody>
-                        <TdBody class="text-right">
+                        <ThBody>Corrente da Moto</ThBody>
+                        <TdBody>(C6/DÉBITO)</TdBody>
+                        <TdBody>165,00</TdBody>
+                        <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody>
+                            </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
-                        <ThBody>Microsoft Surface Pro</ThBody>
-                        <TdBody>White</TdBody>
-                        <TdBody>Laptop PC</TdBody>
-                        <TdBody>$1999</TdBody>
-                        <TdBody class="text-right">
+                        <ThBody>Presente da Maria</ThBody>
+                        <TdBody>(C6/DÉBITO)</TdBody>
+                        <TdBody>303,50</TdBody>
+                        <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody>
+                            </TdBody> -->
                     </TrBody>
 
-                    <TrBody>
-                        <ThBody>Magic Mouse 2</ThBody>
-                        <TdBody>Black</TdBody>
-                        <TdBody>Accessories</TdBody>
-                        <TdBody>$99</TdBody>
-                        <TdBody class="text-right">
+                    <TrBody withBorder>
+                        <ThBody>Viagem da Praia</ThBody>
+                        <TdBody>(Dinheiro)</TdBody>
+                        <TdBody>450,00</TdBody>
+                        <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody>
+                            </TdBody> -->
                     </TrBody>
                 </template>
+
+                <template #tfoot>
+                    <ThFoot>Total</ThFoot>
+                    <TdFoot></TdFoot>
+                    <TdFoot>918,50</TdFoot>
+                    <!-- <TdFoot></TdFoot> -->
+                </template>
             </Table>
+
+            <Table>
+                <template #header>
+                    Parceladas
+                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras parceladas</p>
+                </template>
+
+                <template #thead>
+                    <ThHead>Tipo</ThHead>
+                    <ThHead>Parcela</ThHead>
+                    <ThHead>Forma de Pagamento</ThHead>
+                    <ThHead>Valor</ThHead>
+                    <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
+                </template>
+
+                <template #tbody>
+                    <TrBody withBorder>
+                        <ThBody>C6</ThBody>
+                        <TdBody>1/2</TdBody>
+                        <TdBody>(C6/CRÉDITO)</TdBody>
+                        <TdBody>200,00</TdBody>
+                        <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                    </TrBody>
+
+                    <TrBody withBorder>
+                        <ThBody>Nubank</ThBody>
+                        <TdBody>1/7</TdBody>
+                        <TdBody>(Nubank/CRÉDITO)</TdBody>
+                        <TdBody>980,00</TdBody>
+                        <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                    </TrBody>
+
+                    <TrBody withBorder>
+                        <ThBody>Itaú</ThBody>
+                        <TdBody>1/15</TdBody>
+                        <TdBody>(Itaú/CRÉDITO)</TdBody>
+                        <TdBody>120,00</TdBody>
+                        <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                    </TrBody>
+
+                    <TrBody withBorder>
+                        <ThBody>Notebook</ThBody>
+                        <TdBody>3/12</TdBody>
+                        <TdBody>(C6/CRÉDITO)</TdBody>
+                        <TdBody>650,00</TdBody>
+                        <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                    </TrBody>
+
+                    <TrBody withBorder>
+                        <ThBody>Aliexpress</ThBody>
+                        <TdBody>3/12</TdBody>
+                        <TdBody>(C6/CRÉDITO)</TdBody>
+                        <TdBody>1.555,00</TdBody>
+                        <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                    </TrBody>
+
+                    <TrBody withBorder>
+                        <ThBody>Portão</ThBody>
+                        <TdBody>5/6</TdBody>
+                        <TdBody>(C6/CRÉDITO)</TdBody>
+                        <TdBody>95,00</TdBody>
+                        <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                    </TrBody>
+                </template>
+
+                <template #tfoot>
+                    <ThFoot>Total</ThFoot>
+                    <TdFoot></TdFoot>
+                    <TdFoot></TdFoot>
+                    <TdFoot>3.000,00</TdFoot>
+                    <!-- <TdFoot></TdFoot> -->
+                </template>
+            </Table>
+        </div>
+    </div>
+
+    <div v-show="activeTab === 'investments'" class="grid w-full gap-10 md:grid-cols-2">
+        <Table>
+            <template #header>
+                Rendimentos
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores respectivo aos rendimentos do mês anterior</p>
+            </template>
+
+            <template #thead>
+                <ThHead>Tipo</ThHead>
+                <ThHead>Rentabilidade</ThHead>
+                <ThHead>Valor</ThHead>
+                <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
+            </template>
+
+            <template #tbody>
+                <TrBody withBorder>
+                    <ThBody>FII</ThBody>
+                    <TdBody>1%</TdBody>
+                    <TdBody>100,00</TdBody>
+                    <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Renda Fixa</ThBody>
+                    <TdBody>0.9%</TdBody>
+                    <TdBody>9,00</TdBody>
+                    <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Tesouro</ThBody>
+                    <TdBody>2%</TdBody>
+                    <TdBody>23,00</TdBody>
+                    <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                </TrBody>
+            </template>
+
+            <template #tfoot>
+                <ThFoot>Total</ThFoot>
+                <TdFoot></TdFoot>
+                <TdFoot>132,00</TdFoot>
+                <!-- <TdFoot></TdFoot> -->
+            </template>
+        </Table>
+
+        <Table>
+            <template #header>
+                Aplicações
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores investido nesse mês</p>
+            </template>
+
+            <template #thead>
+                <ThHead>Tipo</ThHead>
+                <ThHead>Rentabilidade</ThHead>
+                <ThHead>Valor</ThHead>
+                <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
+            </template>
+
+            <template #tbody>
+                <TrBody withBorder>
+                    <ThBody>FII</ThBody>
+                    <TdBody>1%</TdBody>
+                    <TdBody>500,00</TdBody>
+                    <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Criptomoeda</ThBody>
+                    <TdBody></TdBody>
+                    <TdBody>200,00</TdBody>
+                    <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Renda Fixa</ThBody>
+                    <TdBody>0.9%</TdBody>
+                    <TdBody>500,00</TdBody>
+                    <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Tesouro</ThBody>
+                    <TdBody>2%</TdBody>
+                    <TdBody>500,00</TdBody>
+                    <!-- <TdBody class="text-right">
+                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </TdBody> -->
+                </TrBody>
+            </template>
+
+            <template #tfoot>
+                <ThFoot>Total</ThFoot>
+                <TdFoot></TdFoot>
+                <TdFoot>1.700,00</TdFoot>
+                <!-- <TdFoot></TdFoot> -->
+            </template>
+        </Table>
+    </div>
+
+    <div v-show="activeTab === 'results'" class="grid w-full gap-10 md:grid-cols-2">
+        <Table>
+            <template #header>
+                Total Gasto
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Cálculo total de saídas</p>
+            </template>
+
+            <template #thead>
+                <ThHead>Tipo</ThHead>
+                <ThHead>Valor</ThHead>
+            </template>
+
+            <template #tbody>
+                <TrBody withBorder>
+                    <ThBody>C6</ThBody>
+                    <TdBody>2.500,00</TdBody>
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Nubank</ThBody>
+                    <TdBody>300,00</TdBody>
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Itaú</ThBody>
+                    <TdBody>550,00</TdBody>
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Dinheiro</ThBody>
+                    <TdBody>550,00</TdBody>
+                </TrBody>
+            </template>
+
+            <template #tfoot>
+                <ThFoot>Total</ThFoot>
+                <TdFoot>3.900,00</TdFoot>
+            </template>
+        </Table>
+
+        <Table>
+            <template #header>
+                Total Recebido
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Cálculo total de entradas</p>
+            </template>
+
+            <template #thead>
+                <ThHead>Tipo</ThHead>
+                <ThHead>Valor</ThHead>
+            </template>
+
+            <template #tbody>
+                <TrBody withBorder>
+                    <ThBody>Recorrentes</ThBody>
+                    <TdBody>2.500,00</TdBody>
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Recebidos</ThBody>
+                    <TdBody>300,00</TdBody>
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Rendimentos</ThBody>
+                    <TdBody>231,00</TdBody>
+                </TrBody>
+            </template>
+
+            <template #tfoot>
+                <ThFoot>Total</ThFoot>
+                <TdFoot>3.031,00</TdFoot>
+            </template>
+        </Table>
+
+        <Table>
+            <template #header>
+                Aplicações
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Cálculo total de investimentos</p>
+            </template>
+
+            <template #tfoot>
+                <ThFoot>Total</ThFoot>
+                <TdFoot>3.900,00</TdFoot>
+            </template>
+        </Table>
+
+        <Table>
+            <template #header>
+                Sobra
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Cálculo do total recebido menos total gasto</p>
+            </template>
+
+            <template #tfoot>
+                <ThFoot>Total</ThFoot>
+                <TdFoot>3.900,00</TdFoot>
+            </template>
+        </Table>
+
+        <div class="flex items-center justify-center md:col-span-2">
+            <PieChart />
         </div>
     </div>
 </template>
