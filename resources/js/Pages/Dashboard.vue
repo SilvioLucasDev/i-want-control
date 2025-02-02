@@ -48,7 +48,7 @@ const setActiveTab = (tab: string): void => {
             </template>
 
             <template #thead>
-                <ThHead>Tipo</ThHead>
+                <ThHead class="text-start">Tipo</ThHead>
                 <ThHead>Valor</ThHead>
                 <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
             </template>
@@ -93,7 +93,7 @@ const setActiveTab = (tab: string): void => {
             </template>
 
             <template #thead>
-                <ThHead>Tipo</ThHead>
+                <ThHead class="text-start">Tipo</ThHead>
                 <ThHead>Valor</ThHead>
                 <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
             </template>
@@ -130,7 +130,7 @@ const setActiveTab = (tab: string): void => {
             </template>
 
             <template #thead>
-                <ThHead>Tipo</ThHead>
+                <ThHead class="text-start">Tipo</ThHead>
                 <ThHead>Valor</ThHead>
             </template>
 
@@ -162,7 +162,7 @@ const setActiveTab = (tab: string): void => {
                 </template>
 
                 <template #thead>
-                    <ThHead>Tipo</ThHead>
+                    <ThHead class="text-start">Tipo</ThHead>
                     <ThHead>Forma de Pagamento</ThHead>
                     <ThHead>Valor</ThHead>
                     <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
@@ -212,7 +212,7 @@ const setActiveTab = (tab: string): void => {
                 </template>
 
                 <template #thead>
-                    <ThHead>Tipo</ThHead>
+                    <ThHead class="text-start">Tipo</ThHead>
                     <ThHead>Forma de Pagamento</ThHead>
                     <ThHead>Valor</ThHead>
                     <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
@@ -273,7 +273,7 @@ const setActiveTab = (tab: string): void => {
                 </template>
 
                 <template #thead>
-                    <ThHead>Tipo</ThHead>
+                    <ThHead class="text-start">Tipo</ThHead>
                     <ThHead>Forma de Pagamento</ThHead>
                     <ThHead>Valor</ThHead>
                     <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
@@ -323,7 +323,7 @@ const setActiveTab = (tab: string): void => {
                 </template>
 
                 <template #thead>
-                    <ThHead>Tipo</ThHead>
+                    <ThHead class="text-start">Tipo</ThHead>
                     <ThHead>Parcela</ThHead>
                     <ThHead>Forma de Pagamento</ThHead>
                     <ThHead>Valor</ThHead>
@@ -411,7 +411,7 @@ const setActiveTab = (tab: string): void => {
             </template>
 
             <template #thead>
-                <ThHead>Tipo</ThHead>
+                <ThHead class="text-start">Tipo</ThHead>
                 <ThHead>Rentabilidade</ThHead>
                 <ThHead>Valor</ThHead>
                 <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
@@ -461,7 +461,7 @@ const setActiveTab = (tab: string): void => {
             </template>
 
             <template #thead>
-                <ThHead>Tipo</ThHead>
+                <ThHead class="text-start">Tipo</ThHead>
                 <ThHead>Rentabilidade</ThHead>
                 <ThHead>Valor</ThHead>
                 <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
@@ -522,7 +522,7 @@ const setActiveTab = (tab: string): void => {
             </template>
 
             <template #thead>
-                <ThHead>Tipo</ThHead>
+                <ThHead class="text-start">Tipo</ThHead>
                 <ThHead>Valor</ThHead>
             </template>
 
@@ -561,7 +561,7 @@ const setActiveTab = (tab: string): void => {
             </template>
 
             <template #thead>
-                <ThHead>Tipo</ThHead>
+                <ThHead class="text-start">Tipo</ThHead>
                 <ThHead>Valor</ThHead>
             </template>
 

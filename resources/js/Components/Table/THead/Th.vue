@@ -6,7 +6,7 @@ const props = defineProps({
     screenReaderOnly: Boolean,
 });
 
-const classes = computed(() => ['px-6 py-3', props.class]);
+const classes = computed(() => ['px-6 py-3 text-center', props.class]);
 </script>
 
 <template>

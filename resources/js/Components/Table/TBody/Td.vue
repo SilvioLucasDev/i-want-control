@@ -5,7 +5,7 @@ const props = defineProps({
     class: String,
 });
 
-const classes = computed(() => ['px-6 py-4', props.class]);
+const classes = computed(() => ['px-6 py-4 text-center', props.class]);
 </script>
 
 <template>
