@@ -2,9 +2,9 @@
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
+import DarkBadge from '@/Components/Badges/DarkBadge.vue';
 import Calendar, { SelectDate } from '@/Components/Calendar.vue';
 import Tabs from '@/Components/Navigation/Tabs.vue';
-
 import PieChart from '@/Components/PieChart.vue';
 import Table from '@/Components/Table/Table.vue';
 import TdBody from '@/Components/Table/TBody/Td.vue';
@@ -171,7 +171,7 @@ const setActiveTab = (tab: string): void => {
                 <template #tbody>
                     <TrBody withBorder>
                         <ThBody>Luz</ThBody>
-                        <TdBody>(Dinheiro)</TdBody>
+                        <TdBody><DarkBadge>Dinheiro</DarkBadge></TdBody>
                         <TdBody>200,00</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -180,7 +180,7 @@ const setActiveTab = (tab: string): void => {
 
                     <TrBody withBorder>
                         <ThBody>Aluguel</ThBody>
-                        <TdBody>(Dinheiro)</TdBody>
+                        <TdBody><DarkBadge>Dinheiro</DarkBadge></TdBody>
                         <TdBody>1.500,00</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -189,7 +189,7 @@ const setActiveTab = (tab: string): void => {
 
                     <TrBody withBorder>
                         <ThBody>Internet</ThBody>
-                        <TdBody>(Dinheiro)</TdBody>
+                        <TdBody><DarkBadge>Dinheiro</DarkBadge></TdBody>
                         <TdBody>120,00</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -221,7 +221,7 @@ const setActiveTab = (tab: string): void => {
                 <template #tbody>
                     <TrBody withBorder>
                         <ThBody>ChatGPT</ThBody>
-                        <TdBody>(Nubank/Crédito)</TdBody>
+                        <TdBody><DarkBadge>Nubank</DarkBadge></TdBody>
                         <TdBody>115,24</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -230,7 +230,7 @@ const setActiveTab = (tab: string): void => {
 
                     <TrBody withBorder>
                         <ThBody>Youtube Premium</ThBody>
-                        <TdBody>(Nubank/Crédito)</TdBody>
+                        <TdBody><DarkBadge>Nubank</DarkBadge></TdBody>
                         <TdBody>41,90</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -239,7 +239,7 @@ const setActiveTab = (tab: string): void => {
 
                     <TrBody withBorder>
                         <ThBody>PetLove</ThBody>
-                        <TdBody>(Nubank/Crédito)</TdBody>
+                        <TdBody><DarkBadge>Nubank</DarkBadge></TdBody>
                         <TdBody>75,00</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -248,7 +248,7 @@ const setActiveTab = (tab: string): void => {
 
                     <TrBody withBorder>
                         <ThBody>Cabeleireiro</ThBody>
-                        <TdBody>(Dinheiro)</TdBody>
+                        <TdBody><DarkBadge>Dinheiro</DarkBadge></TdBody>
                         <TdBody>120,00</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -282,7 +282,7 @@ const setActiveTab = (tab: string): void => {
                 <template #tbody>
                     <TrBody withBorder>
                         <ThBody>Corrente da Moto</ThBody>
-                        <TdBody>(C6/DÉBITO)</TdBody>
+                        <TdBody><DarkBadge>C6</DarkBadge></TdBody>
                         <TdBody>165,00</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -291,7 +291,7 @@ const setActiveTab = (tab: string): void => {
 
                     <TrBody withBorder>
                         <ThBody>Presente da Maria</ThBody>
-                        <TdBody>(C6/DÉBITO)</TdBody>
+                        <TdBody><DarkBadge>C6</DarkBadge></TdBody>
                         <TdBody>303,50</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -300,7 +300,7 @@ const setActiveTab = (tab: string): void => {
 
                     <TrBody withBorder>
                         <ThBody>Viagem da Praia</ThBody>
-                        <TdBody>(Dinheiro)</TdBody>
+                        <TdBody><DarkBadge>Dinheiro</DarkBadge></TdBody>
                         <TdBody>450,00</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -334,7 +334,7 @@ const setActiveTab = (tab: string): void => {
                     <TrBody withBorder>
                         <ThBody>C6</ThBody>
                         <TdBody>1/2</TdBody>
-                        <TdBody>(C6/CRÉDITO)</TdBody>
+                        <TdBody><DarkBadge>C6</DarkBadge></TdBody>
                         <TdBody>200,00</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -344,7 +344,7 @@ const setActiveTab = (tab: string): void => {
                     <TrBody withBorder>
                         <ThBody>Nubank</ThBody>
                         <TdBody>1/7</TdBody>
-                        <TdBody>(Nubank/CRÉDITO)</TdBody>
+                        <TdBody><DarkBadge>Nubank</DarkBadge></TdBody>
                         <TdBody>980,00</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -354,7 +354,7 @@ const setActiveTab = (tab: string): void => {
                     <TrBody withBorder>
                         <ThBody>Itaú</ThBody>
                         <TdBody>1/15</TdBody>
-                        <TdBody>(Itaú/CRÉDITO)</TdBody>
+                        <TdBody><DarkBadge>Itaú</DarkBadge></TdBody>
                         <TdBody>120,00</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -364,7 +364,7 @@ const setActiveTab = (tab: string): void => {
                     <TrBody withBorder>
                         <ThBody>Notebook</ThBody>
                         <TdBody>3/12</TdBody>
-                        <TdBody>(C6/CRÉDITO)</TdBody>
+                        <TdBody><DarkBadge>C6</DarkBadge></TdBody>
                         <TdBody>650,00</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -374,7 +374,7 @@ const setActiveTab = (tab: string): void => {
                     <TrBody withBorder>
                         <ThBody>Aliexpress</ThBody>
                         <TdBody>3/12</TdBody>
-                        <TdBody>(C6/CRÉDITO)</TdBody>
+                        <TdBody><DarkBadge>C6</DarkBadge></TdBody>
                         <TdBody>1.555,00</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
@@ -384,7 +384,7 @@ const setActiveTab = (tab: string): void => {
                     <TrBody withBorder>
                         <ThBody>Portão</ThBody>
                         <TdBody>5/6</TdBody>
-                        <TdBody>(C6/CRÉDITO)</TdBody>
+                        <TdBody><DarkBadge>C6</DarkBadge></TdBody>
                         <TdBody>95,00</TdBody>
                         <!-- <TdBody class="text-right">
                             <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
