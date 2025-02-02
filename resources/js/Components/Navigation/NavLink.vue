@@ -3,11 +3,14 @@ import { Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 const props = defineProps({
-    href: String,
+    href: {
+        type: String,
+        required: true,
+    },
     active: Boolean,
 });
 
-const classes = computed(() => (props.active ? 'dark:bg-gray-600 dark:text-white bg-gray-200 text-gray-900' : ''));
+const classes = computed(() => (props.active ? 'dark:bg-gray-700 dark:text-white bg-gray-100 text-gray-900' : ''));
 </script>
 
 <template>
