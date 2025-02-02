@@ -100,8 +100,15 @@ const addRecurrent = (): void => {
 
         <Table>
             <template #header>
-                Á receber
-                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores dinâmicos que eu irei receber esse mês</p>
+                <div class="flex justify-between">
+                    <div>
+                        Á receber
+                        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores dinâmicos que eu irei receber esse mês</p>
+                    </div>
+                    <div>
+                        <PlusButton @click="addRecurrent" />
+                    </div>
+                </div>
             </template>
 
             <template #thead>
@@ -169,8 +176,15 @@ const addRecurrent = (): void => {
         <div class="grid gap-10 xl:grid-cols-2">
             <Table>
                 <template #header>
-                    Necessidades
-                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Gastos necessários de todo mês</p>
+                    <div class="flex justify-between">
+                        <div>
+                            Necessidades
+                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Gastos necessários de todo mês</p>
+                        </div>
+                        <div>
+                            <PlusButton @click="addRecurrent" />
+                        </div>
+                    </div>
                 </template>
 
                 <template #thead>
@@ -219,8 +233,15 @@ const addRecurrent = (): void => {
 
             <Table>
                 <template #header>
-                    Recorrentes
-                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras realizadas todos os meses (Streamers...)</p>
+                    <div class="flex justify-between">
+                        <div>
+                            Recorrentes
+                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras realizadas todos os meses (Streamers...)</p>
+                        </div>
+                        <div>
+                            <PlusButton @click="addRecurrent" />
+                        </div>
+                    </div>
                 </template>
 
                 <template #thead>
@@ -280,8 +301,15 @@ const addRecurrent = (): void => {
         <div class="grid gap-10 xl:grid-cols-2">
             <Table>
                 <template #header>
-                    Á vista
-                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras á vista</p>
+                    <div class="flex justify-between">
+                        <div>
+                            Á vista
+                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras á vista</p>
+                        </div>
+                        <div>
+                            <PlusButton @click="addRecurrent" />
+                        </div>
+                    </div>
                 </template>
 
                 <template #thead>
@@ -330,8 +358,15 @@ const addRecurrent = (): void => {
 
             <Table>
                 <template #header>
-                    Parceladas
-                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras parceladas</p>
+                    <div class="flex justify-between">
+                        <div>
+                            Parceladas
+                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras parceladas</p>
+                        </div>
+                        <div>
+                            <PlusButton @click="addRecurrent" />
+                        </div>
+                    </div>
                 </template>
 
                 <template #thead>
@@ -418,8 +453,15 @@ const addRecurrent = (): void => {
     <div v-show="activeTab === 'investments'" class="grid w-full gap-10 md:grid-cols-2">
         <Table>
             <template #header>
-                Rendimentos
-                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores respectivo aos rendimentos do mês anterior</p>
+                <div class="flex justify-between">
+                    <div>
+                        Rendimentos
+                        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores respectivo aos rendimentos do mês anterior</p>
+                    </div>
+                    <div>
+                        <PlusButton @click="addRecurrent" />
+                    </div>
+                </div>
             </template>
 
             <template #thead>
@@ -468,8 +510,15 @@ const addRecurrent = (): void => {
 
         <Table>
             <template #header>
-                Aplicações
-                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores investido nesse mês</p>
+                <div class="flex justify-between">
+                    <div>
+                        Aplicações
+                        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores investido nesse mês</p>
+                    </div>
+                    <div>
+                        <PlusButton @click="addRecurrent" />
+                    </div>
+                </div>
             </template>
 
             <template #thead>

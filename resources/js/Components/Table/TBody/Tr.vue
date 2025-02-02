@@ -6,7 +6,7 @@ const props = defineProps({
     withBorder: Boolean,
 });
 
-const classes = computed(() => ['bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600', props.withBorder ? 'border-b border-gray-200 dark:border-gray-700' : '', props.class]);
+const classes = computed(() => ['bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700', props.withBorder ? 'border-b border-gray-200 dark:border-gray-700' : '', props.class]);
 </script>
 
 <template>
