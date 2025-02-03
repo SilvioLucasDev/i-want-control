@@ -9,7 +9,7 @@ import Modal from '@/Components/Modal/Modal.vue';
 import { useForm } from '@inertiajs/vue3';
 
 defineProps({
-    showToReceiveModal: Boolean,
+    showVariableInputModal: Boolean,
 });
 
 const emit = defineEmits(['close']);
@@ -24,14 +24,14 @@ const form = useForm({
 });
 
 const save = (): void => {
-    console.log('DASHBOARD :: Save To Receive', form);
+    console.log('DASHBOARD :: Save Variable Input', form);
 };
 </script>
 
 <template>
-    <Modal :show="showToReceiveModal" @close="close" max-width="md">
+    <Modal :show="showVariableInputModal" @close="close" max-width="md">
         <div class="p-6">
-            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar novo ganho variável?</h3>
+            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar nova entrada variável?</h3>
 
             <form @submit.prevent="save" class="grid gap-4">
                 <div>

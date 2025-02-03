@@ -9,7 +9,7 @@ import Modal from '@/Components/Modal/Modal.vue';
 import { useForm } from '@inertiajs/vue3';
 
 defineProps({
-    showRecurrentModal: Boolean,
+    showFixedInputModal: Boolean,
 });
 
 const emit = defineEmits(['close']);
@@ -24,12 +24,12 @@ const form = useForm({
 });
 
 const save = (): void => {
-    console.log('DASHBOARD :: Save Recurrence', form);
+    console.log('DASHBOARD :: Save Fixed Input', form);
 };
 </script>
 
 <template>
-    <Modal :show="showRecurrentModal" @close="close" max-width="md">
+    <Modal :show="showFixedInputModal" @close="close" max-width="md">
         <div class="p-6">
             <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar nova entrada fixa?</h3>
 

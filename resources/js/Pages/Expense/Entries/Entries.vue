@@ -8,17 +8,17 @@ import TdFoot from '@/Components/Table/TFoot/Td.vue';
 import ThFoot from '@/Components/Table/TFoot/Th.vue';
 import ThHead from '@/Components/Table/THead/Th.vue';
 
-import AddRecurrentForm from '@/Pages/Expense/Entries/AddRecurrentForm.vue';
-import AddToReceiveForm from '@/Pages/Expense/Entries/AddToReceiveForm.vue';
+import AddFixedInputForm from '@/Pages/Expense/Entries/AddFixedInputForm.vue';
+import AddVariableInputForm from '@/Pages/Expense/Entries/AddVariableInputForm.vue';
 
 import { ref } from 'vue';
 
 const modals = ref({
-    recurrent: false,
-    toReceive: false,
+    variableInput: false,
+    fixedInput: false,
 });
 
-const toggleModal = (type: 'recurrent' | 'toReceive') => {
+const toggleModal = (type: 'fixedInput' | 'variableInput') => {
     modals.value[type] = !modals.value[type];
 };
 </script>
@@ -33,7 +33,7 @@ const toggleModal = (type: 'recurrent' | 'toReceive') => {
                         <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores que recebo regularmente, como salário e benefícios.</p>
                     </div>
                     <div>
-                        <PlusButton @click="toggleModal('recurrent')" />
+                        <PlusButton @click="toggleModal('fixedInput')" />
                     </div>
                 </div>
             </template>
@@ -74,7 +74,7 @@ const toggleModal = (type: 'recurrent' | 'toReceive') => {
                         <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Ganhos esporádicos ou extras, como freelas e pagamentos pendentes.</p>
                     </div>
                     <div>
-                        <PlusButton @click="toggleModal('toReceive')" />
+                        <PlusButton @click="toggleModal('variableInput')" />
                     </div>
                 </div>
             </template>
@@ -132,6 +132,6 @@ const toggleModal = (type: 'recurrent' | 'toReceive') => {
         </Table>
     </div>
 
-    <AddRecurrentForm :showRecurrentModal="modals.recurrent" @close="toggleModal('recurrent')" />
-    <AddToReceiveForm :showToReceiveModal="modals.toReceive" @close="toggleModal('toReceive')" />
+    <AddFixedInputForm :showFixedInputModal="modals.fixedInput" @close="toggleModal('fixedInput')" />
+    <AddVariableInputForm :showVariableInputModal="modals.variableInput" @close="toggleModal('variableInput')" />
 </template>
