@@ -9,7 +9,7 @@ import Modal from '@/Components/Modal/Modal.vue';
 import { useForm } from '@inertiajs/vue3';
 
 defineProps({
-    showRecurrentModal: Boolean,
+    showFixedExpenseModal: Boolean,
 });
 
 const emit = defineEmits(['close']);
@@ -25,14 +25,14 @@ const form = useForm({
 });
 
 const save = (): void => {
-    console.log('DASHBOARD :: Save Recurrent', form);
+    console.log('DASHBOARD :: Save Fixed Expense', form);
 };
 </script>
 
 <template>
-    <Modal :show="showRecurrentModal" @close="close" max-width="md">
+    <Modal :show="showFixedExpenseModal" @close="close" max-width="md">
         <div class="p-6">
-            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar nova assinatura?</h3>
+            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar nova despesa fixa?</h3>
 
             <form @submit.prevent="save" class="grid gap-4">
                 <div>

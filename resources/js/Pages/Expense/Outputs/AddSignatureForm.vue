@@ -9,7 +9,7 @@ import Modal from '@/Components/Modal/Modal.vue';
 import { useForm } from '@inertiajs/vue3';
 
 defineProps({
-    showInstallmentsModal: Boolean,
+    showSignatureModal: Boolean,
 });
 
 const emit = defineEmits(['close']);
@@ -20,32 +20,25 @@ const close = (): void => {
 
 const form = useForm({
     type: '',
-    installments: '',
     paymentType: '',
     value: '',
 });
 
 const save = (): void => {
-    console.log('DASHBOARD :: Save Installments', form);
+    console.log('DASHBOARD :: Save Signature', form);
 };
 </script>
 
 <template>
-    <Modal :show="showInstallmentsModal" @close="close" max-width="md">
+    <Modal :show="showSignatureModal" @close="close" max-width="md">
         <div class="p-6">
-            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar nova compra parcelada?</h3>
+            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar nova assinatura?</h3>
 
             <form @submit.prevent="save" class="grid gap-4">
                 <div>
                     <InputLabel for="type" value="Tipo" />
                     <TextInput id="type" v-model="form.type" type="text" class="mt-1 block w-full" />
                     <InputError class="mt-2" :message="form.errors.type" />
-                </div>
-
-                <div>
-                    <InputLabel for="installments" value="Parcelas" />
-                    <TextInput id="installments" v-model="form.installments" type="text" class="mt-1 block w-full" />
-                    <InputError class="mt-2" :message="form.errors.installments" />
                 </div>
 
                 <div>

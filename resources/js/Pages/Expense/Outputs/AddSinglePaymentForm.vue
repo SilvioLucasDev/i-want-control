@@ -9,7 +9,7 @@ import Modal from '@/Components/Modal/Modal.vue';
 import { useForm } from '@inertiajs/vue3';
 
 defineProps({
-    showNeedModal: Boolean,
+    showSinglePaymentModal: Boolean,
 });
 
 const emit = defineEmits(['close']);
@@ -25,14 +25,14 @@ const form = useForm({
 });
 
 const save = (): void => {
-    console.log('DASHBOARD :: Save Needs', form);
+    console.log('DASHBOARD :: Save Single Payment', form);
 };
 </script>
 
 <template>
-    <Modal :show="showNeedModal" @close="close" max-width="md">
+    <Modal :show="showSinglePaymentModal" @close="close" max-width="md">
         <div class="p-6">
-            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar nova despesa fixa?</h3>
+            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar novo pagamento único?</h3>
 
             <form @submit.prevent="save" class="grid gap-4">
                 <div>

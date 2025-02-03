@@ -8,21 +8,21 @@ import TrBody from '@/Components/Table/TBody/Tr.vue';
 import TdFoot from '@/Components/Table/TFoot/Td.vue';
 import ThFoot from '@/Components/Table/TFoot/Th.vue';
 import ThHead from '@/Components/Table/THead/Th.vue';
-import AddCashForm from '@/Pages/Expense/Outputs/AddCashForm.vue';
-import AddInstallmentsForm from '@/Pages/Expense/Outputs/AddInstallmentsForm.vue';
-import AddNeedForm from '@/Pages/Expense/Outputs/AddNeedForm.vue';
-import AddRecurrentForm from '@/Pages/Expense/Outputs/AddRecurrentForm.vue';
+import AddFixedExpenseForm from '@/Pages/Expense/Outputs/AddFixedExpenseForm.vue';
+import AddInstallmentPaymentForm from '@/Pages/Expense/Outputs/AddInstallmentPaymentForm.vue';
+import AddSignatureForm from '@/Pages/Expense/Outputs/AddSignatureForm.vue';
+import AddSinglePaymentForm from '@/Pages/Expense/Outputs/AddSinglePaymentForm.vue';
 
 import { ref } from 'vue';
 
 const modals = ref({
-    need: false,
-    recurrent: false,
-    cash: false,
-    installments: false,
+    fixedExpense: false,
+    signature: false,
+    singlePayment: false,
+    installmentPayment: false,
 });
 
-const toggleModal = (type: 'need' | 'recurrent' | 'cash' | 'installments') => {
+const toggleModal = (type: 'fixedExpense' | 'signature' | 'singlePayment' | 'installmentPayment') => {
     modals.value[type] = !modals.value[type];
 };
 </script>
@@ -38,7 +38,7 @@ const toggleModal = (type: 'need' | 'recurrent' | 'cash' | 'installments') => {
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Gastos essenciais e recorrentes, como contas e aluguel.</p>
                         </div>
                         <div>
-                            <PlusButton @click="toggleModal('need')" />
+                            <PlusButton @click="toggleModal('fixedExpense')" />
                         </div>
                     </div>
                 </template>
@@ -84,7 +84,7 @@ const toggleModal = (type: 'need' | 'recurrent' | 'cash' | 'installments') => {
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Pagamentos mensais, como serviços e assinaturas.</p>
                         </div>
                         <div>
-                            <PlusButton @click="toggleModal('recurrent')" />
+                            <PlusButton @click="toggleModal('signature')" />
                         </div>
                     </div>
                 </template>
@@ -138,7 +138,7 @@ const toggleModal = (type: 'need' | 'recurrent' | 'cash' | 'installments') => {
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras pagas à vista, sem parcelamento.</p>
                         </div>
                         <div>
-                            <PlusButton @click="toggleModal('cash')" />
+                            <PlusButton @click="toggleModal('singlePayment')" />
                         </div>
                     </div>
                 </template>
@@ -184,7 +184,7 @@ const toggleModal = (type: 'need' | 'recurrent' | 'cash' | 'installments') => {
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Despesas divididas em várias parcelas.</p>
                         </div>
                         <div>
-                            <PlusButton @click="toggleModal('installments')" />
+                            <PlusButton @click="toggleModal('installmentPayment')" />
                         </div>
                     </div>
                 </template>
@@ -250,8 +250,8 @@ const toggleModal = (type: 'need' | 'recurrent' | 'cash' | 'installments') => {
         </div>
     </div>
 
-    <AddNeedForm :showNeedModal="modals.need" @close="toggleModal('need')" />
-    <AddRecurrentForm :showRecurrentModal="modals.recurrent" @close="toggleModal('recurrent')" />
-    <AddCashForm :showCashModal="modals.cash" @close="toggleModal('cash')" />
-    <AddInstallmentsForm :showInstallmentsModal="modals.installments" @close="toggleModal('installments')" />
+    <AddFixedExpenseForm :showFixedExpenseModal="modals.fixedExpense" @close="toggleModal('fixedExpense')" />
+    <AddSignatureForm :showSignatureModal="modals.signature" @close="toggleModal('signature')" />
+    <AddSinglePaymentForm :showSinglePaymentModal="modals.singlePayment" @close="toggleModal('singlePayment')" />
+    <AddInstallmentPaymentForm :showInstallmentPaymentModal="modals.installmentPayment" @close="toggleModal('installmentPayment')" />
 </template>
