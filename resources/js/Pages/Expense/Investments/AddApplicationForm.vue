@@ -32,7 +32,7 @@ const save = (): void => {
 <template>
     <Modal :show="showApplicationModal" @close="close" max-width="md">
         <div class="p-6">
-            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar uma nova aplicação?</h3>
+            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar novo investimento?</h3>
 
             <form @submit.prevent="save" class="grid gap-4">
                 <div>

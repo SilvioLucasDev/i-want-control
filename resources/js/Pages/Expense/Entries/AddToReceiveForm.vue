@@ -31,7 +31,7 @@ const save = (): void => {
 <template>
     <Modal :show="showToReceiveModal" @close="close" max-width="md">
         <div class="p-6">
-            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar novo item á receber</h3>
+            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar novo ganho variável?</h3>
 
             <form @submit.prevent="save" class="grid gap-4">
                 <div>

@@ -28,8 +28,8 @@ const toggleModal = (type: 'income' | 'application') => {
             <template #header>
                 <div class="flex justify-between">
                     <div>
-                        Rendimentos
-                        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores respectivo aos rendimentos do mês anterior</p>
+                        Ganhos com Investimentos
+                        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Retorno financeiro dos seus investimentos no mês anterior.</p>
                     </div>
                     <div>
                         <PlusButton @click="toggleModal('income')" />
@@ -74,8 +74,8 @@ const toggleModal = (type: 'income' | 'application') => {
             <template #header>
                 <div class="flex justify-between">
                     <div>
-                        Aplicações
-                        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores investido nesse mês</p>
+                        Novos Investimentos
+                        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores que foram investidos neste mês.</p>
                     </div>
                     <div>
                         <PlusButton @click="toggleModal('application')" />

@@ -29,8 +29,8 @@ const toggleModal = (type: 'recurrent' | 'toReceive') => {
             <template #header>
                 <div class="flex justify-between">
                     <div>
-                        Recorrentes
-                        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores fixos que eu recebo todos os meses</p>
+                        Entradas fixas
+                        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores que recebo regularmente, como salário e benefícios.</p>
                     </div>
                     <div>
                         <PlusButton @click="toggleModal('recurrent')" />
@@ -70,8 +70,8 @@ const toggleModal = (type: 'recurrent' | 'toReceive') => {
             <template #header>
                 <div class="flex justify-between">
                     <div>
-                        Á receber
-                        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores dinâmicos que eu irei receber esse mês</p>
+                        Entradas Variáveis
+                        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Ganhos esporádicos ou extras, como freelas e pagamentos pendentes.</p>
                     </div>
                     <div>
                         <PlusButton @click="toggleModal('toReceive')" />
@@ -104,8 +104,8 @@ const toggleModal = (type: 'recurrent' | 'toReceive') => {
 
         <Table>
             <template #header>
-                Investimentos
-                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores que saquei dos meus investimentos</p>
+                Saques de Investimentos
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Resgates feitos de investimentos neste mês.</p>
             </template>
 
             <template #thead>

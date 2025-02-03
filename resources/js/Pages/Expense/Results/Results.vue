@@ -13,8 +13,42 @@ import ThHead from '@/Components/Table/THead/Th.vue';
     <div class="grid w-full gap-10 md:grid-cols-2">
         <Table>
             <template #header>
-                Total Gasto
-                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Cálculo total de saídas</p>
+                Receitas Totais
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valor total recebido neste mês.</p>
+            </template>
+
+            <template #thead>
+                <ThHead class="text-start">Tipo</ThHead>
+                <ThHead>Valor</ThHead>
+            </template>
+
+            <template #tbody>
+                <TrBody withBorder>
+                    <ThBody>Entradas Fixas</ThBody>
+                    <TdBody>2.500,00</TdBody>
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Entradas Variáveis</ThBody>
+                    <TdBody>300,00</TdBody>
+                </TrBody>
+
+                <TrBody withBorder>
+                    <ThBody>Saques de Investimentos</ThBody>
+                    <TdBody>231,00</TdBody>
+                </TrBody>
+            </template>
+
+            <template #tfoot>
+                <ThFoot>Total</ThFoot>
+                <TdFoot>3.031,00</TdFoot>
+            </template>
+        </Table>
+
+        <Table>
+            <template #header>
+                Despesas Totais
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valor total gasto neste mês.</p>
             </template>
 
             <template #thead>
@@ -52,42 +86,8 @@ import ThHead from '@/Components/Table/THead/Th.vue';
 
         <Table>
             <template #header>
-                Total Recebido
-                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Cálculo total de entradas</p>
-            </template>
-
-            <template #thead>
-                <ThHead class="text-start">Tipo</ThHead>
-                <ThHead>Valor</ThHead>
-            </template>
-
-            <template #tbody>
-                <TrBody withBorder>
-                    <ThBody>Recorrentes</ThBody>
-                    <TdBody>2.500,00</TdBody>
-                </TrBody>
-
-                <TrBody withBorder>
-                    <ThBody>Recebidos</ThBody>
-                    <TdBody>300,00</TdBody>
-                </TrBody>
-
-                <TrBody withBorder>
-                    <ThBody>Rendimentos</ThBody>
-                    <TdBody>231,00</TdBody>
-                </TrBody>
-            </template>
-
-            <template #tfoot>
-                <ThFoot>Total</ThFoot>
-                <TdFoot>3.031,00</TdFoot>
-            </template>
-        </Table>
-
-        <Table>
-            <template #header>
-                Aplicações
-                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Cálculo total de investimentos</p>
+                Novos Investimentos
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valor total investido neste mês.</p>
             </template>
 
             <template #tfoot>
@@ -98,8 +98,8 @@ import ThHead from '@/Components/Table/THead/Th.vue';
 
         <Table>
             <template #header>
-                Sobra
-                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Cálculo do total recebido menos total gasto</p>
+                Saldo Final
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Diferença entre receitas e despesas.</p>
             </template>
 
             <template #tfoot>

@@ -58,15 +58,10 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="w-full max-w-sm rounded-lg bg-white p-4 shadow-sm dark:bg-gray-800 md:p-6">
-        <div class="mb-1 flex items-center justify-center">
-            <h5 class="me-1 text-xl font-bold leading-none text-gray-900 dark:text-white">Resumo Financeiro</h5>
-
-            <svg class="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm0 16a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm1-5.034V12a1 1 0 0 1-2 0v-1.418a1 1 0 0 1 1.038-.999 1.436 1.436 0 0 0 1.488-1.441 1.501 1.501 0 1 0-3-.116.986.986 0 0 1-1.037.961 1 1 0 0 1-.96-1.037A3.5 3.5 0 1 1 11 11.466Z"
-                />
-            </svg>
+    <div class="w-full max-w-lg rounded-lg bg-white p-4 shadow-sm dark:bg-gray-800 md:p-6">
+        <div class="bg-white text-lg font-semibold text-gray-900 dark:bg-gray-800 dark:text-white">
+            Resumo Financeiro
+            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Distribuição das despesas e receitas deste mês.</p>
         </div>
 
         <div id="pie-chart" class="mt-4"></div>

@@ -34,8 +34,8 @@ const toggleModal = (type: 'need' | 'recurrent' | 'cash' | 'installments') => {
                 <template #header>
                     <div class="flex justify-between">
                         <div>
-                            Necessidades
-                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Gastos necessários de todo mês</p>
+                            Despesas Fixas
+                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Gastos essenciais e recorrentes, como contas e aluguel.</p>
                         </div>
                         <div>
                             <PlusButton @click="toggleModal('need')" />
@@ -80,8 +80,8 @@ const toggleModal = (type: 'need' | 'recurrent' | 'cash' | 'installments') => {
                 <template #header>
                     <div class="flex justify-between">
                         <div>
-                            Recorrentes
-                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras realizadas todos os meses (Streamers...)</p>
+                            Assinaturas
+                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Pagamentos mensais, como serviços e assinaturas.</p>
                         </div>
                         <div>
                             <PlusButton @click="toggleModal('recurrent')" />
@@ -134,8 +134,8 @@ const toggleModal = (type: 'need' | 'recurrent' | 'cash' | 'installments') => {
                 <template #header>
                     <div class="flex justify-between">
                         <div>
-                            Á vista
-                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras á vista</p>
+                            Pagamentos Únicos
+                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras pagas à vista, sem parcelamento.</p>
                         </div>
                         <div>
                             <PlusButton @click="toggleModal('cash')" />
@@ -180,8 +180,8 @@ const toggleModal = (type: 'need' | 'recurrent' | 'cash' | 'installments') => {
                 <template #header>
                     <div class="flex justify-between">
                         <div>
-                            Parceladas
-                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras parceladas</p>
+                            Pagamentos Parcelados
+                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Despesas divididas em várias parcelas.</p>
                         </div>
                         <div>
                             <PlusButton @click="toggleModal('installments')" />
