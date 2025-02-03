@@ -15,28 +15,15 @@ import AddRecurrentForm from '@/Pages/Expense/Outputs/AddRecurrentForm.vue';
 
 import { ref } from 'vue';
 
-const showNeedModal = ref<boolean>(false);
+const modals = ref({
+    need: false,
+    recurrent: false,
+    cash: false,
+    installments: false,
+});
 
-const showNeedToggle = (): void => {
-    showNeedModal.value = !showNeedModal.value;
-};
-
-const showRecurrentModal = ref<boolean>(false);
-
-const showRecurrentToggle = (): void => {
-    showRecurrentModal.value = !showRecurrentModal.value;
-};
-
-const showCashModal = ref<boolean>(false);
-
-const showCashToggle = (): void => {
-    showCashModal.value = !showCashModal.value;
-};
-
-const showInstallmentsModal = ref<boolean>(false);
-
-const showInstallmentsToggle = (): void => {
-    showInstallmentsModal.value = !showInstallmentsModal.value;
+const toggleModal = (type: 'need' | 'recurrent' | 'cash' | 'installments') => {
+    modals.value[type] = !modals.value[type];
 };
 </script>
 
@@ -51,7 +38,7 @@ const showInstallmentsToggle = (): void => {
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Gastos necessários de todo mês</p>
                         </div>
                         <div>
-                            <PlusButton @click="showNeedToggle" />
+                            <PlusButton @click="toggleModal('need')" />
                         </div>
                     </div>
                 </template>
@@ -97,7 +84,7 @@ const showInstallmentsToggle = (): void => {
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras realizadas todos os meses (Streamers...)</p>
                         </div>
                         <div>
-                            <PlusButton @click="showRecurrentToggle" />
+                            <PlusButton @click="toggleModal('recurrent')" />
                         </div>
                     </div>
                 </template>
@@ -151,7 +138,7 @@ const showInstallmentsToggle = (): void => {
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras á vista</p>
                         </div>
                         <div>
-                            <PlusButton @click="showCashToggle" />
+                            <PlusButton @click="toggleModal('cash')" />
                         </div>
                     </div>
                 </template>
@@ -197,7 +184,7 @@ const showInstallmentsToggle = (): void => {
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras parceladas</p>
                         </div>
                         <div>
-                            <PlusButton @click="showInstallmentsToggle" />
+                            <PlusButton @click="toggleModal('installments')" />
                         </div>
                     </div>
                 </template>
@@ -263,11 +250,8 @@ const showInstallmentsToggle = (): void => {
         </div>
     </div>
 
-    <AddNeedForm :showNeedModal="showNeedModal" @close="showNeedToggle" />
-
-    <AddRecurrentForm :showRecurrentModal="showRecurrentModal" @close="showRecurrentToggle" />
-
-    <AddCashForm :showCashModal="showCashModal" @close="showCashToggle" />
-
-    <AddInstallmentsForm :showInstallmentsModal="showInstallmentsModal" @close="showInstallmentsToggle" />
+    <AddNeedForm :showNeedModal="modals.need" @close="toggleModal('need')" />
+    <AddRecurrentForm :showRecurrentModal="modals.recurrent" @close="toggleModal('recurrent')" />
+    <AddCashForm :showCashModal="modals.cash" @close="toggleModal('cash')" />
+    <AddInstallmentsForm :showInstallmentsModal="modals.installments" @close="toggleModal('installments')" />
 </template>

@@ -12,16 +12,13 @@ import AddIncomeForm from '@/Pages/Expense/Investments/AddIncomeForm.vue';
 
 import { ref } from 'vue';
 
-const showIncomeModal = ref<boolean>(false);
+const modals = ref({
+    income: false,
+    application: false,
+});
 
-const showIncomeToggle = (): void => {
-    showIncomeModal.value = !showIncomeModal.value;
-};
-
-const showApplicationModal = ref<boolean>(false);
-
-const showApplicationToggle = (): void => {
-    showApplicationModal.value = !showApplicationModal.value;
+const toggleModal = (type: 'income' | 'application') => {
+    modals.value[type] = !modals.value[type];
 };
 </script>
 
@@ -35,7 +32,7 @@ const showApplicationToggle = (): void => {
                         <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores respectivo aos rendimentos do mês anterior</p>
                     </div>
                     <div>
-                        <PlusButton @click="showIncomeToggle" />
+                        <PlusButton @click="toggleModal('income')" />
                     </div>
                 </div>
             </template>
@@ -81,7 +78,7 @@ const showApplicationToggle = (): void => {
                         <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores investido nesse mês</p>
                     </div>
                     <div>
-                        <PlusButton @click="showApplicationToggle" />
+                        <PlusButton @click="toggleModal('application')" />
                     </div>
                 </div>
             </template>
@@ -126,7 +123,6 @@ const showApplicationToggle = (): void => {
         </Table>
     </div>
 
-    <AddIncomeForm :showIncomeModal="showIncomeModal" @close="showIncomeToggle" />
-
-    <AddApplicationForm :showApplicationModal="showApplicationModal" @close="showApplicationToggle" />
+    <AddIncomeForm :showIncomeModal="modals.income" @close="toggleModal('income')" />
+    <AddApplicationForm :showApplicationModal="modals.application" @close="toggleModal('application')" />
 </template>

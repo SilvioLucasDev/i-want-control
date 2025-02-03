@@ -13,16 +13,13 @@ import AddToReceiveForm from '@/Pages/Expense/Entries/AddToReceiveForm.vue';
 
 import { ref } from 'vue';
 
-const showRecurrentModal = ref<boolean>(false);
+const modals = ref({
+    recurrent: false,
+    toReceive: false,
+});
 
-const showRecurrentToggle = (): void => {
-    showRecurrentModal.value = !showRecurrentModal.value;
-};
-
-const showToReceiveModal = ref<boolean>(false);
-
-const showToReceiveToggle = (): void => {
-    showToReceiveModal.value = !showToReceiveModal.value;
+const toggleModal = (type: 'recurrent' | 'toReceive') => {
+    modals.value[type] = !modals.value[type];
 };
 </script>
 
@@ -36,7 +33,7 @@ const showToReceiveToggle = (): void => {
                         <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores fixos que eu recebo todos os meses</p>
                     </div>
                     <div>
-                        <PlusButton @click="showRecurrentToggle" />
+                        <PlusButton @click="toggleModal('recurrent')" />
                     </div>
                 </div>
             </template>
@@ -77,7 +74,7 @@ const showToReceiveToggle = (): void => {
                         <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores dinâmicos que eu irei receber esse mês</p>
                     </div>
                     <div>
-                        <PlusButton @click="showToReceiveToggle" />
+                        <PlusButton @click="toggleModal('toReceive')" />
                     </div>
                 </div>
             </template>
@@ -135,6 +132,6 @@ const showToReceiveToggle = (): void => {
         </Table>
     </div>
 
-    <AddRecurrentForm :showRecurrentModal="showRecurrentModal" @close="showRecurrentToggle" />
-    <AddToReceiveForm :showToReceiveModal="showToReceiveModal" @close="showToReceiveToggle" />
+    <AddRecurrentForm :showRecurrentModal="modals.recurrent" @close="toggleModal('recurrent')" />
+    <AddToReceiveForm :showToReceiveModal="modals.toReceive" @close="toggleModal('toReceive')" />
 </template>
