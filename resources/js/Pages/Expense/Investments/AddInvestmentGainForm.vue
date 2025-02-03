@@ -9,7 +9,7 @@ import Modal from '@/Components/Modal/Modal.vue';
 import { useForm } from '@inertiajs/vue3';
 
 defineProps({
-    showIncomeModal: Boolean,
+    showInvestmentGainModal: Boolean,
 });
 
 const emit = defineEmits(['close']);
@@ -25,12 +25,12 @@ const form = useForm({
 });
 
 const save = (): void => {
-    console.log('DASHBOARD :: Save Income', form);
+    console.log('DASHBOARD :: Save Investment Gain', form);
 };
 </script>
 
 <template>
-    <Modal :show="showIncomeModal" @close="close" max-width="md">
+    <Modal :show="showInvestmentGainModal" @close="close" max-width="md">
         <div class="p-6">
             <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar novo ganho de investimento?</h3>
 

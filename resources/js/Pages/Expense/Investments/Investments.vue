@@ -7,17 +7,17 @@ import TrBody from '@/Components/Table/TBody/Tr.vue';
 import TdFoot from '@/Components/Table/TFoot/Td.vue';
 import ThFoot from '@/Components/Table/TFoot/Th.vue';
 import ThHead from '@/Components/Table/THead/Th.vue';
-import AddApplicationForm from '@/Pages/Expense/Investments/AddApplicationForm.vue';
-import AddIncomeForm from '@/Pages/Expense/Investments/AddIncomeForm.vue';
+import AddInvestmentGainForm from '@/Pages/Expense/Investments/AddInvestmentGainForm.vue';
+import AddNewInvestmentForm from '@/Pages/Expense/Investments/AddNewInvestmentForm.vue';
 
 import { ref } from 'vue';
 
 const modals = ref({
-    income: false,
-    application: false,
+    investmentGain: false,
+    newInvestment: false,
 });
 
-const toggleModal = (type: 'income' | 'application') => {
+const toggleModal = (type: 'investmentGain' | 'newInvestment') => {
     modals.value[type] = !modals.value[type];
 };
 </script>
@@ -28,11 +28,11 @@ const toggleModal = (type: 'income' | 'application') => {
             <template #header>
                 <div class="flex justify-between">
                     <div>
-                        Ganhos com Investimentos
+                        Ganhos de Investimentos
                         <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Retorno financeiro dos seus investimentos no mês anterior.</p>
                     </div>
                     <div>
-                        <PlusButton @click="toggleModal('income')" />
+                        <PlusButton @click="toggleModal('investmentGain')" />
                     </div>
                 </div>
             </template>
@@ -78,7 +78,7 @@ const toggleModal = (type: 'income' | 'application') => {
                         <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores que foram investidos neste mês.</p>
                     </div>
                     <div>
-                        <PlusButton @click="toggleModal('application')" />
+                        <PlusButton @click="toggleModal('newInvestment')" />
                     </div>
                 </div>
             </template>
@@ -123,6 +123,6 @@ const toggleModal = (type: 'income' | 'application') => {
         </Table>
     </div>
 
-    <AddIncomeForm :showIncomeModal="modals.income" @close="toggleModal('income')" />
-    <AddApplicationForm :showApplicationModal="modals.application" @close="toggleModal('application')" />
+    <AddInvestmentGainForm :showInvestmentGainModal="modals.investmentGain" @close="toggleModal('investmentGain')" />
+    <AddNewInvestmentForm :showNewInvestmentModal="modals.newInvestment" @close="toggleModal('newInvestment')" />
 </template>
