@@ -33,8 +33,8 @@ const save = (): void => {
         <div class="p-6">
             <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar novo item á receber</h3>
 
-            <form @submit.prevent="save">
-                <div class="mb-4">
+            <form @submit.prevent="save" class="grid gap-4">
+                <div>
                     <InputLabel for="type" value="Tipo" />
                     <TextInput id="type" v-model="form.type" type="text" class="mt-1 block w-full" />
                     <InputError class="mt-2" :message="form.errors.type" />
@@ -46,7 +46,7 @@ const save = (): void => {
                     <InputError class="mt-2" :message="form.errors.value" />
                 </div>
 
-                <div class="mt-4 grid grid-cols-2 gap-2">
+                <div class="grid grid-cols-2 gap-2">
                     <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Salvar </PrimaryButton>
 
                     <SecondaryButton @click="close"> Cancelar </SecondaryButton>
