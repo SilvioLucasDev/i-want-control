@@ -22,15 +22,13 @@ defineExpose({ focus: () => selectRef.value?.focus() });
 </script>
 
 <template>
-    <div>
-        <label v-if="label" :for="id" :class="['mb-2 block text-sm font-medium text-gray-900 dark:text-white', { 'sr-only': screenReaderOnly }]">
-            {{ label }}
-        </label>
+    <label v-if="label" :for="id" :class="['mb-2 block text-sm font-medium text-gray-900 dark:text-white', { 'sr-only': screenReaderOnly }]">
+        {{ label }}
+    </label>
 
-        <select :id="id" v-model="model" ref="selectRef" class="block w-full rounded-lg border border-gray-300 dark:bg-gray-700 dark:text-white">
-            <option v-for="option in options" :key="option.value" :value="option.value">
-                {{ option.label }}
-            </option>
-        </select>
-    </div>
+    <select :id="id" v-model="model" ref="selectRef" class="block w-full rounded-lg border border-gray-300 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300" v-bind="$attrs">
+        <option v-for="option in options" :key="option.value" :value="option.value">
+            {{ option.label }}
+        </option>
+    </select>
 </template>

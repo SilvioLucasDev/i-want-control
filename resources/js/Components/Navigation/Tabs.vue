@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Select from '@/Components/Inputs/Select.vue';
 import { PropType, ref } from 'vue';
 
 const props = defineProps({
@@ -24,7 +23,12 @@ const setActiveTab = (tab: string): void => {
 <template>
     <!-- Dropdown for Mobile -->
     <div class="sm:hidden">
-        <Select @change="setActiveTab(activeTab)" v-model="activeTab" label="Selecione uma opção" screenReaderOnly :options="tabs.map((tab) => ({ value: tab.key, label: tab.label }))" />
+        <label for="tab-select" class="sr-only">Selecione uma opção</label>
+        <select id="tab-select" v-model="activeTab" @change="setActiveTab(activeTab)" class="block w-full rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+            <option v-for="tab in tabs" :key="tab.key" :value="tab.key">
+                {{ tab.label }}
+            </option>
+        </select>
     </div>
 
     <!-- Desktop Navigation -->
