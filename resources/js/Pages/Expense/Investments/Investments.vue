@@ -7,9 +7,21 @@ import TrBody from '@/Components/Table/TBody/Tr.vue';
 import TdFoot from '@/Components/Table/TFoot/Td.vue';
 import ThFoot from '@/Components/Table/TFoot/Th.vue';
 import ThHead from '@/Components/Table/THead/Th.vue';
+import AddApplicationForm from '@/Pages/Expense/Investments/AddApplicationForm.vue';
+import AddIncomeForm from '@/Pages/Expense/Investments/AddIncomeForm.vue';
 
-const addRecurrent = (): void => {
-    console.log('DASHBOARD :: Add Recurrence');
+import { ref } from 'vue';
+
+const showIncomeModal = ref<boolean>(false);
+
+const showIncomeToggle = (): void => {
+    showIncomeModal.value = !showIncomeModal.value;
+};
+
+const showApplicationModal = ref<boolean>(false);
+
+const showApplicationToggle = (): void => {
+    showApplicationModal.value = !showApplicationModal.value;
 };
 </script>
 
@@ -23,7 +35,7 @@ const addRecurrent = (): void => {
                         <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores respectivo aos rendimentos do mês anterior</p>
                     </div>
                     <div>
-                        <PlusButton @click="addRecurrent" />
+                        <PlusButton @click="showIncomeToggle" />
                     </div>
                 </div>
             </template>
@@ -32,7 +44,6 @@ const addRecurrent = (): void => {
                 <ThHead class="text-start">Tipo</ThHead>
                 <ThHead>Rentabilidade</ThHead>
                 <ThHead>Valor</ThHead>
-                <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
             </template>
 
             <template #tbody>
@@ -40,27 +51,18 @@ const addRecurrent = (): void => {
                     <ThBody>FII</ThBody>
                     <TdBody>1%</TdBody>
                     <TdBody>100,00</TdBody>
-                    <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                 </TrBody>
 
                 <TrBody withBorder>
                     <ThBody>Renda Fixa</ThBody>
                     <TdBody>0.9%</TdBody>
                     <TdBody>9,00</TdBody>
-                    <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                 </TrBody>
 
                 <TrBody withBorder>
                     <ThBody>Tesouro</ThBody>
                     <TdBody>2%</TdBody>
                     <TdBody>23,00</TdBody>
-                    <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                 </TrBody>
             </template>
 
@@ -68,7 +70,6 @@ const addRecurrent = (): void => {
                 <ThFoot>Total</ThFoot>
                 <TdFoot></TdFoot>
                 <TdFoot>132,00</TdFoot>
-                <!-- <TdFoot></TdFoot> -->
             </template>
         </Table>
 
@@ -80,7 +81,7 @@ const addRecurrent = (): void => {
                         <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores investido nesse mês</p>
                     </div>
                     <div>
-                        <PlusButton @click="addRecurrent" />
+                        <PlusButton @click="showApplicationToggle" />
                     </div>
                 </div>
             </template>
@@ -89,7 +90,6 @@ const addRecurrent = (): void => {
                 <ThHead class="text-start">Tipo</ThHead>
                 <ThHead>Rentabilidade</ThHead>
                 <ThHead>Valor</ThHead>
-                <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
             </template>
 
             <template #tbody>
@@ -97,36 +97,24 @@ const addRecurrent = (): void => {
                     <ThBody>FII</ThBody>
                     <TdBody>1%</TdBody>
                     <TdBody>500,00</TdBody>
-                    <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                 </TrBody>
 
                 <TrBody withBorder>
                     <ThBody>Criptomoeda</ThBody>
                     <TdBody></TdBody>
                     <TdBody>200,00</TdBody>
-                    <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                 </TrBody>
 
                 <TrBody withBorder>
                     <ThBody>Renda Fixa</ThBody>
                     <TdBody>0.9%</TdBody>
                     <TdBody>500,00</TdBody>
-                    <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                 </TrBody>
 
                 <TrBody withBorder>
                     <ThBody>Tesouro</ThBody>
                     <TdBody>2%</TdBody>
                     <TdBody>500,00</TdBody>
-                    <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                 </TrBody>
             </template>
 
@@ -134,8 +122,11 @@ const addRecurrent = (): void => {
                 <ThFoot>Total</ThFoot>
                 <TdFoot></TdFoot>
                 <TdFoot>1.700,00</TdFoot>
-                <!-- <TdFoot></TdFoot> -->
             </template>
         </Table>
     </div>
+
+    <AddIncomeForm :showIncomeModal="showIncomeModal" @close="showIncomeToggle" />
+
+    <AddApplicationForm :showApplicationModal="showApplicationModal" @close="showApplicationToggle" />
 </template>

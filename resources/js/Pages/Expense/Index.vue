@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Entries from '@/Pages/Expense/Entries/Entries.vue';
-import Investments from '@/Pages/Expense/Investmnets/Investments.vue';
+import Investments from '@/Pages/Expense/Investments/Investments.vue';
 import Outputs from '@/Pages/Expense/Outputs/Outputs.vue';
 import Results from '@/Pages/Expense/Results/Results.vue';
 import { Head } from '@inertiajs/vue3';
