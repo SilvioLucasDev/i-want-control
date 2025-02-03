@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Entries from '@/Pages/Expense/Partials/Entries.vue';
-import Investments from '@/Pages/Expense/Partials/Investments.vue';
-import Outputs from '@/Pages/Expense/Partials/Outputs.vue';
-import Results from '@/Pages/Expense/Partials/Results.vue';
+import Entries from '@/Pages/Expense/Entries/Entries.vue';
+import Investments from '@/Pages/Expense/Investmnets/Investments.vue';
+import Outputs from '@/Pages/Expense/Outputs/Outputs.vue';
+import Results from '@/Pages/Expense/Results/Results.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
