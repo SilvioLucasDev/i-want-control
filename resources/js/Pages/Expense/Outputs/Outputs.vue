@@ -8,9 +8,35 @@ import TrBody from '@/Components/Table/TBody/Tr.vue';
 import TdFoot from '@/Components/Table/TFoot/Td.vue';
 import ThFoot from '@/Components/Table/TFoot/Th.vue';
 import ThHead from '@/Components/Table/THead/Th.vue';
+import AddCashForm from '@/Pages/Expense/Outputs/AddCashForm.vue';
+import AddInstallmentsForm from '@/Pages/Expense/Outputs/AddInstallmentsForm.vue';
+import AddNeedForm from '@/Pages/Expense/Outputs/AddNeedForm.vue';
+import AddRecurrentForm from '@/Pages/Expense/Outputs/AddRecurrentForm.vue';
 
-const addRecurrent = (): void => {
-    console.log('DASHBOARD :: Add Recurrence');
+import { ref } from 'vue';
+
+const showNeedModal = ref<boolean>(false);
+
+const showNeedToggle = (): void => {
+    showNeedModal.value = !showNeedModal.value;
+};
+
+const showRecurrentModal = ref<boolean>(false);
+
+const showRecurrentToggle = (): void => {
+    showRecurrentModal.value = !showRecurrentModal.value;
+};
+
+const showCashModal = ref<boolean>(false);
+
+const showCashToggle = (): void => {
+    showCashModal.value = !showCashModal.value;
+};
+
+const showInstallmentsModal = ref<boolean>(false);
+
+const showInstallmentsToggle = (): void => {
+    showInstallmentsModal.value = !showInstallmentsModal.value;
 };
 </script>
 
@@ -25,7 +51,7 @@ const addRecurrent = (): void => {
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Gastos necessários de todo mês</p>
                         </div>
                         <div>
-                            <PlusButton @click="addRecurrent" />
+                            <PlusButton @click="showNeedToggle" />
                         </div>
                     </div>
                 </template>
@@ -34,7 +60,6 @@ const addRecurrent = (): void => {
                     <ThHead class="text-start">Tipo</ThHead>
                     <ThHead>Forma de Pagamento</ThHead>
                     <ThHead>Valor</ThHead>
-                    <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
                 </template>
 
                 <template #tbody>
@@ -42,27 +67,18 @@ const addRecurrent = (): void => {
                         <ThBody>Luz</ThBody>
                         <TdBody><DarkBadge>Dinheiro</DarkBadge></TdBody>
                         <TdBody>200,00</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
                         <ThBody>Aluguel</ThBody>
                         <TdBody><DarkBadge>Dinheiro</DarkBadge></TdBody>
                         <TdBody>1.500,00</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
                         <ThBody>Internet</ThBody>
                         <TdBody><DarkBadge>Dinheiro</DarkBadge></TdBody>
                         <TdBody>120,00</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                     </TrBody>
                 </template>
 
@@ -70,7 +86,6 @@ const addRecurrent = (): void => {
                     <ThFoot>Total</ThFoot>
                     <TdFoot></TdFoot>
                     <TdFoot>1.820,00</TdFoot>
-                    <!-- <TdFoot></TdFoot> -->
                 </template>
             </Table>
 
@@ -82,7 +97,7 @@ const addRecurrent = (): void => {
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras realizadas todos os meses (Streamers...)</p>
                         </div>
                         <div>
-                            <PlusButton @click="addRecurrent" />
+                            <PlusButton @click="showRecurrentToggle" />
                         </div>
                     </div>
                 </template>
@@ -91,7 +106,6 @@ const addRecurrent = (): void => {
                     <ThHead class="text-start">Tipo</ThHead>
                     <ThHead>Forma de Pagamento</ThHead>
                     <ThHead>Valor</ThHead>
-                    <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
                 </template>
 
                 <template #tbody>
@@ -99,36 +113,24 @@ const addRecurrent = (): void => {
                         <ThBody>ChatGPT</ThBody>
                         <TdBody><DarkBadge>Nubank</DarkBadge></TdBody>
                         <TdBody>115,24</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
                         <ThBody>Youtube Premium</ThBody>
                         <TdBody><DarkBadge>Nubank</DarkBadge></TdBody>
                         <TdBody>41,90</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
                         <ThBody>PetLove</ThBody>
                         <TdBody><DarkBadge>Nubank</DarkBadge></TdBody>
                         <TdBody>75,00</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
                         <ThBody>Cabeleireiro</ThBody>
                         <TdBody><DarkBadge>Dinheiro</DarkBadge></TdBody>
                         <TdBody>120,00</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                     </TrBody>
                 </template>
 
@@ -136,7 +138,6 @@ const addRecurrent = (): void => {
                     <ThFoot>Total</ThFoot>
                     <TdFoot></TdFoot>
                     <TdFoot>353,14</TdFoot>
-                    <!-- <TdFoot></TdFoot> -->
                 </template>
             </Table>
         </div>
@@ -150,7 +151,7 @@ const addRecurrent = (): void => {
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras á vista</p>
                         </div>
                         <div>
-                            <PlusButton @click="addRecurrent" />
+                            <PlusButton @click="showCashToggle" />
                         </div>
                     </div>
                 </template>
@@ -159,7 +160,6 @@ const addRecurrent = (): void => {
                     <ThHead class="text-start">Tipo</ThHead>
                     <ThHead>Forma de Pagamento</ThHead>
                     <ThHead>Valor</ThHead>
-                    <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
                 </template>
 
                 <template #tbody>
@@ -167,27 +167,18 @@ const addRecurrent = (): void => {
                         <ThBody>Corrente da Moto</ThBody>
                         <TdBody><DarkBadge>C6</DarkBadge></TdBody>
                         <TdBody>165,00</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                            </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
                         <ThBody>Presente da Maria</ThBody>
                         <TdBody><DarkBadge>C6</DarkBadge></TdBody>
                         <TdBody>303,50</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                            </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
                         <ThBody>Viagem da Praia</ThBody>
                         <TdBody><DarkBadge>Dinheiro</DarkBadge></TdBody>
                         <TdBody>450,00</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                            </TdBody> -->
                     </TrBody>
                 </template>
 
@@ -195,7 +186,6 @@ const addRecurrent = (): void => {
                     <ThFoot>Total</ThFoot>
                     <TdFoot></TdFoot>
                     <TdFoot>918,50</TdFoot>
-                    <!-- <TdFoot></TdFoot> -->
                 </template>
             </Table>
 
@@ -207,7 +197,7 @@ const addRecurrent = (): void => {
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras parceladas</p>
                         </div>
                         <div>
-                            <PlusButton @click="addRecurrent" />
+                            <PlusButton @click="showInstallmentsToggle" />
                         </div>
                     </div>
                 </template>
@@ -217,7 +207,6 @@ const addRecurrent = (): void => {
                     <ThHead>Parcela</ThHead>
                     <ThHead>Forma de Pagamento</ThHead>
                     <ThHead>Valor</ThHead>
-                    <!-- <ThHead screenReaderOnly> Edit </ThHead> -->
                 </template>
 
                 <template #tbody>
@@ -226,9 +215,6 @@ const addRecurrent = (): void => {
                         <TdBody>1/2</TdBody>
                         <TdBody><DarkBadge>C6</DarkBadge></TdBody>
                         <TdBody>200,00</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
@@ -236,9 +222,6 @@ const addRecurrent = (): void => {
                         <TdBody>1/7</TdBody>
                         <TdBody><DarkBadge>Nubank</DarkBadge></TdBody>
                         <TdBody>980,00</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
@@ -246,9 +229,6 @@ const addRecurrent = (): void => {
                         <TdBody>1/15</TdBody>
                         <TdBody><DarkBadge>Itaú</DarkBadge></TdBody>
                         <TdBody>120,00</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
@@ -256,9 +236,6 @@ const addRecurrent = (): void => {
                         <TdBody>3/12</TdBody>
                         <TdBody><DarkBadge>C6</DarkBadge></TdBody>
                         <TdBody>650,00</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
@@ -266,9 +243,6 @@ const addRecurrent = (): void => {
                         <TdBody>3/12</TdBody>
                         <TdBody><DarkBadge>C6</DarkBadge></TdBody>
                         <TdBody>1.555,00</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                     </TrBody>
 
                     <TrBody withBorder>
@@ -276,9 +250,6 @@ const addRecurrent = (): void => {
                         <TdBody>5/6</TdBody>
                         <TdBody><DarkBadge>C6</DarkBadge></TdBody>
                         <TdBody>95,00</TdBody>
-                        <!-- <TdBody class="text-right">
-                            <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </TdBody> -->
                     </TrBody>
                 </template>
 
@@ -287,9 +258,16 @@ const addRecurrent = (): void => {
                     <TdFoot></TdFoot>
                     <TdFoot></TdFoot>
                     <TdFoot>3.000,00</TdFoot>
-                    <!-- <TdFoot></TdFoot> -->
                 </template>
             </Table>
         </div>
     </div>
+
+    <AddNeedForm :showNeedModal="showNeedModal" @close="showNeedToggle" />
+
+    <AddRecurrentForm :showRecurrentModal="showRecurrentModal" @close="showRecurrentToggle" />
+
+    <AddCashForm :showCashModal="showCashModal" @close="showCashToggle" />
+
+    <AddInstallmentsForm :showInstallmentsModal="showInstallmentsModal" @close="showInstallmentsToggle" />
 </template>
