@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
+import Checkbox from '@/Components/Inputs/Checkbox.vue';
 import InputError from '@/Components/Inputs/InputError.vue';
 import InputLabel from '@/Components/Inputs/InputLabel.vue';
 import TextInput from '@/Components/Inputs/TextInput.vue';
@@ -21,6 +22,7 @@ const close = (): void => {
 const form = useForm({
     type: '',
     value: '',
+    recurrent: false,
 });
 
 const save = (): void => {
@@ -44,6 +46,12 @@ const save = (): void => {
                     <InputLabel for="value" value="Valor" />
                     <TextInput id="value" v-model="form.value" type="text" class="mt-1 block w-full" />
                     <InputError class="mt-2" :message="form.errors.value" />
+                </div>
+
+                <div class="flex items-center">
+                    <InputLabel for="remember" value="Recorrente" class="me-2" />
+                    <Checkbox id="remember" v-model:checked="form.recurrent" />
+                    <InputError class="mt-2" :message="form.errors.recurrent" />
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
