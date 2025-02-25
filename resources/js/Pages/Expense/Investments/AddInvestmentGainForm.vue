@@ -43,7 +43,10 @@ const save = (): void => {
 
                 <div>
                     <InputLabel for="income" value="Rentabilidade" />
-                    <TextInput id="income" v-model="form.income" type="text" class="mt-1 block w-full" />
+                    <div class="relative">
+                        <div class="pointer-events-none absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 text-gray-900 dark:text-gray-400">%</div>
+                        <TextInput id="income" v-model="form.income" type="text" class="block w-full p-2.5 pe-10" />
+                    </div>
                     <InputError class="mt-2" :message="form.errors.income" />
                 </div>
 

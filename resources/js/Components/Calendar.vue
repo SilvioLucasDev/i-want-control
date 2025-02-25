@@ -91,9 +91,9 @@ onMounted(() => {
         <div class="p-6">
             <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Selecione o mês e ano</h3>
 
-            <Select id="year-select" class="mb-4" v-model="currentYear" label="Ano" :options="years.map((year) => ({ value: year, label: year.toString() }))" />
+            <Select id="yearSelect" class="mb-4" v-model="currentYear" label="Ano" :options="years.map((year) => ({ value: year, label: year.toString() }))" />
 
-            <Select id="month-select" class="mb-4" v-model="currentMonth" label="Mês" :options="months.map((month, index) => ({ value: index, label: month }))" />
+            <Select id="monthSelect" class="mb-4" v-model="currentMonth" label="Mês" :options="months.map((month, index) => ({ value: index, label: month }))" />
 
             <div class="mt-4 grid grid-cols-2 gap-2">
                 <PrimaryButton
