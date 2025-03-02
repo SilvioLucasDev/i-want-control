@@ -58,7 +58,7 @@ const submit = () => {
         </div>
 
         <div class="mt-4 flex items-center justify-end">
-            <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Reset Password </PrimaryButton>
+            <PrimaryButton class="mb-2 me-2 px-5" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Reset Password </PrimaryButton>
         </div>
     </form>
 </template>

@@ -97,6 +97,7 @@ onMounted(() => {
 
             <div class="mt-4 grid grid-cols-2 gap-2">
                 <PrimaryButton
+                    class="mb-2 me-2 px-5"
                     @click="
                         () => {
                             setMonthYear();

@@ -47,7 +47,7 @@ const save = (): void => {
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
-                    <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Salvar </PrimaryButton>
+                    <PrimaryButton class="mb-2 me-2 px-5" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Salvar </PrimaryButton>
 
                     <SecondaryButton @click="close"> Cancelar </SecondaryButton>
                 </div>

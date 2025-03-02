@@ -34,7 +34,7 @@ const submit = () => {
         </div>
 
         <div class="mt-4 flex justify-end">
-            <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Confirm </PrimaryButton>
+            <PrimaryButton class="mb-2 me-2 ms-4 px-5" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Confirm </PrimaryButton>
         </div>
     </form>
 </template>
