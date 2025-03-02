@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType, ref } from 'vue';
+import { onUnmounted, PropType, ref } from 'vue';
 
 const props = defineProps({
     tabs: {
@@ -18,6 +18,10 @@ const setActiveTab = (tab: string): void => {
     activeTab.value = tab;
     emit('setActiveTab', tab);
 };
+
+onUnmounted(() => {
+    setActiveTab(props.tabs[0].key);
+});
 </script>
 
 <template>
