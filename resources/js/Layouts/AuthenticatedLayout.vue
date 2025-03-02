@@ -9,11 +9,17 @@ import MoonIcon from '@/Components/Icons/MoonIcon.vue';
 import SunIcon from '@/Components/Icons/SunIcon.vue';
 import NavLink from '@/Components/Navigation/NavLink.vue';
 import SideDropdown from '@/Components/Navigation/SideDropdown.vue';
-import { applyDarkMode } from '@/dark-mode';
+
 import Settings from '@/Pages/Settings/Index.vue';
+
+import { provideEditMode } from '@/Composables/useEditMode';
+
+import { applyDarkMode } from '@/dark-mode';
 
 import { Link } from '@inertiajs/vue3';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
+
+provideEditMode();
 
 const props = defineProps<{
     auth: {
@@ -41,6 +47,14 @@ const getFirstName = (fullName: string): string => {
 
 const firstName = computed(() => getFirstName(props.auth.user.name));
 
+const modals = ref({
+    settings: false,
+});
+
+const toggleModal = (type: 'settings') => {
+    modals.value[type] = !modals.value[type];
+};
+
 onMounted(() => {
     updateIsMobile();
     window.addEventListener('resize', updateIsMobile);
@@ -51,14 +65,6 @@ onMounted(() => {
 onUnmounted(() => {
     window.removeEventListener('resize', updateIsMobile);
 });
-
-const modals = ref({
-    settings: false,
-});
-
-const toggleModal = (type: 'settings') => {
-    modals.value[type] = !modals.value[type];
-};
 </script>
 
 <template>
@@ -114,7 +120,7 @@ const toggleModal = (type: 'settings') => {
 
                     <ul v-show="isSidebarOpen" class="mt-auto space-y-2 border-t border-gray-200 pt-4 font-medium dark:border-gray-700">
                         <li>
-                            <div class="group flex justify-between rounded-lg p-2 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <div class="group flex justify-between rounded-lg bg-gray-100 p-2 text-gray-900 transition duration-75 dark:bg-gray-700 dark:text-white">
                                 <div class="flex items-center">
                                     <MoonIcon id="theme-toggle-dark-icon-mobile" class="hidden" />
                                     <SunIcon id="theme-toggle-light-icon-mobile" class="hidden" />
