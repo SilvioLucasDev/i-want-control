@@ -13,7 +13,7 @@ const fetchData = ({ month, year }: SelectDate): void => {
     console.log(`GASTOS :: Fetching data for: ${month} / ${year}`);
 };
 
-const activeTab = ref('entries');
+const activeTab = ref<string>('entries');
 
 const setActiveTab = (tab: string): void => {
     activeTab.value = tab;
