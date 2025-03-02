@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Avatar from '@/Components/Avatar.vue';
+import BarsFromLeftIcon from '@/Components/Icons/BarsFromLeftIcon.vue';
 import BarsIcon from '@/Components/Icons/BarsIcon.vue';
 import DashboardIcon from '@/Components/Icons/DashboardIcon.vue';
 import LogoutIcon from '@/Components/Icons/LogoutIcon.vue';
@@ -9,8 +10,9 @@ import SunIcon from '@/Components/Icons/SunIcon.vue';
 import NavLink from '@/Components/Navigation/NavLink.vue';
 import SideDropdown from '@/Components/Navigation/SideDropdown.vue';
 import { applyDarkMode } from '@/dark-mode';
-import { Link } from '@inertiajs/vue3';
+import Settings from '@/Pages/Settings/Index.vue';
 
+import { Link } from '@inertiajs/vue3';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 
 const props = defineProps<{
@@ -49,11 +51,29 @@ onMounted(() => {
 onUnmounted(() => {
     window.removeEventListener('resize', updateIsMobile);
 });
+
+const modals = ref({
+    settings: false,
+});
+
+const toggleModal = (type: 'settings') => {
+    modals.value[type] = !modals.value[type];
+};
 </script>
 
 <template>
     <div>
         <div class="flex min-h-screen bg-gray-100 dark:bg-gray-900">
+            <div class="fixed right-0 top-0 z-50 inline-flex items-center">
+                <button
+                    @click="toggleModal('settings')"
+                    type="button"
+                    class="mx-1 my-1 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                >
+                    <BarsIcon />
+                </button>
+            </div>
+
             <!-- Sidebar Mobile -->
             <aside v-show="isMobile" :class="[isSidebarOpen ? 'h-screen w-64 bg-gray-50 dark:bg-gray-800' : 'w-screen bg-gray-100 dark:bg-gray-900', 'fixed left-0 top-0 z-40']" aria-label="Mobile Sidebar">
                 <div :class="[isSidebarOpen ? 'bg-gray-50 px-3 py-4 dark:bg-gray-800' : 'bg-gray-100 dark:bg-gray-900', 'flex h-full flex-col overflow-y-auto']">
@@ -71,7 +91,7 @@ onUnmounted(() => {
                                 'inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600',
                             ]"
                         >
-                            <BarsIcon />
+                            <BarsFromLeftIcon />
                         </button>
                     </div>
 
@@ -139,7 +159,7 @@ onUnmounted(() => {
                             type="button"
                             class="inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                         >
-                            <BarsIcon />
+                            <BarsFromLeftIcon />
                         </button>
                     </div>
 
@@ -200,4 +220,6 @@ onUnmounted(() => {
             </main>
         </div>
     </div>
+
+    <Settings :showSettingsModal="modals.settings" @close="toggleModal('settings')" />
 </template>
