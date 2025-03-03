@@ -10,7 +10,7 @@ import Modal from '@/Components/Modal/Modal.vue';
 import { useForm } from '@inertiajs/vue3';
 
 defineProps({
-    showVariableInputModal: Boolean,
+    showAddVariableInputModal: Boolean,
 });
 
 const emit = defineEmits(['close']);
@@ -31,7 +31,7 @@ const save = (): void => {
 </script>
 
 <template>
-    <Modal :show="showVariableInputModal" @close="close" max-width="md">
+    <Modal :show="showAddVariableInputModal" @close="close" max-width="md">
         <div class="p-6">
             <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar nova entrada variável?</h3>
 
