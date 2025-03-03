@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import PlusButton from '@/Components/Buttons/PlusButton.vue';
+import TransparentButton from '@/Components/Buttons/TransparentButton.vue';
+import DotsIcon from '@/Components/Icons/DotsIcon.vue';
 import Table from '@/Components/Table/Table.vue';
 import TdBody from '@/Components/Table/TBody/Td.vue';
 import ThBody from '@/Components/Table/TBody/Th.vue';
@@ -10,16 +12,40 @@ import ThHead from '@/Components/Table/THead/Th.vue';
 
 import AddFixedInputForm from '@/Pages/Expense/Entries/AddFixedInputForm.vue';
 import AddVariableInputForm from '@/Pages/Expense/Entries/AddVariableInputForm.vue';
+import EditFixedInputForm from '@/Pages/Expense/Entries/EditFixedInputForm.vue';
+import EditVariableInputForm from '@/Pages/Expense/Entries/EditVariableInputForm.vue';
 
-import { ref } from 'vue';
+import { useEditMode } from '@/Composables/useEditMode';
 
-const modals = ref({
-    variableInput: false,
-    fixedInput: false,
+import { nextTick, ref } from 'vue';
+
+const { isEditing } = useEditMode();
+
+type AddModalType = 'addVariableInput' | 'addFixedInput';
+
+type EditModalType = 'editVariableInput' | 'editFixedInput';
+
+type ModalType = AddModalType | EditModalType;
+
+const modals = ref<Record<ModalType, boolean>>({
+    addVariableInput: false,
+    editVariableInput: false,
+    addFixedInput: false,
+    editFixedInput: false,
 });
 
-const toggleModal = (type: 'fixedInput' | 'variableInput') => {
+const toggleModal = (type: ModalType) => {
     modals.value[type] = !modals.value[type];
+};
+
+type Item = { id: number; type: string; value: string; recurrent?: boolean };
+
+const itemToEdit = ref<Item | null>(null);
+
+const editItem = async (type: EditModalType, item: Item) => {
+    itemToEdit.value = { ...item };
+    await nextTick();
+    toggleModal(type);
 };
 </script>
 
@@ -33,7 +59,7 @@ const toggleModal = (type: 'fixedInput' | 'variableInput') => {
                         <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Valores que recebo regularmente, como salário e benefícios.</p>
                     </div>
                     <div>
-                        <PlusButton @click="toggleModal('fixedInput')" />
+                        <PlusButton @click="toggleModal('addFixedInput')" />
                     </div>
                 </div>
             </template>
@@ -41,28 +67,48 @@ const toggleModal = (type: 'fixedInput' | 'variableInput') => {
             <template #thead>
                 <ThHead class="text-start">Tipo</ThHead>
                 <ThHead>Valor</ThHead>
+                <ThHead v-if="isEditing" class="px-0"></ThHead>
             </template>
 
             <template #tbody>
                 <TrBody withBorder>
                     <ThBody>Salário</ThBody>
                     <TdBody>1.000,00</TdBody>
+
+                    <TdBody v-if="isEditing" class="px-0">
+                        <TransparentButton @click="editItem('editFixedInput', { id: 1, type: 'Salário', value: '1.000,00' })">
+                            <DotsIcon />
+                        </TransparentButton>
+                    </TdBody>
                 </TrBody>
 
                 <TrBody withBorder>
                     <ThBody>Vale Refeição</ThBody>
                     <TdBody>1.000,00</TdBody>
+
+                    <TdBody v-if="isEditing" class="px-0">
+                        <TransparentButton @click="editItem('editFixedInput', { id: 2, type: 'Vale Refeição', value: '1.000,00' })">
+                            <DotsIcon />
+                        </TransparentButton>
+                    </TdBody>
                 </TrBody>
 
                 <TrBody withBorder>
                     <ThBody>Auxilio</ThBody>
                     <TdBody>1.000,00</TdBody>
+
+                    <TdBody v-if="isEditing" class="px-0">
+                        <TransparentButton @click="editItem('editFixedInput', { id: 3, type: 'Auxilio', value: '1.000,00' })">
+                            <DotsIcon />
+                        </TransparentButton>
+                    </TdBody>
                 </TrBody>
             </template>
 
             <template #tfoot>
                 <ThFoot>Total</ThFoot>
                 <TdFoot>3.000,00</TdFoot>
+                <TdFoot v-if="isEditing" class="px-0"></TdFoot>
             </template>
         </Table>
 
@@ -74,7 +120,7 @@ const toggleModal = (type: 'fixedInput' | 'variableInput') => {
                         <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Ganhos esporádicos ou extras, como freelas e pagamentos pendentes.</p>
                     </div>
                     <div>
-                        <PlusButton @click="toggleModal('variableInput')" />
+                        <PlusButton @click="toggleModal('addVariableInput')" />
                     </div>
                 </div>
             </template>
@@ -82,23 +128,37 @@ const toggleModal = (type: 'fixedInput' | 'variableInput') => {
             <template #thead>
                 <ThHead class="text-start">Tipo</ThHead>
                 <ThHead>Valor</ThHead>
+                <ThHead v-if="isEditing" class="px-0"></ThHead>
             </template>
 
             <template #tbody>
                 <TrBody withBorder>
                     <ThBody>João</ThBody>
                     <TdBody>434,00</TdBody>
+
+                    <TdBody v-if="isEditing" class="px-0">
+                        <TransparentButton @click="editItem('editVariableInput', { id: 1, type: 'João', value: '434,00', recurrent: true })">
+                            <DotsIcon />
+                        </TransparentButton>
+                    </TdBody>
                 </TrBody>
 
                 <TrBody withBorder>
                     <ThBody>Freelas</ThBody>
                     <TdBody>1.000,00</TdBody>
+
+                    <TdBody v-if="isEditing" class="px-0">
+                        <TransparentButton @click="editItem('editVariableInput', { id: 2, type: 'Freelas', value: '1.000,00', recurrent: true })">
+                            <DotsIcon />
+                        </TransparentButton>
+                    </TdBody>
                 </TrBody>
             </template>
 
             <template #tfoot>
                 <ThFoot>Total</ThFoot>
                 <TdFoot>1.434,00</TdFoot>
+                <TdFoot v-if="isEditing" class="px-0"></TdFoot>
             </template>
         </Table>
 
@@ -132,6 +192,9 @@ const toggleModal = (type: 'fixedInput' | 'variableInput') => {
         </Table>
     </div>
 
-    <AddFixedInputForm :showFixedInputModal="modals.fixedInput" @close="toggleModal('fixedInput')" />
-    <AddVariableInputForm :showVariableInputModal="modals.variableInput" @close="toggleModal('variableInput')" />
+    <AddFixedInputForm :showAddFixedInputModal="modals.addFixedInput" @close="toggleModal('addFixedInput')" />
+    <EditFixedInputForm :showEditFixedInputModal="modals.editFixedInput" :item="itemToEdit" @close="toggleModal('editFixedInput')" />
+
+    <AddVariableInputForm :showAddVariableInputModal="modals.addVariableInput" @close="toggleModal('addVariableInput')" />
+    <EditVariableInputForm :showEditVariableInputModal="modals.editVariableInput" :item="itemToEdit" @close="toggleModal('editVariableInput')" />
 </template>
