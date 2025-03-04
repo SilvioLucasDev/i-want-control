@@ -74,7 +74,7 @@ const removeProject = (projectId: number): void => {
 <template>
     <form @submit.prevent="submit" class="mx-auto flex items-center">
         <div class="relative w-full pe-2">
-            <TextInput id="type" v-model="form.type" type="text" class="block w-full" placeholder="Projeto" />
+            <TextInput id="type" v-model="form.type" type="text" class="block w-full" placeholder="I Want Control" />
             <InputError class="mt-2" :message="form.errors.type" />
         </div>
 
