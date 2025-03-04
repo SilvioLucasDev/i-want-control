@@ -55,6 +55,7 @@ const paymentTypeMock = ref<string[]>(['Dinheiro', 'Débito', 'Crédito']);
 
                 <div>
                     <Select id="paymentType" v-model="form.paymentType" label="Forma de Pagamento" :options="paymentTypeMock.map((type, index) => ({ value: index, label: type }))" />
+                    <InputError class="mt-2" :message="form.errors.paymentType" />
                 </div>
 
                 <div>
