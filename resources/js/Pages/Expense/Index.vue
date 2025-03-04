@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import Calendar, { SelectDate } from '@/Components/Calendar.vue';
+import Tabs from '@/Components/Navigation/Tabs.vue';
+
 import Entries from '@/Pages/Expense/Entries/Entries.vue';
 import Investments from '@/Pages/Expense/Investments/Investments.vue';
 import Outputs from '@/Pages/Expense/Outputs/Outputs.vue';
 import Results from '@/Pages/Expense/Results/Results.vue';
+
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
-
-import Calendar, { SelectDate } from '@/Components/Calendar.vue';
-import Tabs from '@/Components/Navigation/Tabs.vue';
 
 const fetchData = ({ month, year }: SelectDate): void => {
     console.log(`GASTOS :: Fetching data for: ${month} / ${year}`);

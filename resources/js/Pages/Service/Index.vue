@@ -70,8 +70,8 @@ const projectsMock = ref<string[]>(['Wakami', 'Gestione', 'MFA', 'IWantControl',
 
     <Calendar @select-date="fetchData" />
 
-    <div class="w-full">
-        <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div class="grid w-full gap-10">
+        <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
             <DashboardCard title="Valor Hora" text="R$ 100,00">
                 <DolarIcon />
             </DashboardCard>
