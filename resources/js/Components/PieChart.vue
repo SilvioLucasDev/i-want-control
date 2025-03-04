@@ -58,7 +58,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="w-full max-w-lg rounded-lg bg-white p-4 shadow-sm dark:bg-gray-800 md:p-6">
+    <div class="w-full rounded-lg bg-white p-4 shadow-sm dark:bg-gray-800 md:p-6">
         <div class="bg-white text-lg font-semibold text-gray-900 dark:bg-gray-800 dark:text-white">
             Resumo Financeiro
             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Distribuição das despesas e receitas deste mês.</p>
