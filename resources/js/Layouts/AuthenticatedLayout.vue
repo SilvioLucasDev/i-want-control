@@ -7,17 +7,19 @@ import DashboardIcon from '@/Components/Icons/DashboardIcon.vue';
 import LogoutIcon from '@/Components/Icons/LogoutIcon.vue';
 import MoonIcon from '@/Components/Icons/MoonIcon.vue';
 import SunIcon from '@/Components/Icons/SunIcon.vue';
+import ToggleInput from '@/Components/Inputs/ToggleInput.vue';
 import NavLink from '@/Components/Navigation/NavLink.vue';
 import SideDropdown from '@/Components/Navigation/SideDropdown.vue';
+import { useDarkMode } from '@/Composables/useDarkMode';
 
 import Settings from '@/Pages/Settings/Index.vue';
 
 import { provideEditMode } from '@/Composables/useEditMode';
 
-import { applyDarkMode } from '@/dark-mode';
-
 import { Link } from '@inertiajs/vue3';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
+
+const { isDarkMode, toggleDarkMode, themeText } = useDarkMode();
 
 provideEditMode();
 
@@ -58,8 +60,6 @@ const toggleModal = (type: 'settings') => {
 onMounted(() => {
     updateIsMobile();
     window.addEventListener('resize', updateIsMobile);
-
-    applyDarkMode();
 });
 
 onUnmounted(() => {
@@ -122,24 +122,19 @@ onUnmounted(() => {
                         <li>
                             <div class="group flex justify-between rounded-lg bg-gray-100 p-2 text-gray-900 transition duration-75 dark:bg-gray-700 dark:text-white">
                                 <div class="flex items-center">
-                                    <MoonIcon id="theme-toggle-dark-icon-mobile" class="hidden" />
-                                    <SunIcon id="theme-toggle-light-icon-mobile" class="hidden" />
-                                    <span id="theme-toggle-text-mobile" class="ms-3">Dark Mode</span>
+                                    <MoonIcon v-if="!isDarkMode" class="hidden" />
+                                    <SunIcon v-else class="hidden" />
+                                    <span class="ms-3">{{ themeText }}</span>
                                 </div>
 
-                                <label class="inline-flex cursor-pointer items-center">
-                                    <input id="theme-toggle-checkbox-mobile" type="checkbox" value="" class="peer sr-only" />
-                                    <div
-                                        class="peer relative h-5 w-9 rounded-full bg-gray-900 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-900 after:bg-white after:transition-all after:content-[''] peer-checked:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gray-300 dark:peer-checked:bg-gray-600 dark:peer-focus:ring-gray-800 rtl:peer-checked:after:-translate-x-full"
-                                    ></div>
-                                </label>
+                                <ToggleInput :checked="isDarkMode" @toggle="toggleDarkMode" />
                             </div>
                         </li>
 
                         <li>
                             <div class="flex items-center justify-between p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                <NavLink :href="route('profile.edit')" class="group flex items-center rounded-lg">
-                                    <img class="h-8 w-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
+                                <NavLink :href="route('profile.edit')" class="group flex items-center">
+                                    <Avatar :name="props.auth.user.name" />
                                     <span class="ms-3 flex-1 whitespace-nowrap">{{ firstName }}</span>
                                 </NavLink>
                                 <NavLink :href="route('logout')" method="post" as="button">
@@ -190,24 +185,19 @@ onUnmounted(() => {
                         <li>
                             <div class="group flex justify-between rounded-lg bg-gray-100 p-2 text-gray-900 transition duration-75 dark:bg-gray-700 dark:text-white">
                                 <div class="flex items-center">
-                                    <MoonIcon id="theme-toggle-dark-icon" class="hidden" />
-                                    <SunIcon id="theme-toggle-light-icon" class="hidden" />
-                                    <span id="theme-toggle-text" class="ms-3">Dark Mode</span>
+                                    <MoonIcon v-if="!isDarkMode" class="hidden" />
+                                    <SunIcon v-else class="hidden" />
+                                    <span class="ms-3">{{ themeText }}</span>
                                 </div>
 
-                                <label class="inline-flex cursor-pointer items-center">
-                                    <input id="theme-toggle-checkbox" type="checkbox" value="" class="peer sr-only" />
-                                    <div
-                                        class="peer relative h-5 w-9 rounded-full bg-gray-900 after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-900 after:bg-white after:transition-all after:content-[''] peer-checked:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gray-300 dark:peer-checked:bg-gray-600 dark:peer-focus:ring-gray-800 rtl:peer-checked:after:-translate-x-full"
-                                    ></div>
-                                </label>
+                                <ToggleInput :checked="isDarkMode" @toggle="toggleDarkMode" />
                             </div>
                         </li>
 
                         <li>
                             <div class="flex items-center justify-between rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <NavLink :href="route('profile.edit')" class="group flex items-center">
-                                    <Avatar :name="props.auth.user.name" :image="props.auth.user.profile_picture" />
+                                    <Avatar :name="props.auth.user.name" />
                                     <span class="ms-3 flex-1 whitespace-nowrap">{{ firstName }}</span>
                                 </NavLink>
                                 <NavLink :href="route('logout')" method="post" as="button">
