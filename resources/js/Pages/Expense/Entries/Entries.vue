@@ -12,8 +12,10 @@ import ThHead from '@/Components/Table/THead/Th.vue';
 
 import AddFixedInputForm from '@/Pages/Expense/Entries/AddFixedInputForm.vue';
 import AddVariableInputForm from '@/Pages/Expense/Entries/AddVariableInputForm.vue';
+import AddWithdrawalsFromInvestments from '@/Pages/Expense/Entries/AddWithdrawalsFromInvestments.vue';
 import EditFixedInputForm from '@/Pages/Expense/Entries/EditFixedInputForm.vue';
 import EditVariableInputForm from '@/Pages/Expense/Entries/EditVariableInputForm.vue';
+import EditWithdrawalsFromInvestments from '@/Pages/Expense/Entries/EditWithdrawalsFromInvestments.vue';
 
 import { useEditMode } from '@/Composables/useEditMode';
 
@@ -21,9 +23,9 @@ import { nextTick, ref } from 'vue';
 
 const { isEditing } = useEditMode();
 
-type AddModalType = 'addVariableInput' | 'addFixedInput';
+type AddModalType = 'addVariableInput' | 'addFixedInput' | 'addWithdrawalsFromInvestments';
 
-type EditModalType = 'editVariableInput' | 'editFixedInput';
+type EditModalType = 'editVariableInput' | 'editFixedInput' | 'editWithdrawalsFromInvestments';
 
 type ModalType = AddModalType | EditModalType;
 
@@ -32,6 +34,8 @@ const modals = ref<Record<ModalType, boolean>>({
     editVariableInput: false,
     addFixedInput: false,
     editFixedInput: false,
+    addWithdrawalsFromInvestments: false,
+    editWithdrawalsFromInvestments: false,
 });
 
 const toggleModal = (type: ModalType) => {
@@ -164,30 +168,51 @@ const editItem = async (type: EditModalType, item: Item) => {
 
         <Table>
             <template #header>
-                Saques de Investimentos
-                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Resgates feitos de investimentos neste mês.</p>
+                <div class="flex justify-between">
+                    <div>
+                        Saques de Investimentos
+                        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Resgates feitos de investimentos neste mês</p>
+                    </div>
+                    <div>
+                        <PlusButton @click="toggleModal('addWithdrawalsFromInvestments')" />
+                    </div>
+                </div>
             </template>
 
             <template #thead>
                 <ThHead class="text-start">Tipo</ThHead>
                 <ThHead>Valor</ThHead>
+                <ThHead v-if="isEditing" class="px-0"></ThHead>
             </template>
 
             <template #tbody>
                 <TrBody withBorder>
                     <ThBody>FII</ThBody>
                     <TdBody>500,00</TdBody>
+
+                    <TdBody v-if="isEditing" class="px-0">
+                        <TransparentButton @click="editItem('editWithdrawalsFromInvestments', { id: 1, type: 'FII', value: '500,00' })">
+                            <DotsIcon />
+                        </TransparentButton>
+                    </TdBody>
                 </TrBody>
 
                 <TrBody withBorder>
                     <ThBody>Criptomoeda</ThBody>
                     <TdBody>500,00</TdBody>
+
+                    <TdBody v-if="isEditing" class="px-0">
+                        <TransparentButton @click="editItem('editWithdrawalsFromInvestments', { id: 2, type: 'Criptomoeda', value: '500,00' })">
+                            <DotsIcon />
+                        </TransparentButton>
+                    </TdBody>
                 </TrBody>
             </template>
 
             <template #tfoot>
                 <ThFoot>Total</ThFoot>
                 <TdFoot>1.000,00</TdFoot>
+                <TdFoot v-if="isEditing" class="px-0"></TdFoot>
             </template>
         </Table>
     </div>
@@ -197,4 +222,7 @@ const editItem = async (type: EditModalType, item: Item) => {
 
     <AddVariableInputForm :showAddVariableInputModal="modals.addVariableInput" @close="toggleModal('addVariableInput')" />
     <EditVariableInputForm :showEditVariableInputModal="modals.editVariableInput" :item="itemToEdit" @close="toggleModal('editVariableInput')" />
+
+    <AddWithdrawalsFromInvestments :showAddWithdrawalsFromInvestmentsModal="modals.addWithdrawalsFromInvestments" @close="toggleModal('addWithdrawalsFromInvestments')" />
+    <EditWithdrawalsFromInvestments :showEditWithdrawalsFromInvestmentsModal="modals.editWithdrawalsFromInvestments" :item="itemToEdit" @close="toggleModal('editWithdrawalsFromInvestments')" />
 </template>
