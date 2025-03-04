@@ -9,7 +9,7 @@ import Modal from '@/Components/Modal/Modal.vue';
 import { useForm } from '@inertiajs/vue3';
 
 defineProps({
-    showNewInvestmentModal: Boolean,
+    showAddNewInvestmentModal: Boolean,
 });
 
 const emit = defineEmits(['close']);
@@ -30,7 +30,7 @@ const save = (): void => {
 </script>
 
 <template>
-    <Modal :show="showNewInvestmentModal" @close="close" max-width="md">
+    <Modal :show="showAddNewInvestmentModal" @close="close" max-width="md">
         <div class="p-6">
             <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar novo investimento?</h3>
 
