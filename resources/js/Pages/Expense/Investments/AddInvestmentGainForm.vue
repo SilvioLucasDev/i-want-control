@@ -3,10 +3,12 @@ import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
 import InputError from '@/Components/Inputs/InputError.vue';
 import InputLabel from '@/Components/Inputs/InputLabel.vue';
+import Select from '@/Components/Inputs/Select.vue';
 import TextInput from '@/Components/Inputs/TextInput.vue';
 import Modal from '@/Components/Modal/Modal.vue';
 
 import { useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 defineProps({
     showAddInvestmentGainModal: Boolean,
@@ -27,6 +29,8 @@ const form = useForm({
 const save = (): void => {
     console.log('DASHBOARD :: Save Investment Gain', form);
 };
+
+const projectTypeMock = ref<string[]>(['FII', 'Criptomoeda', 'Renda Fixa', 'Tesouro']);
 </script>
 
 <template>
@@ -36,8 +40,7 @@ const save = (): void => {
 
             <form @submit.prevent="save" class="grid gap-4">
                 <div>
-                    <InputLabel for="type" value="Tipo" />
-                    <TextInput id="type" v-model="form.type" type="text" class="mt-1 block w-full" />
+                    <Select id="type" v-model="form.type" label="Tipo" :options="projectTypeMock.map((type, index) => ({ value: index, label: type }))" />
                     <InputError class="mt-2" :message="form.errors.type" />
                 </div>
 

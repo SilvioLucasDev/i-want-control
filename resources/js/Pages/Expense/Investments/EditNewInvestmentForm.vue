@@ -5,6 +5,7 @@ import TransparentButton from '@/Components/Buttons/TransparentButton.vue';
 import TrashIcon from '@/Components/Icons/TrashIcon.vue';
 import InputError from '@/Components/Inputs/InputError.vue';
 import InputLabel from '@/Components/Inputs/InputLabel.vue';
+import Select from '@/Components/Inputs/Select.vue';
 import TextInput from '@/Components/Inputs/TextInput.vue';
 import ConfirmDeleteModal from '@/Components/Modal/ConfirmDeleteModal.vue';
 import Modal from '@/Components/Modal/Modal.vue';
@@ -60,6 +61,8 @@ const deleteItem = () => {
 
     toggleModal('confirmDeleteModal');
 };
+
+const projectTypeMock = ref<string[]>(['FII', 'Criptomoeda', 'Renda Fixa', 'Tesouro']);
 </script>
 
 <template>
@@ -75,8 +78,7 @@ const deleteItem = () => {
 
             <form @submit.prevent="edit" class="grid gap-4">
                 <div>
-                    <InputLabel for="type" value="Tipo" />
-                    <TextInput id="type" v-model="form.type" type="text" class="mt-1 block w-full" />
+                    <Select id="type" v-model="form.type" label="Tipo" :options="projectTypeMock.map((type, index) => ({ value: index, label: type }))" />
                     <InputError class="mt-2" :message="form.errors.type" />
                 </div>
 
