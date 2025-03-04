@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import Modal from '@/Components/Modal/Modal.vue';
 import TabsWithIcons from '@/Components/Navigation/TabsWithIcons.vue';
+
 import Configuration from '@/Pages/Settings/Configuration.vue';
 import Export from '@/Pages/Settings/Export.vue';
 import PaymentMethods from '@/Pages/Settings/PaymentMethods.vue';
+import Projects from '@/Pages/Settings/Projects.vue';
 
 import { ref } from 'vue';
 
@@ -28,6 +30,7 @@ const setActiveTab = (tab: string): void => {
             <TabsWithIcons
                 :tabs="[
                     { key: 'paymentMethods', label: 'Métodos de Pagamento' },
+                    { key: 'projects', label: 'Projetos' },
                     { key: 'export', label: 'Exportação' },
                     { key: 'configuration', label: 'Configurações' },
                 ]"
@@ -36,6 +39,10 @@ const setActiveTab = (tab: string): void => {
 
             <template v-if="activeTab === 'paymentMethods'">
                 <PaymentMethods />
+            </template>
+
+            <template v-if="activeTab === 'projects'">
+                <Projects />
             </template>
 
             <template v-if="activeTab === 'export'">
