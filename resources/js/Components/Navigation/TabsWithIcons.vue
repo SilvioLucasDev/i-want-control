@@ -63,6 +63,8 @@ onUnmounted(() => {
 
     document.removeEventListener('touchend', stopDragging);
     document.removeEventListener('touchmove', dragMove);
+
+    setActiveTab(props.tabs[0].key);
 });
 </script>
 
