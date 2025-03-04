@@ -21,11 +21,11 @@ const form = useForm({
 });
 
 const projects = ref<Project[]>([
-    { id: 1, name: 'Wakami', isEditing: false },
-    { id: 2, name: 'Gestione', isEditing: false },
-    { id: 3, name: 'MFA', isEditing: false },
-    { id: 4, name: 'IWantControl', isEditing: false },
-    { id: 5, name: 'ABBA', isEditing: false },
+    { id: 1, name: 'Wakami', hourlyRate: 10, isEditing: false },
+    { id: 2, name: 'Gestione', hourlyRate: 10, isEditing: false },
+    { id: 3, name: 'MFA', hourlyRate: 10, isEditing: false },
+    { id: 4, name: 'IWantControl', hourlyRate: 10, isEditing: false },
+    { id: 5, name: 'ABBA', hourlyRate: 10, isEditing: false },
 ]);
 
 const submit = (): void => {
@@ -74,8 +74,13 @@ const removeProject = (projectId: number): void => {
 <template>
     <form @submit.prevent="submit" class="mx-auto flex items-center">
         <div class="relative w-full pe-2">
-            <TextInput id="type" v-model="form.type" type="text" class="block w-full" placeholder="I Want Control" />
+            <TextInput id="type" v-model="form.type" type="text" class="block w-full" placeholder="Nome do Projeto" />
             <InputError class="mt-2" :message="form.errors.type" />
+        </div>
+
+        <div class="relative w-full pe-2">
+            <TextInput id="hourlyRate" v-model="form.hourlyRate" type="text" class="block w-full" placeholder="Valor da Hora" />
+            <InputError class="mt-2" :message="form.errors.hourlyRate" />
         </div>
 
         <PrimaryButton type="submit" class="flex h-10 items-center sm:px-5">
@@ -87,6 +92,7 @@ const removeProject = (projectId: number): void => {
     <ul class="mt-4 divide-y divide-gray-200 rounded-lg border border-gray-300 bg-white shadow dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
         <li v-for="project in projects" :key="project.id" class="flex items-center justify-between px-4 py-3">
             <TextInput v-if="project.isEditing" v-model="project.name" class="me-2 block w-full" />
+            <TextInput v-if="project.isEditing" v-model="project.hourlyRate" class="me-2 block w-full" />
             <span v-else class="text-gray-900 dark:text-white">{{ project.name }}</span>
 
             <div class="flex space-x-2">

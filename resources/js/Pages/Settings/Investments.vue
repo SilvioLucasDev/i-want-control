@@ -75,7 +75,7 @@ const removeInvestment = (investmentId: number): void => {
 <template>
     <form @submit.prevent="submit" class="mx-auto flex items-center">
         <div class="relative w-full pe-2">
-            <TextInput id="type" v-model="form.type" type="text" class="block w-full" placeholder="FII" />
+            <TextInput id="type" v-model="form.type" type="text" class="block w-full" placeholder="Tipo de Investimento" />
             <InputError class="mt-2" :message="form.errors.type" />
         </div>
 
