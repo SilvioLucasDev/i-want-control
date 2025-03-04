@@ -16,13 +16,13 @@ import AddSinglePaymentForm from '@/Pages/Expense/Outputs/AddSinglePaymentForm.v
 import { ref } from 'vue';
 
 const modals = ref({
-    fixedExpense: false,
-    signature: false,
-    singlePayment: false,
-    installmentPayment: false,
+    addFixedExpense: false,
+    addSignature: false,
+    addSinglePayment: false,
+    addInstallmentPayment: false,
 });
 
-const toggleModal = (type: 'fixedExpense' | 'signature' | 'singlePayment' | 'installmentPayment') => {
+const toggleModal = (type: 'addFixedExpense' | 'addSignature' | 'addSinglePayment' | 'addInstallmentPayment') => {
     modals.value[type] = !modals.value[type];
 };
 </script>
@@ -38,7 +38,7 @@ const toggleModal = (type: 'fixedExpense' | 'signature' | 'singlePayment' | 'ins
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Gastos essenciais e recorrentes, como contas e aluguel.</p>
                         </div>
                         <div>
-                            <PlusButton @click="toggleModal('fixedExpense')" />
+                            <PlusButton @click="toggleModal('addFixedExpense')" />
                         </div>
                     </div>
                 </template>
@@ -84,7 +84,7 @@ const toggleModal = (type: 'fixedExpense' | 'signature' | 'singlePayment' | 'ins
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Pagamentos mensais, como serviços e assinaturas.</p>
                         </div>
                         <div>
-                            <PlusButton @click="toggleModal('signature')" />
+                            <PlusButton @click="toggleModal('addSignature')" />
                         </div>
                     </div>
                 </template>
@@ -138,7 +138,7 @@ const toggleModal = (type: 'fixedExpense' | 'signature' | 'singlePayment' | 'ins
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Compras pagas à vista, sem parcelamento.</p>
                         </div>
                         <div>
-                            <PlusButton @click="toggleModal('singlePayment')" />
+                            <PlusButton @click="toggleModal('addSinglePayment')" />
                         </div>
                     </div>
                 </template>
@@ -184,7 +184,7 @@ const toggleModal = (type: 'fixedExpense' | 'signature' | 'singlePayment' | 'ins
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Despesas divididas em várias parcelas.</p>
                         </div>
                         <div>
-                            <PlusButton @click="toggleModal('installmentPayment')" />
+                            <PlusButton @click="toggleModal('addInstallmentPayment')" />
                         </div>
                     </div>
                 </template>
@@ -250,8 +250,8 @@ const toggleModal = (type: 'fixedExpense' | 'signature' | 'singlePayment' | 'ins
         </div>
     </div>
 
-    <AddFixedExpenseForm :showFixedExpenseModal="modals.fixedExpense" @close="toggleModal('fixedExpense')" />
-    <AddSignatureForm :showSignatureModal="modals.signature" @close="toggleModal('signature')" />
-    <AddSinglePaymentForm :showSinglePaymentModal="modals.singlePayment" @close="toggleModal('singlePayment')" />
-    <AddInstallmentPaymentForm :showInstallmentPaymentModal="modals.installmentPayment" @close="toggleModal('installmentPayment')" />
+    <AddFixedExpenseForm :showAddFixedExpenseModal="modals.addFixedExpense" @close="toggleModal('addFixedExpense')" />
+    <AddSignatureForm :showAddSignatureModal="modals.addSignature" @close="toggleModal('addSignature')" />
+    <AddSinglePaymentForm :showAddSinglePaymentModal="modals.addSinglePayment" @close="toggleModal('addSinglePayment')" />
+    <AddInstallmentPaymentForm :showAddInstallmentPaymentModal="modals.addInstallmentPayment" @close="toggleModal('addInstallmentPayment')" />
 </template>

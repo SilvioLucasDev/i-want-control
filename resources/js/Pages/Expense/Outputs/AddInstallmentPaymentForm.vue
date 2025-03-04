@@ -11,7 +11,7 @@ import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 defineProps({
-    showInstallmentPaymentModal: Boolean,
+    showAddInstallmentPaymentModal: Boolean,
 });
 
 const emit = defineEmits(['close']);
@@ -35,7 +35,7 @@ const paymentTypeMock = ref<string[]>(['Dinheiro', 'Débito', 'Crédito']);
 </script>
 
 <template>
-    <Modal :show="showInstallmentPaymentModal" @close="close" max-width="md">
+    <Modal :show="showAddInstallmentPaymentModal" @close="close" max-width="md">
         <div class="p-6">
             <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar novo pagamento parcelado?</h3>
 

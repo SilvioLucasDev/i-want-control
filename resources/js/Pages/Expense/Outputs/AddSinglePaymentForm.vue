@@ -11,7 +11,7 @@ import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 defineProps({
-    showSinglePaymentModal: Boolean,
+    showAddSinglePaymentModal: Boolean,
 });
 
 const emit = defineEmits(['close']);
@@ -34,7 +34,7 @@ const paymentTypeMock = ref<string[]>(['Dinheiro', 'Débito', 'Crédito']);
 </script>
 
 <template>
-    <Modal :show="showSinglePaymentModal" @close="close" max-width="md">
+    <Modal :show="showAddSinglePaymentModal" @close="close" max-width="md">
         <div class="p-6">
             <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Adicionar novo pagamento único?</h3>
 
