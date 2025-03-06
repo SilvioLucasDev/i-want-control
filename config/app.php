@@ -123,4 +123,18 @@ return [
         'store'  => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Application Encryption
+    |--------------------------------------------------------------------------
+    |
+    | This configuration option allows you to specify the encryption method
+    | that should be used to encrypt and decrypt values. This will be used
+    | by the Illuminate Encrypter service and should be set to a cipher
+    | supported by your version of OpenSSL.
+    |
+    */
+
+    'force_https' => env('APP_FORCE_HTTPS', true),
+
 ];
