@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        using: function () {
+        using: function (): void {
             $basePath = base_path('app');
 
             Route::middleware('web')
@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->group($basePath . '/User/routes/user-routes.php');
         }
     )
-    ->withMiddleware(function (Middleware $middleware) {
+    ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             \App\Common\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
@@ -26,6 +26,6 @@ return Application::configure(basePath: dirname(__DIR__))
 
         //
     })
-    ->withExceptions(function (Exceptions $exceptions) {
+    ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
