@@ -49,6 +49,9 @@
         "stan": "phpstan analyse",
         "rector-dry-run": "rector --dry-run",
         "rector": "rector",
+        "post-install-cmd": [
+            "git config core.hooksPath .githooks"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
