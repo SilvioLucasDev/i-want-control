@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 use App\Service\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;

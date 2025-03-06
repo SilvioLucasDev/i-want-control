@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 use App\Auth\Http\Controllers\{AuthenticatedSessionController, ConfirmablePasswordController, EmailVerificationNotificationController, EmailVerificationPromptController, NewPasswordController, PasswordController, PasswordResetLinkController, RegisteredUserController, VerifyEmailController};
 use Illuminate\Support\Facades\Route;
