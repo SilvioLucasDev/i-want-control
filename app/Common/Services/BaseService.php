@@ -34,7 +34,6 @@ abstract class BaseService implements BaseServiceInterface
     /**
      * Returns a record by its ID.
      *
-     * @param int $id
      * @return T|null
      */
     public function find(int $id): ?Model
@@ -56,9 +55,7 @@ abstract class BaseService implements BaseServiceInterface
     /**
      * Updates a record by its ID.
      *
-     * @param int $id
      * @param array<string, mixed> $data
-     * @return bool
      */
     public function update(int $id, array $data): bool
     {
@@ -67,9 +64,6 @@ abstract class BaseService implements BaseServiceInterface
 
     /**
      * Deletes a record by its ID.
-     *
-     * @param int $id
-     * @return bool
      */
     public function delete(int $id): bool
     {

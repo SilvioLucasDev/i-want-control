@@ -22,7 +22,6 @@ interface BaseRepositoryInterface
     /**
      * Returns a record by its ID.
      *
-     * @param int $id
      * @return T|null
      */
     public function find(int $id): ?Model;
@@ -38,17 +37,12 @@ interface BaseRepositoryInterface
     /**
      * Updates a record by its ID.
      *
-     * @param int $id
      * @param array<string, mixed> $data
-     * @return bool
      */
     public function update(int $id, array $data): bool;
 
     /**
      * Deletes a record by its ID.
-     *
-     * @param int $id
-     * @return bool
      */
     public function delete(int $id): bool;
 }

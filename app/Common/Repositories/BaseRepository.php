@@ -16,18 +16,12 @@ use Illuminate\Database\Eloquent\Model;
 abstract class BaseRepository implements BaseRepositoryInterface
 {
     /**
-     * @var T
-     */
-    protected Model $model;
-
-    /**
      * Generic constructor receiving the Model.
      *
      * @param T $model
      */
-    public function __construct(Model $model)
+    public function __construct(protected Model $model)
     {
-        $this->model = $model;
     }
 
     /**
@@ -43,7 +37,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Returns a record by its ID.
      *
-     * @param int $id
      * @return T|null
      */
     public function find(int $id): ?Model
@@ -65,14 +58,12 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Updates a record by its ID.
      *
-     * @param int $id
      * @param array<string, mixed> $data
-     * @return bool
      */
     public function update(int $id, array $data): bool
     {
         $record = $this->find($id);
-        if (!$record) {
+        if (!$record instanceof Model) {
             return false;
         }
 
@@ -81,14 +72,11 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
     /**
      * Deletes a record by its ID.
-     *
-     * @param int $id
-     * @return bool
      */
     public function delete(int $id): bool
     {
         $record = $this->find($id);
-        if (!$record) {
+        if (!$record instanceof Model) {
             return false;
         }
 
