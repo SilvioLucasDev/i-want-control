@@ -6,42 +6,47 @@ import PlusIcon from '@/Components/Icons/PlusIcon.vue';
 import TrashIcon from '@/Components/Icons/TrashIcon.vue';
 import InputError from '@/Components/Inputs/InputError.vue';
 import TextInput from '@/Components/Inputs/TextInput.vue';
+import { useInvestmentType } from '@/Composables/useInvestment';
 
 import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
-interface Investment {
+const { fetchInvestments, isInvestments } = useInvestmentType();
+
+export interface Investment {
     id: number;
-    type: string;
-    income: string | null;
+    name: string;
+    income: string;
     isEditing: boolean;
 }
 
+const investments = ref<Investment[]>([]);
+
 const form = useForm({
     type: '',
+    income: '',
 });
 
-const investments = ref<Investment[]>([
-    { id: 1, type: 'FII', income: '1%', isEditing: false },
-    { id: 2, type: 'Criptomoeda', income: null, isEditing: false },
-    { id: 3, type: 'Renda Fixa', income: '0.9%', isEditing: false },
-    { id: 4, type: 'Tesouro', income: '2%', isEditing: false },
-]);
+const loadInvestments = async () => {
+    await fetchInvestments();
+    investments.value = isInvestments.value;
+};
+
+onMounted(() => {
+    loadInvestments();
+});
 
 const submit = (): void => {
-    console.log('Adicionando novo investimento:', form.type);
-    // if (!form.type.trim()) return;
+    if (!form.type.trim()) return;
 
-    // form.post('/investments', {
-    //     onSuccess: () => {
-    //         investments.value.push({
-    //             id: Date.now(),
-    //             type: form.type.trim(),
-    //             isEditing: false,
-    //         });
-    //         form.type = ''; // Limpa o input
-    //     },
-    // });
+    form.post('/investments', {
+        onSuccess: () => {
+            form.type = '';
+            form.income = '';
+
+            loadInvestments();
+        },
+    });
 };
 
 const toggleEdit = (investment: Investment): void => {
@@ -51,24 +56,24 @@ const toggleEdit = (investment: Investment): void => {
 const saveEdit = (investment: Investment): void => {
     investment.isEditing = false;
 
-    console.log('Salvando edição do investimento:', investment.type);
+    const editForm = useForm({
+        name: investment.name,
+        income: investment.income,
+    });
 
-    // form.put(`/investments/${investment.id}`, {
-    //     type: investment.type,
-    //     onSuccess: () => {
-    //         console.log('Método atualizado com sucesso!');
-    //     },
-    // });
+    editForm.put(`/investments/${investment.id}`, {
+        onSuccess: () => {
+            loadInvestments();
+        },
+    });
 };
 
 const removeInvestment = (investmentId: number): void => {
-    console.log('Removendo investmento:', investmentId);
-
-    // form.delete(`/investments/${investmentId}`, {
-    //     onSuccess: () => {
-    //         investments.value = investments.value.filter((investment) => investment.id !== investmentId);
-    //     },
-    // });
+    form.delete(`/investments/${investmentId}`, {
+        onSuccess: () => {
+            loadInvestments();
+        },
+    });
 };
 </script>
 
@@ -77,6 +82,10 @@ const removeInvestment = (investmentId: number): void => {
         <div class="relative w-full pe-2">
             <TextInput id="type" v-model="form.type" type="text" class="block w-full" placeholder="Tipo de Investimento" />
             <InputError class="mt-2" :message="form.errors.type" />
+        </div>
+        <div class="relative w-full pe-2">
+            <TextInput id="income" v-model="form.income" type="text" class="block w-full" placeholder="Rendimento" />
+            <InputError class="mt-2" :message="form.errors.income" />
         </div>
 
         <PrimaryButton type="submit" class="flex h-10 items-center sm:px-5">
@@ -87,8 +96,9 @@ const removeInvestment = (investmentId: number): void => {
 
     <ul class="mt-4 divide-y divide-gray-200 rounded-lg border border-gray-300 bg-white shadow dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
         <li v-for="investment in investments" :key="investment.id" class="flex items-center justify-between px-4 py-3">
-            <TextInput v-if="investment.isEditing" v-model="investment.type" class="me-2 block w-full" />
-            <span v-else class="text-gray-900 dark:text-white">{{ investment.type }}</span>
+            <TextInput v-if="investment.isEditing" v-model="investment.name" class="me-2 block w-full" />
+            <TextInput v-if="investment.isEditing" v-model="investment.income" class="me-2 block w-full" />
+            <span v-else class="text-gray-900 dark:text-white">{{ investment.name }}</span>
 
             <div class="flex space-x-2">
                 <CheckIcon v-if="investment.isEditing" @click="saveEdit(investment)" class="cursor-pointer" />

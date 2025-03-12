@@ -6,41 +6,44 @@ import PlusIcon from '@/Components/Icons/PlusIcon.vue';
 import TrashIcon from '@/Components/Icons/TrashIcon.vue';
 import InputError from '@/Components/Inputs/InputError.vue';
 import TextInput from '@/Components/Inputs/TextInput.vue';
+import { usePaymentType } from '@/Composables/usePaymentMethod';
 
 import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
-interface PaymentMethod {
+const { fetchPaymentMethods, isPaymentMethods } = usePaymentType();
+
+export interface PaymentMethod {
     id: number;
     name: string;
     isEditing: boolean;
 }
 
+const paymentMethods = ref<PaymentMethod[]>([]);
+
 const form = useForm({
     type: '',
 });
 
-const paymentMethods = ref<PaymentMethod[]>([
-    { id: 1, name: 'Cartão de Crédito', isEditing: false },
-    { id: 2, name: 'Pix', isEditing: false },
-    { id: 3, name: 'Boleto Bancário', isEditing: false },
-    { id: 4, name: 'Dinheiro', isEditing: false },
-]);
+const loadPaymentMethods = async () => {
+    await fetchPaymentMethods();
+    paymentMethods.value = isPaymentMethods.value;
+};
+
+onMounted(() => {
+    loadPaymentMethods();
+});
 
 const submit = (): void => {
-    console.log('Adicionando método de pagamento:', form.type);
-    // if (!form.type.trim()) return;
+    if (!form.type.trim()) return;
 
-    // form.post('/payment-methods', {
-    //     onSuccess: () => {
-    //         paymentMethods.value.push({
-    //             id: Date.now(),
-    //             name: form.type.trim(),
-    //             isEditing: false,
-    //         });
-    //         form.type = ''; // Limpa o input
-    //     },
-    // });
+    form.post('/payment-methods', {
+        onSuccess: () => {
+            form.type = '';
+
+            loadPaymentMethods();
+        },
+    });
 };
 
 const toggleEdit = (method: PaymentMethod): void => {
@@ -50,23 +53,23 @@ const toggleEdit = (method: PaymentMethod): void => {
 const saveEdit = (method: PaymentMethod): void => {
     method.isEditing = false;
 
-    console.log('Salvando edição do método:', method.name);
+    const editForm = useForm({
+        name: method.name,
+    });
 
-    // form.put(`/payment-methods/${method.id}`, {
-    //     type: method.name,
-    //     onSuccess: () => {
-    //         console.log('Método atualizado com sucesso!');
-    //     },
-    // });
+    editForm.put(`/payment-methods/${method.id}`, {
+        onSuccess: () => {
+            loadPaymentMethods();
+        },
+    });
 };
 
 const removePaymentMethod = (methodId: number): void => {
-    console.log('Removendo método de pagamento:', methodId);
-    // form.delete(`/payment-methods/${methodId}`, {
-    //     onSuccess: () => {
-    //         paymentMethods.value = paymentMethods.value.filter((method) => method.id !== methodId);
-    //     },
-    // });
+    form.delete(`/payment-methods/${methodId}`, {
+        onSuccess: () => {
+            loadPaymentMethods();
+        },
+    });
 };
 </script>
 

@@ -6,42 +6,47 @@ import PlusIcon from '@/Components/Icons/PlusIcon.vue';
 import TrashIcon from '@/Components/Icons/TrashIcon.vue';
 import InputError from '@/Components/Inputs/InputError.vue';
 import TextInput from '@/Components/Inputs/TextInput.vue';
+import { useProjectType } from '@/Composables/useProject';
 
 import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
-interface Project {
+const { fetchProjects, isProjects } = useProjectType();
+
+export interface Project {
     id: number;
     name: string;
+    hourlyRate: string;
     isEditing: boolean;
 }
 
-const form = useForm({
-    type: '',
+const projects = ref<Project[]>([]);
+
+const loadProjects = async () => {
+    await fetchProjects();
+    projects.value = isProjects.value;
+};
+
+onMounted(() => {
+    loadProjects();
 });
 
-const projects = ref<Project[]>([
-    { id: 1, name: 'Wakami', hourlyRate: 10, isEditing: false },
-    { id: 2, name: 'Gestione', hourlyRate: 10, isEditing: false },
-    { id: 3, name: 'MFA', hourlyRate: 10, isEditing: false },
-    { id: 4, name: 'IWantControl', hourlyRate: 10, isEditing: false },
-    { id: 5, name: 'ABBA', hourlyRate: 10, isEditing: false },
-]);
+const form = useForm({
+    type: '',
+    hourlyRate: '',
+});
 
 const submit = (): void => {
-    console.log('Adicionando método de pagamento:', form.type);
-    // if (!form.type.trim()) return;
+    if (!form.type.trim()) return;
 
-    // form.post('/projects', {
-    //     onSuccess: () => {
-    //         projects.value.push({
-    //             id: Date.now(),
-    //             name: form.type.trim(),
-    //             isEditing: false,
-    //         });
-    //         form.type = ''; // Limpa o input
-    //     },
-    // });
+    form.post('/projects', {
+        onSuccess: () => {
+            form.type = '';
+            form.hourlyRate = '';
+
+            loadProjects();
+        },
+    });
 };
 
 const toggleEdit = (project: Project): void => {
@@ -51,23 +56,24 @@ const toggleEdit = (project: Project): void => {
 const saveEdit = (project: Project): void => {
     project.isEditing = false;
 
-    console.log('Salvando edição do método:', project.name);
+    const editForm = useForm({
+        name: project.name,
+        hourlyRate: project.hourlyRate,
+    });
 
-    // form.put(`/projects/${project.id}`, {
-    //     type: project.name,
-    //     onSuccess: () => {
-    //         console.log('Método atualizado com sucesso!');
-    //     },
-    // });
+    editForm.put(`/projects/${project.id}`, {
+        onSuccess: () => {
+            loadProjects();
+        },
+    });
 };
 
 const removeProject = (projectId: number): void => {
-    console.log('Removendo projeto:', projectId);
-    // form.delete(`/projects/${projectId}`, {
-    //     onSuccess: () => {
-    //         projects.value = projects.value.filter((project) => project.id !== projectId);
-    //     },
-    // });
+    form.delete(`/projects/${projectId}`, {
+        onSuccess: () => {
+            loadProjects();
+        },
+    });
 };
 </script>
 
@@ -92,8 +98,8 @@ const removeProject = (projectId: number): void => {
     <ul class="mt-4 divide-y divide-gray-200 rounded-lg border border-gray-300 bg-white shadow dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
         <li v-for="project in projects" :key="project.id" class="flex items-center justify-between px-4 py-3">
             <TextInput v-if="project.isEditing" v-model="project.name" class="me-2 block w-full" />
-            <TextInput v-if="project.isEditing" v-model="project.hourlyRate" class="me-2 block w-full" />
             <span v-else class="text-gray-900 dark:text-white">{{ project.name }}</span>
+            <TextInput v-if="project.isEditing" v-model="project.hourlyRate" class="me-2 block w-full" />
 
             <div class="flex space-x-2">
                 <CheckIcon v-if="project.isEditing" @click="saveEdit(project)" class="cursor-pointer" />
