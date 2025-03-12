@@ -2,8 +2,12 @@
 
 namespace App\User\Models;
 
+use App\Expense\Models\Investment;
+use App\Expense\Models\PaymentMethod;
+use App\Expense\Models\Project;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -47,5 +51,29 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
         ];
+    }
+
+    /**
+     * @return HasMany<PaymentMethod, self>
+     */
+    public function paymentMethods(): HasMany
+    {
+        return $this->hasMany(PaymentMethod::class);
+    }
+
+    /**
+     * @return HasMany<Investment, self>
+     */
+    public function investments(): HasMany
+    {
+        return $this->hasMany(Investment::class);
+    }
+
+    /**
+     * @return HasMany<Project, self>
+     */
+    public function projects(): HasMany
+    {
+        return $this->hasMany(Project::class);
     }
 }
