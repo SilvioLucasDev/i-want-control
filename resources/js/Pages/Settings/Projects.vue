@@ -6,12 +6,11 @@ import PlusIcon from '@/Components/Icons/PlusIcon.vue';
 import TrashIcon from '@/Components/Icons/TrashIcon.vue';
 import InputError from '@/Components/Inputs/InputError.vue';
 import TextInput from '@/Components/Inputs/TextInput.vue';
-import { useProjectType } from '@/Composables/useProject';
+import { useProjects } from '@/Composables/useProjects';
 
 import { useForm } from '@inertiajs/vue3';
-import { onMounted, ref } from 'vue';
 
-const { fetchProjects, isProjects } = useProjectType();
+const { projects } = useProjects();
 
 export interface Project {
     id: number;
@@ -19,17 +18,6 @@ export interface Project {
     hourlyRate: string;
     isEditing: boolean;
 }
-
-const projects = ref<Project[]>([]);
-
-const loadProjects = async () => {
-    await fetchProjects();
-    projects.value = isProjects.value;
-};
-
-onMounted(() => {
-    loadProjects();
-});
 
 const form = useForm({
     type: '',
@@ -44,7 +32,7 @@ const submit = (): void => {
             form.type = '';
             form.hourlyRate = '';
 
-            loadProjects();
+            // AQUI EU ADICIONO O PROJETO NO ARRAY (SE EU RETORNAR A LISTA INTEIRA, EU SO RESETO)
         },
     });
 };
@@ -63,7 +51,7 @@ const saveEdit = (project: Project): void => {
 
     editForm.put(`/projects/${project.id}`, {
         onSuccess: () => {
-            loadProjects();
+            // AQUI EU ATUALIZO O PROJETO NO ARRAY
         },
     });
 };
@@ -71,7 +59,7 @@ const saveEdit = (project: Project): void => {
 const removeProject = (projectId: number): void => {
     form.delete(`/projects/${projectId}`, {
         onSuccess: () => {
-            loadProjects();
+            // AQUI EU REMOVO O PROJETO DO ARRAY
         },
     });
 };

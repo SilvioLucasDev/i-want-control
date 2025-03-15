@@ -6,12 +6,11 @@ import PlusIcon from '@/Components/Icons/PlusIcon.vue';
 import TrashIcon from '@/Components/Icons/TrashIcon.vue';
 import InputError from '@/Components/Inputs/InputError.vue';
 import TextInput from '@/Components/Inputs/TextInput.vue';
-import { useInvestmentType } from '@/Composables/useInvestment';
+import { useInvestments } from '@/Composables/useInvestments';
 
 import { useForm } from '@inertiajs/vue3';
-import { onMounted, ref } from 'vue';
 
-const { fetchInvestments, isInvestments } = useInvestmentType();
+const { investments } = useInvestments();
 
 export interface Investment {
     id: number;
@@ -20,20 +19,9 @@ export interface Investment {
     isEditing: boolean;
 }
 
-const investments = ref<Investment[]>([]);
-
 const form = useForm({
     type: '',
     income: '',
-});
-
-const loadInvestments = async () => {
-    await fetchInvestments();
-    investments.value = isInvestments.value;
-};
-
-onMounted(() => {
-    loadInvestments();
 });
 
 const submit = (): void => {
@@ -44,7 +32,7 @@ const submit = (): void => {
             form.type = '';
             form.income = '';
 
-            loadInvestments();
+            // AQUI EU ADICIONO O INVESTIMENTO NO ARRAY (SE EU RETORNAR A LISTA INTEIRA, EU SO RESETO)
         },
     });
 };
@@ -63,7 +51,7 @@ const saveEdit = (investment: Investment): void => {
 
     editForm.put(`/investments/${investment.id}`, {
         onSuccess: () => {
-            loadInvestments();
+            // AQUI EU ATUALIZO O INVESTIMENTO NO ARRAY
         },
     });
 };
@@ -71,7 +59,7 @@ const saveEdit = (investment: Investment): void => {
 const removeInvestment = (investmentId: number): void => {
     form.delete(`/investments/${investmentId}`, {
         onSuccess: () => {
-            loadInvestments();
+            // AQUI EU REMOVO O INVESTIMENTO DO ARRAY
         },
     });
 };

@@ -6,12 +6,11 @@ import PlusIcon from '@/Components/Icons/PlusIcon.vue';
 import TrashIcon from '@/Components/Icons/TrashIcon.vue';
 import InputError from '@/Components/Inputs/InputError.vue';
 import TextInput from '@/Components/Inputs/TextInput.vue';
-import { usePaymentType } from '@/Composables/usePaymentMethod';
+import { usePaymentMethods } from '@/Composables/usePaymentMethods';
 
 import { useForm } from '@inertiajs/vue3';
-import { onMounted, ref } from 'vue';
 
-const { fetchPaymentMethods, isPaymentMethods } = usePaymentType();
+const { paymentMethods } = usePaymentMethods();
 
 export interface PaymentMethod {
     id: number;
@@ -19,19 +18,8 @@ export interface PaymentMethod {
     isEditing: boolean;
 }
 
-const paymentMethods = ref<PaymentMethod[]>([]);
-
 const form = useForm({
     type: '',
-});
-
-const loadPaymentMethods = async () => {
-    await fetchPaymentMethods();
-    paymentMethods.value = isPaymentMethods.value;
-};
-
-onMounted(() => {
-    loadPaymentMethods();
 });
 
 const submit = (): void => {
@@ -41,7 +29,7 @@ const submit = (): void => {
         onSuccess: () => {
             form.type = '';
 
-            loadPaymentMethods();
+            // AQUI EU ADICIONO O MÉTODO DE PAGAMENTO NO ARRAY
         },
     });
 };
@@ -59,7 +47,7 @@ const saveEdit = (method: PaymentMethod): void => {
 
     editForm.put(`/payment-methods/${method.id}`, {
         onSuccess: () => {
-            loadPaymentMethods();
+            // AQUI EU ATUALIZO O MÉTODO DE PAGAMENTO NO ARRAY
         },
     });
 };
@@ -67,7 +55,7 @@ const saveEdit = (method: PaymentMethod): void => {
 const removePaymentMethod = (methodId: number): void => {
     form.delete(`/payment-methods/${methodId}`, {
         onSuccess: () => {
-            loadPaymentMethods();
+            // AQUI EU REMOVO O MÉTODO DE PAGAMENTO DO ARRAY
         },
     });
 };
