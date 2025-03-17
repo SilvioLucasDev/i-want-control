@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             ProjectSeeder::class,
         ]);
 
-        User::factory(10)->create()->each(function ($user) {
+        User::factory(10)->create()->each(function ($user): void {
             Project::factory(2)->create(['user_id' => $user->id]);
             Investment::factory(2)->create(['user_id' => $user->id]);
             PaymentMethod::factory(2)->create(['user_id' => $user->id]);
