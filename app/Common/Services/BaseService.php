@@ -2,8 +2,8 @@
 
 namespace App\Common\Services;
 
-use App\Common\Contracts\BaseRepositoryInterface;
-use App\Common\Contracts\BaseServiceInterface;
+use App\Common\Repositories\Interfaces\BaseRepositoryInterface;
+use App\Common\Services\Interfaces\BaseServiceInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
