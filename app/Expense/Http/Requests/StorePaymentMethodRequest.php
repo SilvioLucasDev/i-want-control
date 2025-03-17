@@ -23,7 +23,7 @@ class StorePaymentMethodRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'type.unique' => 'Já existe um :attribute com esse nome para o seu usuário.',
+            'type.unique' => 'Você já possui um :attribute com esse nome.',
         ];
     }
 

@@ -1,12 +1,13 @@
 import { useToast } from '@/Composables/useToast';
+
 import { PaymentMethod } from '@/Pages/Settings/PaymentMethods.vue';
+
 import axios from 'axios';
 import { inject, InjectionKey, onMounted, provide, Ref, ref } from 'vue';
 
 const PAYMENT_METHODS_KEY: InjectionKey<{
     paymentMethods: Ref<PaymentMethod[]>;
-    findPaymentMethod: (paymentMethodId: number) => PaymentMethod | undefined;
-    addPaymentMethod: (paymentMethod: PaymentMethod) => Promise<void>;
+    addPaymentMethod: (paymentMethod: PaymentMethod) => Promise<boolean>;
     updatePaymentMethod: (paymentMethod: PaymentMethod) => Promise<void>;
     removePaymentMethod: (id: number) => Promise<void>;
 }> = Symbol('paymentMethods');
@@ -30,18 +31,18 @@ export function providePaymentMethods(): void {
         }
     };
 
-    const findPaymentMethod = (paymentMethodId: number): PaymentMethod | undefined => {
-        return paymentMethods.value.find((item) => item.id === paymentMethodId);
-    };
-
-    const addPaymentMethod = async (paymentMethod: PaymentMethod): Promise<void> => {
+    const addPaymentMethod = async (paymentMethod: PaymentMethod): Promise<boolean> => {
         try {
             const { data } = await axios.post('/payment-methods', paymentMethod);
             paymentMethods.value.push({ ...data.data, isEditing: false });
 
             triggerToast('success', 'Método de pagamento adicionado com sucesso!');
+
+            return true;
         } catch (error) {
             handleApiError(error, 'Erro ao adicionar método de pagamento.');
+
+            return false;
         }
     };
 
@@ -75,8 +76,17 @@ export function providePaymentMethods(): void {
     const handleApiError = (error: any, defaultMessage: string) => {
         if (axios.isAxiosError(error) && error.response) {
             if (error.response.status === 422) {
-                const errorMessage = error.response.data?.message || 'Erro de validação.';
-                triggerToast('error', errorMessage);
+                const errors = error.response.data?.errors;
+
+                if (errors && typeof errors === 'object') {
+                    const allErrors: string[] = Object.values(errors).flatMap((err) => (Array.isArray(err) ? err : [String(err)]));
+
+                    allErrors.forEach((errorMessage) => {
+                        triggerToast('error', errorMessage);
+                    });
+                } else {
+                    triggerToast('error', error.response.data?.message || 'Erro de validação.');
+                }
             } else {
                 triggerToast('error', error.response.data?.message || defaultMessage);
             }
@@ -87,7 +97,7 @@ export function providePaymentMethods(): void {
 
     onMounted(fetchPaymentMethods);
 
-    provide(PAYMENT_METHODS_KEY, { paymentMethods, findPaymentMethod, addPaymentMethod, updatePaymentMethod, removePaymentMethod });
+    provide(PAYMENT_METHODS_KEY, { paymentMethods, addPaymentMethod, updatePaymentMethod, removePaymentMethod });
 }
 
 export function usePaymentMethods() {

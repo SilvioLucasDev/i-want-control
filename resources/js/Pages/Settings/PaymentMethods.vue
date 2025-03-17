@@ -7,6 +7,7 @@ import TrashIcon from '@/Components/Icons/TrashIcon.vue';
 import TextInput from '@/Components/Inputs/TextInput.vue';
 
 import { usePaymentMethods } from '@/Composables/usePaymentMethods';
+
 import { ref } from 'vue';
 
 const { paymentMethods, addPaymentMethod, updatePaymentMethod, removePaymentMethod } = usePaymentMethods();
@@ -20,8 +21,11 @@ export type PaymentMethod = {
 const formType = ref('');
 
 const save = async (): Promise<void> => {
-    await addPaymentMethod({ id: 0, type: formType.value, isEditing: false });
-    formType.value = '';
+    const result = await addPaymentMethod({ id: 0, type: formType.value, isEditing: false });
+
+    if (result) {
+        formType.value = '';
+    }
 };
 
 const edit = async (method: PaymentMethod): Promise<void> => {
