@@ -4,16 +4,12 @@ import CheckIcon from '@/Components/Icons/CheckIcon.vue';
 import PencilIcon from '@/Components/Icons/PencilIcon.vue';
 import PlusIcon from '@/Components/Icons/PlusIcon.vue';
 import TrashIcon from '@/Components/Icons/TrashIcon.vue';
-import InputError from '@/Components/Inputs/InputError.vue';
 import TextInput from '@/Components/Inputs/TextInput.vue';
 
 import { usePaymentMethods } from '@/Composables/usePaymentMethods';
-import { useToast } from '@/Composables/useToast';
+import { ref } from 'vue';
 
-import { useForm } from '@inertiajs/vue3';
-
-const { paymentMethods, findPaymentMethod, addPaymentMethod, updatePaymentMethod, removePaymentMethod } = usePaymentMethods();
-const { triggerToast } = useToast();
+const { paymentMethods, addPaymentMethod, updatePaymentMethod, removePaymentMethod } = usePaymentMethods();
 
 export type PaymentMethod = {
     id: number;
@@ -21,53 +17,15 @@ export type PaymentMethod = {
     isEditing: boolean;
 };
 
-const form = useForm({
-    type: '',
-});
+const formType = ref('');
 
 const save = async (): Promise<void> => {
-    if (!form.type.trim()) {
-        triggerToast('error', 'O campo Tipo do Método de Pagamento é obrigatório.');
-        return;
-    }
-
-    await form.post('/payment-methods', {
-        onSuccess: ({ props }) => {
-            const newPaymentMethod = findPaymentMethod(props.id);
-            if (newPaymentMethod) {
-                addPaymentMethod(newPaymentMethod);
-            }
-            form.reset();
-        },
-        onError: (errors) => {
-            triggerToast('error', errors.type || 'Erro ao adicionar o método de pagamento.');
-        },
-    });
+    await addPaymentMethod({ id: 0, type: formType.value, isEditing: false });
+    formType.value = '';
 };
 
-const editForm = useForm({
-    type: '',
-});
-
 const edit = async (method: PaymentMethod): Promise<void> => {
-    if (!method.type.trim()) {
-        triggerToast('error', 'O campo Tipo do Método de Pagamento é obrigatório.');
-        return;
-    }
-
-    method.isEditing = false;
-    editForm.type = method.type;
-
-    await editForm.put(`/payment-methods/${method.id}`, {
-        onSuccess: () => {
-            updatePaymentMethod(method);
-            form.reset();
-        },
-        onError: (errors) => {
-            triggerToast('error', errors.type || 'Erro ao editar o método de pagamento.');
-            method.isEditing = true;
-        },
-    });
+    await updatePaymentMethod(method);
 };
 
 const toggleEdit = (method: PaymentMethod): void => {
@@ -75,22 +33,14 @@ const toggleEdit = (method: PaymentMethod): void => {
 };
 
 const remove = async (methodId: number): Promise<void> => {
-    await form.delete(`/payment-methods/${methodId}`, {
-        onSuccess: () => {
-            removePaymentMethod(methodId);
-        },
-        onError: () => {
-            triggerToast('error', 'Erro ao excluir o método de pagamento.');
-        },
-    });
+    await removePaymentMethod(methodId);
 };
 </script>
 
 <template>
     <form @submit.prevent="save" class="mx-auto flex items-center">
         <div class="relative w-full pe-2">
-            <TextInput v-model="form.type" type="text" class="block w-full" placeholder="Tipo do Método de Pagamento" />
-            <InputError class="mt-2" :message="form.errors.type" />
+            <TextInput v-model="formType" type="text" class="block w-full" placeholder="Tipo do Método de Pagamento" />
         </div>
 
         <PrimaryButton type="submit" class="flex h-10 items-center sm:px-5">
