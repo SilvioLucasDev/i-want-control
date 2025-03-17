@@ -54,7 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<PaymentMethod, self>
+     * @return HasMany<PaymentMethod, $this>
      */
     public function paymentMethods(): HasMany
     {
@@ -62,7 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<Investment, self>
+     * @return HasMany<Investment, $this>
      */
     public function investments(): HasMany
     {
@@ -70,7 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<Project, self>
+     * @return HasMany<Project, $this>
      */
     public function projects(): HasMany
     {
