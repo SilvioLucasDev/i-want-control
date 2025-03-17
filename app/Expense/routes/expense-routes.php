@@ -9,20 +9,28 @@ use App\Expense\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function (): void {
-    Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses');
+    Route::group(['prefix' => 'expenses'], function (): void {
+        Route::get('/', [ExpenseController::class, 'index'])->name('expenses');
+    });
 
-    Route::get('/payment-methods', [PaymentMethodController::class, 'index'])->name('payment-methods');
-    Route::post('/payment-methods', [PaymentMethodController::class, 'store'])->name('payment-methods.store');
-    Route::put('/payment-methods/{paymentMethod}', [PaymentMethodController::class, 'update'])->name('payment-methods.update');
-    Route::delete('/payment-methods/{paymentMethod}', [PaymentMethodController::class, 'destroy'])->name('payment-methods.destroy');
+    Route::group(['prefix' => 'payment-methods'], function (): void {
+        Route::get('/', [PaymentMethodController::class, 'index'])->name('payment-methods');
+        Route::post('/', [PaymentMethodController::class, 'store'])->name('payment-methods.store');
+        Route::put('/{paymentMethod}', [PaymentMethodController::class, 'update'])->name('payment-methods.update');
+        Route::delete('/{paymentMethod}', [PaymentMethodController::class, 'destroy'])->name('payment-methods.destroy');
+    });
 
-    Route::get('/investments', [InvestmentController::class, 'index'])->name('investments');
-    Route::post('/investments', [InvestmentController::class, 'store'])->name('investments.store');
-    Route::put('/investments/{investment}', [InvestmentController::class, 'update'])->name('investments.update');
-    Route::delete('/investments/{investment}', [InvestmentController::class, 'destroy'])->name('investments.destroy');
+    Route::group(['prefix' => 'investments'], function (): void {
+        Route::get('/', [InvestmentController::class, 'index'])->name('investments');
+        Route::post('/', [InvestmentController::class, 'store'])->name('investments.store');
+        Route::put('/{investment}', [InvestmentController::class, 'update'])->name('investments.update');
+        Route::delete('/{investment}', [InvestmentController::class, 'destroy'])->name('investments.destroy');
+    });
 
-    Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
-    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
-    Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
-    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    Route::group(['prefix' => 'projects'], function (): void {
+        Route::get('/', [ProjectController::class, 'index'])->name('projects');
+        Route::post('/', [ProjectController::class, 'store'])->name('projects.store');
+        Route::put('/{project}', [ProjectController::class, 'update'])->name('projects.update');
+        Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    });
 });
