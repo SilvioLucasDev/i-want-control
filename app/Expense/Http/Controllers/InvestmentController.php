@@ -17,7 +17,7 @@ class InvestmentController extends Controller
     {
     }
 
-    public function userInvestments(): AnonymousResourceCollection
+    public function index(): AnonymousResourceCollection
     {
         $userId = loggedInUserId();
 
