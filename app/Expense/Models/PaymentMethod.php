@@ -12,6 +12,8 @@ class PaymentMethod extends Model
     /** @use HasFactory<\Database\Factories\PaymentMethodFactory> */
     use HasFactory;
 
+    protected static string $factory = \Database\Factories\PaymentMethodFactory::class;
+
     protected $fillable = [
         "type",
         "user_id",

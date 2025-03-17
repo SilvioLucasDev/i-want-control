@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Expense\Models\Investment;
+use App\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class InvestmentFactory extends Factory
 {
+    protected $model = Investment::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +21,9 @@ class InvestmentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'type'    => $this->faker->randomElement(['FII', 'Criptomoeda', 'Renda Fixa', 'Tesouro']),
+            'income'  => $this->faker->randomFloat(2, 0, 1000),
+            'user_id' => User::factory(),
         ];
     }
 }

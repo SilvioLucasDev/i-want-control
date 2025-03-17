@@ -12,6 +12,8 @@ class Project extends Model
     /** @use HasFactory<\Database\Factories\ProjectFactory> */
     use HasFactory;
 
+    protected static string $factory = \Database\Factories\ProjectFactory::class;
+
     protected $fillable = [
         "type",
         "hourly_rate",

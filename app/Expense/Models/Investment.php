@@ -12,6 +12,8 @@ class Investment extends Model
     /** @use HasFactory<\Database\Factories\InvestmentFactory> */
     use HasFactory;
 
+    protected static string $factory = \Database\Factories\InvestmentFactory::class;
+
     protected $fillable = [
         "type",
         "income",
