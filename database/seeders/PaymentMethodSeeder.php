@@ -22,7 +22,7 @@ class PaymentMethodSeeder extends Seeder
         foreach ($methods as $method) {
             PaymentMethod::create(
                 [
-                    "name"    => $method,
+                    "type"    => $method,
                     "user_id" => $user ? $user->id : 1,
                 ]
             );

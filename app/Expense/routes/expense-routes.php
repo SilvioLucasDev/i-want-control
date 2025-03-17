@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 use App\Expense\Http\Controllers\ExpenseController;
 use App\Expense\Http\Controllers\InvestmentController;
@@ -9,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function (): void {
     Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses');
 
-    Route::get('/payment-methods', [PaymentMethodController::class, 'userPaymentMethods'])->name('payment-methods');
+    Route::get('/payment-methods', [PaymentMethodController::class, 'index'])->name('payment-methods');
     Route::post('/payment-methods', [PaymentMethodController::class, 'store'])->name('payment-methods.store');
     Route::put('/payment-methods/{paymentMethod}', [PaymentMethodController::class, 'update'])->name('payment-methods.update');
     Route::delete('/payment-methods/{paymentMethod}', [PaymentMethodController::class, 'destroy'])->name('payment-methods.destroy');

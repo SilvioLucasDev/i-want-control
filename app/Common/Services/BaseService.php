@@ -40,33 +40,4 @@ abstract class BaseService implements BaseServiceInterface
     {
         return $this->repository->find($id);
     }
-
-    /**
-     * Creates a new record.
-     *
-     * @param array<string, mixed> $data
-     * @return T
-     */
-    public function create(array $data): Model
-    {
-        return $this->repository->create($data);
-    }
-
-    /**
-     * Updates a record by its ID.
-     *
-     * @param array<string, mixed> $data
-     */
-    public function update(int $id, array $data): bool
-    {
-        return $this->repository->update($id, $data);
-    }
-
-    /**
-     * Deletes a record by its ID.
-     */
-    public function delete(int $id): bool
-    {
-        return $this->repository->delete($id);
-    }
 }

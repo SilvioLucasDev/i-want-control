@@ -19,15 +19,11 @@ class PaymentMethodRepository extends BaseRepository
     /**
      * @return Collection<int, PaymentMethod>
      */
-    public function userPaymentMethods(int $id): Collection
+    public function getPaymentMethodsByUserId(int $id): Collection
     {
-
         return $this->repository
             ->query()
-            ->where(
-                "user_id",
-                $id
-            )
+            ->where("user_id", $id)
             ->get();
     }
 }

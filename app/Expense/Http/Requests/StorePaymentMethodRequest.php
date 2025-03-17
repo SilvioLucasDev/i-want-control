@@ -3,12 +3,31 @@
 namespace App\Expense\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePaymentMethodRequest extends FormRequest
 {
     /**
-     * Get the validation rules that apply to the request.
-     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'type' => 'Método de Pagamento',
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'type.unique' => 'Já existe um :attribute com esse nome para o seu usuário.',
+        ];
+    }
+
+    /**
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
@@ -18,7 +37,7 @@ class StorePaymentMethodRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                'unique:payment_methods,name,NULL,NULL,user_id,' . auth()->id(),
+                Rule::unique('payment_methods', 'type')->where('user_id', loggedInUserId()),
             ],
         ];
     }

@@ -5,6 +5,7 @@ namespace App\Expense\Services;
 use App\Common\Services\BaseService;
 use App\Expense\Models\PaymentMethod;
 use App\Expense\Repositories\PaymentMethodRepository;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,22 +19,46 @@ class PaymentMethodService extends BaseService
         parent::__construct($repository);
     }
 
-    public function create(array $data): Model
+    /**
+     * @return Collection<int, PaymentMethod>
+     */
+    public function getPaymentMethodsByUserId(int $userId): Collection
     {
-        $data['name']    = $data['type'];
-        $data["user_id"] = auth()->id();
-        unset($data['type']);
+        return $this->repository->getPaymentMethodsByUserId($userId);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function create(int $userId, array $data): Model
+    {
+        $data["user_id"] = $userId;
 
         return $this->repository->create($data);
     }
 
     /**
-     * @return Collection<int, PaymentMethod>
+     * @param array<string, mixed> $data
      */
-    public function userPaymentMethods(): Collection
+    public function update(int $userId, int $paymentMethodId, array $data): void
     {
+        $paymentMethod = $this->repository->find($paymentMethodId);
 
-        return $this->repository
-            ->userPaymentMethods(auth()->id());
+        if ($userId !== $paymentMethod->user_id) {
+            throw new AuthorizationException("Você não tem permissão para realizar essa operação.");
+        }
+
+        $this->repository->update($paymentMethodId, $data);
+    }
+
+    public function delete(int $userId, int $paymentMethodId): void
+    {
+        $paymentMethod = $this->repository->find($paymentMethodId);
+
+        if ($userId !== $paymentMethod->user_id) {
+            throw new AuthorizationException("Você não tem permissão para realizar essa operação.");
+        }
+
+        $this->repository->delete($paymentMethodId);
     }
 }

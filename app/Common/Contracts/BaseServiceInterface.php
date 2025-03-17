@@ -23,24 +23,4 @@ interface BaseServiceInterface
      * @return T|null
      */
     public function find(int $id): ?Model;
-
-    /**
-     * Creates a new record.
-     *
-     * @param array<string, mixed> $data
-     * @return T
-     */
-    public function create(array $data): Model;
-
-    /**
-     * Updates a record by its ID.
-     *
-     * @param array<string, mixed> $data
-     */
-    public function update(int $id, array $data): bool;
-
-    /**
-     * Deletes a record by its ID.
-     */
-    public function delete(int $id): bool;
 }

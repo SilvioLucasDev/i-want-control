@@ -9,6 +9,7 @@ use App\Expense\Http\Resources\PaymentMethodResource;
 use App\Expense\Models\PaymentMethod;
 use App\Expense\Services\PaymentMethodService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class PaymentMethodController extends Controller
 {
@@ -16,31 +17,43 @@ class PaymentMethodController extends Controller
     {
     }
 
-    public function userPaymentMethods(): AnonymousResourceCollection
+    public function index(): AnonymousResourceCollection
     {
-        $paymentMethods = $this->paymentMethodService
-            ->userPaymentMethods();
+        $userId = loggedInUserId();
+
+        $paymentMethods = $this->paymentMethodService->getPaymentMethodsByUserId($userId);
 
         return PaymentMethodResource::collection($paymentMethods);
     }
 
-    public function store(StorePaymentMethodRequest $request): void
+    public function store(StorePaymentMethodRequest $request): PaymentMethodResource
     {
-        $this->paymentMethodService
-            ->create($request->validated());
+        $data = $request->validated();
+
+        $userId = loggedInUserId();
+
+        $createdPaymentMethod = $this->paymentMethodService->create($userId, $data);
+
+        return new PaymentMethodResource($createdPaymentMethod);
     }
 
-    public function update(UpdatePaymentMethodRequest $request, PaymentMethod $paymentMethod): void
+    public function update(UpdatePaymentMethodRequest $request, PaymentMethod $paymentMethod): Response
     {
-        $this->paymentMethodService
-            ->update(
-                $paymentMethod->id,
-                $request->validated()
-            );
+        $data = $request->validated();
+
+        $userId = loggedInUserId();
+
+        $this->paymentMethodService->update($userId, $paymentMethod->id, $data);
+
+        return response()->noContent();
     }
 
-    public function destroy(PaymentMethod $paymentMethod): void
+    public function destroy(PaymentMethod $paymentMethod): Response
     {
-        $this->paymentMethodService->delete($paymentMethod->id);
+        $userId = loggedInUserId();
+
+        $this->paymentMethodService->delete($userId, $paymentMethod->id);
+
+        return response()->noContent();
     }
 }
