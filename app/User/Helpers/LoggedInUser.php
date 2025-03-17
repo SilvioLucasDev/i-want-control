@@ -27,7 +27,7 @@ if (!function_exists('loggedInUserId')) {
     {
         $user = user();
 
-        if ($user) {
+        if ($user instanceof \App\User\Models\User) {
             return $user->id;
         }
 
