@@ -5,6 +5,7 @@ namespace App\Expense\Services;
 use App\Common\Services\BaseService;
 use App\Expense\Models\Project;
 use App\Expense\Repositories\ProjectRepository;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,31 +19,46 @@ class ProjectService extends BaseService
         parent::__construct($repository);
     }
 
-    public function create(array $data): Model
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getProjectsByUserId(int $userId): Collection
     {
-        $data['name']        = $data['type'];
-        $data['hourly_rate'] = $data['hourlyRate'];
-        $data["user_id"]     = auth()->id();
-        unset($data['hourlyRate']);
-        unset($data['type']);
+        return $this->repository->getProjectsByUserId($userId);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function create(int $userId, array $data): Model
+    {
+        $data["user_id"] = $userId;
 
         return $this->repository->create($data);
     }
 
-    public function update(int $id, array $data): bool
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function update(int $userId, int $paymentMethodId, array $data): void
     {
-        $data['hourly_rate'] = $data['hourlyRate'];
-        unset($data['hourlyRate']);
+        $paymentMethod = $this->repository->find($paymentMethodId);
 
-        return $this->repository->update($id, $data);
+        if ($userId !== $paymentMethod->user_id) {
+            throw new AuthorizationException("Você não tem permissão para realizar essa operação.");
+        }
+
+        $this->repository->update($paymentMethodId, $data);
     }
 
-    /**
-     * @return Collection<int, Project>
-     */
-    public function userProjects(): Collection
+    public function delete(int $userId, int $paymentMethodId): void
     {
-        return $this->repository
-            ->userProjects(auth()->id());
+        $paymentMethod = $this->repository->find($paymentMethodId);
+
+        if ($userId !== $paymentMethod->user_id) {
+            throw new AuthorizationException("Você não tem permissão para realizar essa operação.");
+        }
+
+        $this->repository->delete($paymentMethodId);
     }
 }

@@ -9,6 +9,7 @@ use App\Expense\Http\Resources\ProjectsResource;
 use App\Expense\Models\Project;
 use App\Expense\Services\ProjectService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class ProjectController extends Controller
 {
@@ -16,31 +17,43 @@ class ProjectController extends Controller
     {
     }
 
-    public function userProjects(): AnonymousResourceCollection
+    public function index(): AnonymousResourceCollection
     {
-        $projects = $this->projectService
-            ->userProjects();
+        $userId = loggedInUserId();
+
+        $projects = $this->projectService->getProjectsByUserId($userId);
 
         return ProjectsResource::collection($projects);
     }
 
-    public function store(StoreProjectRequest $request): void
+    public function store(StoreProjectRequest $request): ProjectsResource
     {
-        $this->projectService
-            ->create($request->validated());
+        $data = $request->validated();
+
+        $userId = loggedInUserId();
+
+        $createdProject = $this->projectService->create($userId, $data);
+
+        return new ProjectsResource($createdProject);
     }
 
-    public function update(UpdateProjectRequest $request, Project $project): void
+    public function update(UpdateProjectRequest $request, Project $project): Response
     {
-        $this->projectService
-            ->update(
-                $project->id,
-                $request->validated()
-            );
+        $data = $request->validated();
+
+        $userId = loggedInUserId();
+
+        $this->projectService->update($userId, $project->id, $data);
+
+        return response()->noContent();
     }
 
-    public function destroy(Project $project): void
+    public function destroy(Project $project): Response
     {
-        $this->projectService->delete($project->id);
+        $userId = loggedInUserId();
+
+        $this->projectService->delete($userId, $project->id);
+
+        return response()->noContent();
     }
 }

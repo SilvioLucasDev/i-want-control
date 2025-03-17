@@ -13,7 +13,7 @@ class Project extends Model
     use HasFactory;
 
     protected $fillable = [
-        "name",
+        "type",
         "hourly_rate",
         "user_id",
     ];

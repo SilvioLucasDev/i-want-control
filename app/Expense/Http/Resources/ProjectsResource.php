@@ -20,11 +20,9 @@ class ProjectsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id"         => $this->resource->id,
-            "name"       => $this->resource->name,
-            "hourlyRate" => $this->resource->hourly_rate,
-            "created_at" => $this->resource->created_at->format("Y-m-d H:i:s"),
-            "updated_at" => $this->resource->updated_at->format("Y-m-d H:i:s"),
+            "id"          => $this->resource->id,
+            "type"        => $this->resource->type,
+            "hourly_rate" => $this->resource->hourly_rate,
         ];
     }
 }

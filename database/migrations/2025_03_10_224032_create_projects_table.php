@@ -12,7 +12,7 @@ return new class () extends Migration {
     {
         Schema::create('projects', function (Blueprint $table): void {
             $table->id();
-            $table->string('name');
+            $table->string('type');
             $table->decimal('hourly_rate', 8, 2)->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();

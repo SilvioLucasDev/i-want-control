@@ -3,12 +3,31 @@
 namespace App\Expense\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreProjectRequest extends FormRequest
 {
     /**
-     * Get the validation rules that apply to the request.
-     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'type'        => 'Projeto',
+            'hourly_rate' => 'Valor da Hora',
+        ];
+    }
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'type.unique' => 'Você já possui um :attribute com esse nome.',
+        ];
+    }
+
+    /**
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
@@ -18,9 +37,9 @@ class StoreProjectRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                'unique:projects,name,NULL,NULL,user_id,' . auth()->id(),
+                Rule::unique('projects', 'type')->where('user_id', loggedInUserId()),
             ],
-            'hourlyRate' => [
+            'hourly_rate' => [
                 'nullable',
                 'numeric',
             ],
