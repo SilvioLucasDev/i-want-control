@@ -37,7 +37,7 @@ class StorePaymentMethodRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('payment_methods', 'type')->where('user_id', loggedInUserId()),
+                Rule::unique('payment_methods', 'type')->where('user_id', logged_in_user_id()),
             ],
         ];
     }

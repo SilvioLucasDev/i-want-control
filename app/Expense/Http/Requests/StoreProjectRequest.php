@@ -37,7 +37,7 @@ class StoreProjectRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('projects', 'type')->where('user_id', loggedInUserId()),
+                Rule::unique('projects', 'type')->where('user_id', logged_in_user_id()),
             ],
             'hourly_rate' => [
                 'nullable',

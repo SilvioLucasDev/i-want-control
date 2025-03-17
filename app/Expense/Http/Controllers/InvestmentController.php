@@ -19,7 +19,7 @@ class InvestmentController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
-        $userId = loggedInUserId();
+        $userId = logged_in_user_id();
 
         $investments = $this->investmentService->getInvestmentsByUserId($userId);
 
@@ -30,7 +30,7 @@ class InvestmentController extends Controller
     {
         $data = $request->validated();
 
-        $userId = loggedInUserId();
+        $userId = logged_in_user_id();
 
         $createdInvestment = $this->investmentService->create($userId, $data);
 
@@ -41,7 +41,7 @@ class InvestmentController extends Controller
     {
         $data = $request->validated();
 
-        $userId = loggedInUserId();
+        $userId = logged_in_user_id();
 
         $this->investmentService->update($userId, $investment->id, $data);
 
@@ -50,7 +50,7 @@ class InvestmentController extends Controller
 
     public function destroy(Investment $investment): Response
     {
-        $userId = loggedInUserId();
+        $userId = logged_in_user_id();
 
         $this->investmentService->delete($userId, $investment->id);
 

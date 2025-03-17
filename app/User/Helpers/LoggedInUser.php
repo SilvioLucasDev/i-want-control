@@ -19,11 +19,11 @@ if (!function_exists('user')) {
     }
 }
 
-if (!function_exists('loggedInUserId')) {
+if (!function_exists('logged_in_user_id')) {
     /**
      * Get the ID of the authenticated user.
      */
-    function loggedInUserId(): ?int
+    function logged_in_user_id(): ?int
     {
         $user = user();
 

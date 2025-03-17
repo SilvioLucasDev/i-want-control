@@ -38,7 +38,7 @@ class StoreInvestmentRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('investments', 'type')->where('user_id', loggedInUserId()),
+                Rule::unique('investments', 'type')->where('user_id', logged_in_user_id()),
             ],
             'income' => [
                 'nullable',

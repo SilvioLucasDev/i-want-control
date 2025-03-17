@@ -38,7 +38,7 @@ class UpdateProjectRequest extends FormRequest
                 'string',
                 'max:255',
                 Rule::unique('projects', 'type')
-                    ->where('user_id', loggedInUserId())
+                    ->where('user_id', logged_in_user_id())
                     ->ignore($this->route('project')),
             ],
             'hourly_rate' => [

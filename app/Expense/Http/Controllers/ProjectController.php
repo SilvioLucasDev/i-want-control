@@ -19,7 +19,7 @@ class ProjectController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
-        $userId = loggedInUserId();
+        $userId = logged_in_user_id();
 
         $projects = $this->projectService->getProjectsByUserId($userId);
 
@@ -30,7 +30,7 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
 
-        $userId = loggedInUserId();
+        $userId = logged_in_user_id();
 
         $createdProject = $this->projectService->create($userId, $data);
 
@@ -41,7 +41,7 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
 
-        $userId = loggedInUserId();
+        $userId = logged_in_user_id();
 
         $this->projectService->update($userId, $project->id, $data);
 
@@ -50,7 +50,7 @@ class ProjectController extends Controller
 
     public function destroy(Project $project): Response
     {
-        $userId = loggedInUserId();
+        $userId = logged_in_user_id();
 
         $this->projectService->delete($userId, $project->id);
 

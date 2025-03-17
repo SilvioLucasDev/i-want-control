@@ -38,7 +38,7 @@ class UpdatePaymentMethodRequest extends FormRequest
                 'string',
                 'max:255',
                 Rule::unique('payment_methods', 'type')
-                    ->where('user_id', loggedInUserId())
+                    ->where('user_id', logged_in_user_id())
                     ->ignore($this->route('paymentMethod')),
             ],
         ];

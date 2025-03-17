@@ -19,7 +19,7 @@ class PaymentMethodController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
-        $userId = loggedInUserId();
+        $userId = logged_in_user_id();
 
         $paymentMethods = $this->paymentMethodService->getPaymentMethodsByUserId($userId);
 
@@ -30,7 +30,7 @@ class PaymentMethodController extends Controller
     {
         $data = $request->validated();
 
-        $userId = loggedInUserId();
+        $userId = logged_in_user_id();
 
         $createdPaymentMethod = $this->paymentMethodService->create($userId, $data);
 
@@ -41,7 +41,7 @@ class PaymentMethodController extends Controller
     {
         $data = $request->validated();
 
-        $userId = loggedInUserId();
+        $userId = logged_in_user_id();
 
         $this->paymentMethodService->update($userId, $paymentMethod->id, $data);
 
@@ -50,7 +50,7 @@ class PaymentMethodController extends Controller
 
     public function destroy(PaymentMethod $paymentMethod): Response
     {
-        $userId = loggedInUserId();
+        $userId = logged_in_user_id();
 
         $this->paymentMethodService->delete($userId, $paymentMethod->id);
 
