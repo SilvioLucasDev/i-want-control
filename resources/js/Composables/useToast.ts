@@ -2,29 +2,31 @@ import { inject, InjectionKey, provide, Ref, ref } from 'vue';
 
 type ToastType = 'success' | 'error' | 'warning';
 
+interface Toast {
+    id: number;
+    type: ToastType;
+    message: string;
+}
+
 const TOAST_KEY: InjectionKey<{
-    showToast: Ref<boolean>;
-    toastMessage: Ref<string>;
-    toastType: Ref<ToastType>;
+    toasts: Ref<Toast[]>;
     triggerToast: (type: ToastType, message: string, timeout?: number) => void;
 }> = Symbol('toast');
 
 export function provideToast() {
-    const showToast = ref(false);
-    const toastMessage = ref('');
-    const toastType = ref<ToastType>('success');
+    const toasts = ref<Toast[]>([]);
+    let toastId = 0;
 
     const triggerToast = (type: ToastType, message: string, timeout = 3000) => {
-        toastType.value = type;
-        toastMessage.value = message;
-        showToast.value = true;
+        const id = toastId++;
+        toasts.value.push({ id, type, message });
 
         setTimeout(() => {
-            showToast.value = false;
+            toasts.value = toasts.value.filter((toast) => toast.id !== id);
         }, timeout);
     };
 
-    provide(TOAST_KEY, { showToast, toastMessage, toastType, triggerToast });
+    provide(TOAST_KEY, { toasts, triggerToast });
 }
 
 export function useToast() {
