@@ -11,10 +11,10 @@ class InvestmentSeeder extends Seeder
     public function run(): void
     {
         $investments = [
-            ["name" => "FII", "income" => 1],
-            ["name" => "Criptomoeda", "income" => null],
-            ["name" => "Renda Fixa", "income" => 0.9],
-            ["name" => "Tesouro", "income" => 2],
+            ["type" => "FII", "income" => 1],
+            ["type" => "Criptomoeda", "income" => null],
+            ["type" => "Renda Fixa", "income" => 0.9],
+            ["type" => "Tesouro", "income" => 2],
         ];
 
         $user = User::first();
@@ -22,7 +22,7 @@ class InvestmentSeeder extends Seeder
         foreach ($investments as $investment) {
             Investment::create(
                 [
-                    "name"    => $investment["name"],
+                    "type"    => $investment["type"],
                     "income"  => $investment["income"],
                     "user_id" => $user ? $user->id : 1,
                 ]

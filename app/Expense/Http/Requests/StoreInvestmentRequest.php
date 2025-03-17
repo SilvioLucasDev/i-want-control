@@ -3,12 +3,32 @@
 namespace App\Expense\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreInvestmentRequest extends FormRequest
 {
     /**
-     * Get the validation rules that apply to the request.
-     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'type'   => 'Investimento',
+            'income' => 'Rendimento',
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'type.unique' => 'Você já possui um :attribute com esse nome.',
+        ];
+    }
+
+    /**
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
@@ -18,7 +38,7 @@ class StoreInvestmentRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                'unique:investments,name,NULL,NULL,user_id,' . auth()->id(),
+                Rule::unique('investments', 'type')->where('user_id', loggedInUserId()),
             ],
             'income' => [
                 'nullable',

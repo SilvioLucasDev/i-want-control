@@ -3,18 +3,43 @@
 namespace App\Expense\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateInvestmentRequest extends FormRequest
 {
     /**
-     * Get the validation rules that apply to the request.
-     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'type'   => 'Investimento',
+            'income' => 'Rendimento',
+        ];
+    }
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'type.unique' => 'Você já possui um :attribute com esse nome.',
+        ];
+    }
+
+    /**
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'name'   => ['required', 'string', 'max:255', 'unique:investments,name,NULL,NULL,user_id,' . auth()->id(), ],
+            'type' => ['required',
+                'string',
+                'max:255',
+                Rule::unique('investments', 'type')
+                    ->where('user_id', loggedInUserId())
+                    ->ignore($this->route('investment')),
+            ],
             'income' => [
                 'nullable',
                 'numeric',

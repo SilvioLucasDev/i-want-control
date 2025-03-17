@@ -5,6 +5,7 @@ namespace App\Expense\Services;
 use App\Common\Services\BaseService;
 use App\Expense\Models\Investment;
 use App\Expense\Repositories\InvestmentRepository;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,21 +19,46 @@ class InvestmentService extends BaseService
         parent::__construct($repository);
     }
 
-    public function create(array $data): Model
+    /**
+     * @return Collection<int, Investment>
+     */
+    public function getInvestmentsByUserId(int $userId): Collection
     {
-        $data['name']    = $data['type'];
-        $data["user_id"] = auth()->id();
-        unset($data['type']);
+        return $this->repository->getInvestmentsByUserId($userId);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function create(int $userId, array $data): Model
+    {
+        $data["user_id"] = $userId;
 
         return $this->repository->create($data);
     }
 
     /**
-     * @return Collection<int, Investment>
+     * @param array<string, mixed> $data
      */
-    public function userInvestments(): Collection
+    public function update(int $userId, int $paymentMethodId, array $data): void
     {
-        return $this->repository
-            ->userInvestments(auth()->id());
+        $paymentMethod = $this->repository->find($paymentMethodId);
+
+        if ($userId !== $paymentMethod->user_id) {
+            throw new AuthorizationException("Você não tem permissão para realizar essa operação.");
+        }
+
+        $this->repository->update($paymentMethodId, $data);
+    }
+
+    public function delete(int $userId, int $paymentMethodId): void
+    {
+        $paymentMethod = $this->repository->find($paymentMethodId);
+
+        if ($userId !== $paymentMethod->user_id) {
+            throw new AuthorizationException("Você não tem permissão para realizar essa operação.");
+        }
+
+        $this->repository->delete($paymentMethodId);
     }
 }

@@ -19,15 +19,11 @@ class InvestmentRepository extends BaseRepository
     /**
      * @return Collection<int, Investment>
      */
-    public function userInvestments(int $id): Collection
+    public function getInvestmentsByUserId(int $userId): Collection
     {
-
         return $this->repository
             ->query()
-            ->where(
-                "user_id",
-                $id
-            )
+            ->where("user_id", $userId)
             ->get();
     }
 }
