@@ -42,7 +42,9 @@ class UpdateInvestmentRequest extends FormRequest
             ],
             'income' => [
                 'nullable',
-                'numeric',
+                'decimal:2',
+                'min:0',
+                'max:100',
             ],
         ];
     }

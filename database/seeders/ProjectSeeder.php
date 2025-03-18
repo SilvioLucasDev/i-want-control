@@ -11,11 +11,11 @@ class ProjectSeeder extends Seeder
     public function run(): void
     {
         $projects = [
-            ["type" => "Wakami", "hourly_rate" => 10],
-            ["type" => "Gestione", "hourly_rate" => null],
-            ["type" => "MFA", "hourly_rate" => 32.6],
-            ["type" => "IWantControl", "hourly_rate" => 90.2],
-            ["type" => "ABBA", "hourly_rate" => 59],
+            ["type" => "Wakami", "hourly_rate" => 1099],
+            ["type" => "Gestione", "hourly_rate" => 1200],
+            ["type" => "MFA", "hourly_rate" => 3240],
+            ["type" => "IWantControl", "hourly_rate" => 900050],
+            ["type" => "ABBA", "hourly_rate" => 59455],
         ];
 
         $user = User::first();

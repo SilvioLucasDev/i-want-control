@@ -22,7 +22,7 @@ class InvestmentFactory extends Factory
     {
         return [
             'type'    => $this->faker->randomElement(['FII', 'Criptomoeda', 'Renda Fixa', 'Tesouro']),
-            'income'  => $this->faker->randomFloat(2, 0, 1000),
+            'income'  => $this->faker->randomFloat(2, 0, 100),
             'user_id' => User::factory(),
         ];
     }

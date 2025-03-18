@@ -13,7 +13,7 @@ return new class () extends Migration {
         Schema::create('projects', function (Blueprint $table): void {
             $table->id();
             $table->string('type');
-            $table->decimal('hourly_rate', 8, 2)->nullable();
+            $table->unsignedBigInteger('hourly_rate');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

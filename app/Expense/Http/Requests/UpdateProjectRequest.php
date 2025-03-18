@@ -43,7 +43,9 @@ class UpdateProjectRequest extends FormRequest
             ],
             'hourly_rate' => [
                 'nullable',
-                'numeric',
+                'decimal:2',
+                'min:0',
+                'max:100000',
             ],
         ];
     }

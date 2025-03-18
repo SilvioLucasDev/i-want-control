@@ -34,6 +34,8 @@ class ProjectService extends BaseService
     {
         $data["user_id"] = $userId;
 
+        $data["hourly_rate"] = convert_to_cents($data["hourly_rate"]);
+
         return $this->repository->create($data);
     }
 
@@ -47,6 +49,8 @@ class ProjectService extends BaseService
         if ($userId !== $paymentMethod->user_id) {
             throw new AuthorizationException("Você não tem permissão para realizar essa operação.");
         }
+
+        $data["hourly_rate"] = convert_to_cents($data["hourly_rate"]);
 
         $this->repository->update($paymentMethodId, $data);
     }

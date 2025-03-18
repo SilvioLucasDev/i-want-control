@@ -22,7 +22,7 @@ class ProjectFactory extends Factory
     {
         return [
             'type'        => $this->faker->randomElement(['Wakami', 'Gestione', 'MFA', 'IWantControl', 'ABBA']),
-            'hourly_rate' => $this->faker->randomFloat(2, 0, 1000),
+            'hourly_rate' => $this->faker->randomNumber(5),
             'user_id'     => User::factory(),
         ];
     }

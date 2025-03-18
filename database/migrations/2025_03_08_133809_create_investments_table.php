@@ -13,7 +13,7 @@ return new class () extends Migration {
         Schema::create('investments', function (Blueprint $table): void {
             $table->id();
             $table->string('type');
-            $table->decimal('income', 6, 2)->nullable();
+            $table->decimal('income', 5, 2)->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
