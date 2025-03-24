@@ -1,101 +1,99 @@
+import { useFetch, useFetchError } from '@/Composables/useFetch';
 import { useToast } from '@/Composables/useToast';
 
 import { Investment } from '@/Pages/Settings/Investments.vue';
 
-import axios from 'axios';
 import { inject, InjectionKey, onMounted, provide, Ref, ref } from 'vue';
 
 const INVESTMENTS_KEY: InjectionKey<{
     investments: Ref<Investment[]>;
     addInvestment: (investment: Investment) => Promise<boolean>;
-    updateInvestment: (investment: Investment) => Promise<void>;
-    removeInvestment: (id: number) => Promise<void>;
+    updateInvestment: (investment: Investment) => Promise<boolean>;
+    removeInvestment: (id: number) => Promise<boolean>;
 }> = Symbol('investments');
 
 export function provideInvestments(): void {
     const { triggerToast } = useToast();
+    const { handleError } = useFetchError();
 
     const investments: Ref<Investment[]> = ref([]);
 
-    const fetchInvestments = async () => {
-        try {
-            const { data } = await axios.get('/investments');
+    const fetchInvestments = async (): Promise<boolean> => {
+        const { data, error } = await useFetch<Investment[]>('/investments');
 
-            investments.value = data.data.map((item: Investment) => ({
-                ...item,
-                isEditing: false,
-            }));
-        } catch (error) {
-            triggerToast('error', 'Erro ao carregar investimentos.');
+        if (error.value || !data.value) {
+            handleError(error.value, 'Erro ao carregar investimentos.');
             investments.value = [];
-        }
-    };
-
-    const addInvestment = async (investment: Investment): Promise<boolean> => {
-        try {
-            const { data } = await axios.post('/investments', investment);
-            investments.value.push({ ...data.data, isEditing: false });
-
-            triggerToast('success', 'Investimento adicionado com sucesso!');
-
-            return true;
-        } catch (error) {
-            handleApiError(error, 'Erro ao adicionar investimento.');
 
             return false;
         }
+
+        investments.value = data.value.map((item) => ({
+            ...item,
+            isEditing: false,
+        }));
+
+        return true;
     };
 
-    const updateInvestment = async (investment: Investment): Promise<void> => {
-        try {
-            await axios.put(`/investments/${investment.id}`, {
+    const addInvestment = async (investment: Investment): Promise<boolean> => {
+        const { data, error } = await useFetch<Investment>('/investments', {
+            method: 'POST',
+            data: investment,
+        });
+
+        if (error.value || !data.value) {
+            handleError(error.value, 'Erro ao adicionar investimento.');
+
+            return false;
+        }
+
+        investments.value.push({ ...data.value, isEditing: false });
+        triggerToast('success', 'Investimento adicionado com sucesso!');
+
+        return true;
+    };
+
+    const updateInvestment = async (investment: Investment): Promise<boolean> => {
+        const { error } = await useFetch(`/investments/${investment.id}`, {
+            method: 'PUT',
+            data: {
                 type: investment.type,
                 income: investment.income,
-            });
+            },
+        });
 
-            const index = investments.value.findIndex((item) => item.id === investment.id);
-            if (index !== -1) {
-                investments.value[index] = { ...investment, isEditing: false };
-            }
+        if (error.value) {
+            handleError(error.value, 'Erro ao atualizar investimento.');
 
-            triggerToast('success', 'Investimento atualizado com sucesso!');
-        } catch (error) {
-            handleApiError(error, 'Erro ao atualizar investimento.');
+            return false;
         }
+
+        const index = investments.value.findIndex((item) => item.id === investment.id);
+        if (index !== -1) {
+            investments.value[index] = { ...investment, isEditing: false };
+        }
+
+        triggerToast('success', 'Investimento atualizado com sucesso!');
+
+        return true;
     };
 
-    const removeInvestment = async (investmentId: number): Promise<void> => {
-        try {
-            await axios.delete(`/investments/${investmentId}`);
+    const removeInvestment = async (investmentId: number): Promise<boolean> => {
+        const { error } = await useFetch(`/investments/${investmentId}`, {
+            method: 'DELETE',
+        });
 
-            investments.value = investments.value.filter((item) => item.id !== investmentId);
+        if (error.value) {
+            handleError(error.value, 'Erro ao remover investimento.');
 
-            triggerToast('success', 'Investimento removido com sucesso!');
-        } catch (error) {
-            handleApiError(error, 'Erro ao remover investimento.');
+            return false;
         }
-    };
 
-    const handleApiError = (error: any, defaultMessage: string) => {
-        if (axios.isAxiosError(error) && error.response) {
-            if (error.response.status === 422) {
-                const errors = error.response.data?.errors;
+        investments.value = investments.value.filter((item) => item.id !== investmentId);
+        triggerToast('success', 'Investimento removido com sucesso!');
 
-                if (errors && typeof errors === 'object') {
-                    const allErrors: string[] = Object.values(errors).flatMap((err) => (Array.isArray(err) ? err : [String(err)]));
-
-                    allErrors.forEach((errorMessage) => {
-                        triggerToast('error', errorMessage);
-                    });
-                } else {
-                    triggerToast('error', error.response.data?.message || 'Erro de validação.');
-                }
-            } else {
-                triggerToast('error', error.response.data?.message || defaultMessage);
-            }
-        } else {
-            triggerToast('error', defaultMessage);
-        }
+        return true;
     };
 
     onMounted(fetchInvestments);

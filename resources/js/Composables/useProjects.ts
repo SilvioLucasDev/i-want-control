@@ -1,105 +1,110 @@
+import { useFetch, useFetchError } from '@/Composables/useFetch';
 import { useToast } from '@/Composables/useToast';
 
 import { Project } from '@/Pages/Settings/Projects.vue';
 
-import axios from 'axios';
 import { inject, InjectionKey, onMounted, provide, Ref, ref } from 'vue';
+
+type ApiProject = Omit<Project, 'hourlyRate'> & { hourly_rate: string };
 
 const PROJECTS_KEY: InjectionKey<{
     projects: Ref<Project[]>;
     addProject: (project: Project) => Promise<boolean>;
-    updateProject: (project: Project) => Promise<void>;
-    removeProject: (id: number) => Promise<void>;
+    updateProject: (project: Project) => Promise<boolean>;
+    removeProject: (id: number) => Promise<boolean>;
 }> = Symbol('projects');
 
 export function provideProjects(): void {
     const { triggerToast } = useToast();
+    const { handleError } = useFetchError();
+
     const projects: Ref<Project[]> = ref([]);
 
-    const fetchProjects = async () => {
-        try {
-            const { data } = await axios.get('/projects');
-            projects.value = data.data.map((item: any) => ({
-                ...item,
-                hourlyRate: item.hourly_rate,
-                isEditing: false,
-            }));
-        } catch (error) {
-            triggerToast('error', 'Erro ao carregar projetos.');
+    const fetchProjects = async (): Promise<boolean> => {
+        const { data, error } = await useFetch<ApiProject[]>('/projects');
+
+        if (error.value || !data.value) {
+            handleError(error.value, 'Erro ao carregar projetos.');
             projects.value = [];
+
+            return false;
         }
+
+        projects.value = data.value.map((item: ApiProject) => ({
+            ...item,
+            hourlyRate: item.hourly_rate,
+            isEditing: false,
+        }));
+
+        return true;
     };
 
     const addProject = async (project: Project): Promise<boolean> => {
-        try {
-            const { data } = await axios.post('/projects', {
+        const { data, error } = await useFetch<ApiProject>('/projects', {
+            method: 'POST',
+            data: {
                 type: project.type,
                 hourly_rate: project.hourlyRate,
-            });
+            },
+        });
 
-            projects.value.push({
-                ...data.data,
-                hourlyRate: data.data.hourly_rate,
-                isEditing: false,
-            });
+        if (error.value || !data.value) {
+            handleError(error.value, 'Erro ao adicionar projeto.');
 
-            triggerToast('success', 'Projeto adicionado com sucesso!');
-            return true;
-        } catch (error) {
-            handleApiError(error, 'Erro ao adicionar projeto.');
             return false;
         }
+
+        projects.value.push({
+            ...data.value,
+            hourlyRate: data.value.hourly_rate,
+            isEditing: false,
+        });
+
+        triggerToast('success', 'Projeto adicionado com sucesso!');
+
+        return true;
     };
 
-    const updateProject = async (project: Project): Promise<void> => {
-        try {
-            await axios.put(`/projects/${project.id}`, {
+    const updateProject = async (project: Project): Promise<boolean> => {
+        const { error } = await useFetch(`/projects/${project.id}`, {
+            method: 'PUT',
+            data: {
                 type: project.type,
                 hourly_rate: project.hourlyRate,
-            });
+            },
+        });
 
-            const index = projects.value.findIndex((item) => item.id === project.id);
-            if (index !== -1) {
-                projects.value[index] = { ...project, isEditing: false };
-            }
+        if (error.value) {
+            handleError(error.value, 'Erro ao atualizar projeto.');
 
-            triggerToast('success', 'Projeto atualizado com sucesso!');
-        } catch (error) {
-            handleApiError(error, 'Erro ao atualizar projeto.');
+            return false;
         }
+
+        const index = projects.value.findIndex((item) => item.id === project.id);
+        if (index !== -1) {
+            projects.value[index] = { ...project, isEditing: false };
+        }
+
+        triggerToast('success', 'Projeto atualizado com sucesso!');
+
+        return true;
     };
 
-    const removeProject = async (projectId: number): Promise<void> => {
-        try {
-            await axios.delete(`/projects/${projectId}`);
+    const removeProject = async (projectId: number): Promise<boolean> => {
+        const { error } = await useFetch(`/projects/${projectId}`, {
+            method: 'DELETE',
+        });
 
-            projects.value = projects.value.filter((item) => item.id !== projectId);
-            triggerToast('success', 'Projeto removido com sucesso!');
-        } catch (error) {
-            handleApiError(error, 'Erro ao remover projeto.');
+        if (error.value) {
+            handleError(error.value, 'Erro ao remover projeto.');
+
+            return false;
         }
-    };
 
-    const handleApiError = (error: any, defaultMessage: string) => {
-        if (axios.isAxiosError(error) && error.response) {
-            if (error.response.status === 422) {
-                const errors = error.response.data?.errors;
+        projects.value = projects.value.filter((item) => item.id !== projectId);
+        triggerToast('success', 'Projeto removido com sucesso!');
 
-                if (errors && typeof errors === 'object') {
-                    const allErrors: string[] = Object.values(errors).flatMap((err) => (Array.isArray(err) ? err : [String(err)]));
-
-                    allErrors.forEach((errorMessage) => {
-                        triggerToast('error', errorMessage);
-                    });
-                } else {
-                    triggerToast('error', error.response.data?.message || 'Erro de validação.');
-                }
-            } else {
-                triggerToast('error', error.response.data?.message || defaultMessage);
-            }
-        } else {
-            triggerToast('error', defaultMessage);
-        }
+        return true;
     };
 
     onMounted(fetchProjects);
