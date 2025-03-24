@@ -21,26 +21,24 @@ export function provideProjects(): void {
     const projects: Ref<Project[]> = ref([]);
 
     const fetchProjects = async (): Promise<boolean> => {
-        const { data, error } = await useFetch<ApiProject[]>('/projects');
+        const { data, error } = await useFetch<ApiProject[]>(route('projects.index'));
 
         if (error.value || !data.value) {
             handleError(error.value, 'Erro ao carregar projetos.');
             projects.value = [];
-
             return false;
         }
 
-        projects.value = data.value.map((item: ApiProject) => ({
+        projects.value = data.value.map((item) => ({
             ...item,
             hourlyRate: item.hourly_rate,
             isEditing: false,
         }));
-
         return true;
     };
 
     const addProject = async (project: Project): Promise<boolean> => {
-        const { data, error } = await useFetch<ApiProject>('/projects', {
+        const { data, error } = await useFetch<ApiProject>(route('projects.store'), {
             method: 'POST',
             data: {
                 type: project.type,
@@ -50,7 +48,6 @@ export function provideProjects(): void {
 
         if (error.value || !data.value) {
             handleError(error.value, 'Erro ao adicionar projeto.');
-
             return false;
         }
 
@@ -61,12 +58,11 @@ export function provideProjects(): void {
         });
 
         triggerToast('success', 'Projeto adicionado com sucesso!');
-
         return true;
     };
 
     const updateProject = async (project: Project): Promise<boolean> => {
-        const { error } = await useFetch(`/projects/${project.id}`, {
+        const { error } = await useFetch(route('projects.update', { project: project.id }), {
             method: 'PUT',
             data: {
                 type: project.type,
@@ -76,7 +72,6 @@ export function provideProjects(): void {
 
         if (error.value) {
             handleError(error.value, 'Erro ao atualizar projeto.');
-
             return false;
         }
 
@@ -86,24 +81,21 @@ export function provideProjects(): void {
         }
 
         triggerToast('success', 'Projeto atualizado com sucesso!');
-
         return true;
     };
 
     const removeProject = async (projectId: number): Promise<boolean> => {
-        const { error } = await useFetch(`/projects/${projectId}`, {
+        const { error } = await useFetch(route('projects.destroy', { project: projectId }), {
             method: 'DELETE',
         });
 
         if (error.value) {
             handleError(error.value, 'Erro ao remover projeto.');
-
             return false;
         }
 
         projects.value = projects.value.filter((item) => item.id !== projectId);
         triggerToast('success', 'Projeto removido com sucesso!');
-
         return true;
     };
 

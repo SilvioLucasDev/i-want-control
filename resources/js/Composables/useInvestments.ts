@@ -19,12 +19,11 @@ export function provideInvestments(): void {
     const investments: Ref<Investment[]> = ref([]);
 
     const fetchInvestments = async (): Promise<boolean> => {
-        const { data, error } = await useFetch<Investment[]>('/investments');
+        const { data, error } = await useFetch<Investment[]>(route('investments.index'));
 
         if (error.value || !data.value) {
             handleError(error.value, 'Erro ao carregar investimentos.');
             investments.value = [];
-
             return false;
         }
 
@@ -32,30 +31,27 @@ export function provideInvestments(): void {
             ...item,
             isEditing: false,
         }));
-
         return true;
     };
 
     const addInvestment = async (investment: Investment): Promise<boolean> => {
-        const { data, error } = await useFetch<Investment>('/investments', {
+        const { data, error } = await useFetch<Investment>(route('investments.store'), {
             method: 'POST',
             data: investment,
         });
 
         if (error.value || !data.value) {
             handleError(error.value, 'Erro ao adicionar investimento.');
-
             return false;
         }
 
         investments.value.push({ ...data.value, isEditing: false });
         triggerToast('success', 'Investimento adicionado com sucesso!');
-
         return true;
     };
 
     const updateInvestment = async (investment: Investment): Promise<boolean> => {
-        const { error } = await useFetch(`/investments/${investment.id}`, {
+        const { error } = await useFetch(route('investments.update', { investment: investment.id }), {
             method: 'PUT',
             data: {
                 type: investment.type,
@@ -65,7 +61,6 @@ export function provideInvestments(): void {
 
         if (error.value) {
             handleError(error.value, 'Erro ao atualizar investimento.');
-
             return false;
         }
 
@@ -75,24 +70,21 @@ export function provideInvestments(): void {
         }
 
         triggerToast('success', 'Investimento atualizado com sucesso!');
-
         return true;
     };
 
     const removeInvestment = async (investmentId: number): Promise<boolean> => {
-        const { error } = await useFetch(`/investments/${investmentId}`, {
+        const { error } = await useFetch(route('investments.destroy', { investment: investmentId }), {
             method: 'DELETE',
         });
 
         if (error.value) {
             handleError(error.value, 'Erro ao remover investimento.');
-
             return false;
         }
 
         investments.value = investments.value.filter((item) => item.id !== investmentId);
         triggerToast('success', 'Investimento removido com sucesso!');
-
         return true;
     };
 
