@@ -14,6 +14,7 @@ return new class () extends Migration {
             $table->id();
             $table->string('type');
             $table->decimal('income', 5, 2)->nullable();
+
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
