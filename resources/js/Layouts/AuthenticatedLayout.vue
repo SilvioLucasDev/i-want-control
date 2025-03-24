@@ -87,7 +87,7 @@ onUnmounted(() => {
             <aside v-show="isMobile" :class="[isSidebarOpen ? 'h-screen w-64 bg-gray-50 dark:bg-gray-800' : 'w-screen bg-gray-100 dark:bg-gray-900', 'fixed left-0 top-0 z-40']" aria-label="Mobile Sidebar">
                 <div :class="[isSidebarOpen ? 'bg-gray-50 px-3 py-4 dark:bg-gray-800' : 'bg-gray-100 dark:bg-gray-900', 'flex h-full flex-col overflow-y-auto']">
                     <div :class="[isSidebarOpen ? 'mb-5' : '', 'flex items-center justify-between']">
-                        <Link v-show="isSidebarOpen" :href="route('dashboard')" class="flex items-center ps-2.5">
+                        <Link v-show="isSidebarOpen" :href="route('dashboard.index')" class="flex items-center ps-2.5">
                             <ApplicationLogo class="block h-9 w-auto fill-current pe-2 text-gray-800 dark:text-gray-200" />
                             <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">IWC</span>
                         </Link>
@@ -106,7 +106,7 @@ onUnmounted(() => {
 
                     <ul v-show="isSidebarOpen" class="space-y-2 font-medium">
                         <li>
-                            <NavLink :href="route('dashboard')" :active="route().current('dashboard')" class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <NavLink :href="route('dashboard.index')" :active="route().current('dashboard.index')" class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <DashboardIcon />
                                 <span class="ms-3">Dashboard</span>
                             </NavLink>
@@ -115,8 +115,8 @@ onUnmounted(() => {
                         <SideDropdown
                             title="Controles"
                             :links="[
-                                { label: 'Gastos', routeName: 'expenses' },
-                                { label: 'Serviços', routeName: 'services' },
+                                { label: 'Gastos', routeName: 'expenses.index' },
+                                { label: 'Serviços', routeName: 'services.index' },
                             ]"
                         />
                     </ul>
@@ -153,7 +153,7 @@ onUnmounted(() => {
             <aside v-show="!isMobile" :class="[isSidebarOpen ? 'w-64' : 'w-16', 'fixed left-0 top-0 z-40 h-screen bg-gray-50 transition-all dark:bg-gray-800']" aria-label="Desktop Sidebar">
                 <div class="flex h-full flex-col overflow-y-auto bg-gray-50 px-3 py-4 dark:bg-gray-800">
                     <div class="mb-5 flex items-center justify-between">
-                        <Link v-show="isSidebarOpen" :href="route('dashboard')" class="flex items-center ps-2.5">
+                        <Link v-show="isSidebarOpen" :href="route('dashboard.index')" class="flex items-center ps-2.5">
                             <ApplicationLogo class="block h-9 w-auto fill-current pe-2 text-gray-800 dark:text-gray-200" />
                             <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">IWC</span>
                         </Link>
@@ -169,8 +169,8 @@ onUnmounted(() => {
 
                     <ul v-show="isSidebarOpen" class="space-y-2 font-medium">
                         <li>
-                            <NavLink :href="route('dashboard')" :active="route().current('dashboard')" class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                <DashboardIcon :active="route().current('dashboard')" />
+                            <NavLink :href="route('dashboard.index')" :active="route().current('dashboard.index')" class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <DashboardIcon :active="route().current('dashboard.index')" />
                                 <span class="ms-3">Dashboard</span>
                             </NavLink>
                         </li>
@@ -178,8 +178,8 @@ onUnmounted(() => {
                         <SideDropdown
                             title="Controles"
                             :links="[
-                                { label: 'Gastos', routeName: 'expenses' },
-                                { label: 'Serviços', routeName: 'services' },
+                                { label: 'Gastos', routeName: 'expenses.index' },
+                                { label: 'Serviços', routeName: 'services.index' },
                             ]"
                         />
                     </ul>
