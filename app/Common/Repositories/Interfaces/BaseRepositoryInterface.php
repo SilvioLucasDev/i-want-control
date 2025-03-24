@@ -1,6 +1,8 @@
-<?php declare(strict_types = 1);
+<?php
 
-namespace App\Common\Contracts;
+declare(strict_types = 1);
+
+namespace App\Common\Repositories\Interfaces;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -8,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @template T of Model
  */
-interface BaseServiceInterface
+interface BaseRepositoryInterface
 {
     /**
      * Returns all records.

@@ -19,7 +19,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
-        "laradumps/laradumps": "^3.0",
+        "laradumps/laradumps": "^3.5",
         "larastan/larastan": "^3.0",
         "laravel/breeze": "^2.3",
         "laravel/pail": "^1.1",
@@ -38,7 +38,11 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app\\User\\Helpers\\LoggedInUserHelper.php",
+            "app\\Common\\Helpers\\MonetaryHelper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

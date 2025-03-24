@@ -2,8 +2,8 @@
 
 namespace App\Common\Services;
 
-use App\Common\Contracts\BaseRepositoryInterface;
-use App\Common\Contracts\BaseServiceInterface;
+use App\Common\Repositories\Interfaces\BaseRepositoryInterface;
+use App\Common\Services\Interfaces\BaseServiceInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,34 +39,5 @@ abstract class BaseService implements BaseServiceInterface
     public function find(int $id): ?Model
     {
         return $this->repository->find($id);
-    }
-
-    /**
-     * Creates a new record.
-     *
-     * @param array<string, mixed> $data
-     * @return T
-     */
-    public function create(array $data): Model
-    {
-        return $this->repository->create($data);
-    }
-
-    /**
-     * Updates a record by its ID.
-     *
-     * @param array<string, mixed> $data
-     */
-    public function update(int $id, array $data): bool
-    {
-        return $this->repository->update($id, $data);
-    }
-
-    /**
-     * Deletes a record by its ID.
-     */
-    public function delete(int $id): bool
-    {
-        return $this->repository->delete($id);
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Common\Repositories;
 
-use App\Common\Contracts\BaseRepositoryInterface;
+use App\Common\Repositories\Interfaces\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;

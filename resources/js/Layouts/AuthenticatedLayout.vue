@@ -10,11 +10,13 @@ import SunIcon from '@/Components/Icons/SunIcon.vue';
 import ToggleInput from '@/Components/Inputs/ToggleInput.vue';
 import NavLink from '@/Components/Navigation/NavLink.vue';
 import SideDropdown from '@/Components/Navigation/SideDropdown.vue';
-import { useDarkMode } from '@/Composables/useDarkMode';
+import Toast from '@/Components/Toast.vue';
 
 import Settings from '@/Pages/Settings/Index.vue';
 
+import { useDarkMode } from '@/Composables/useDarkMode';
 import { provideEditMode } from '@/Composables/useEditMode';
+import { provideToast } from '@/Composables/useToast';
 
 import { Link } from '@inertiajs/vue3';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
@@ -22,6 +24,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 const { isDarkMode, toggleDarkMode, themeText } = useDarkMode();
 
 provideEditMode();
+provideToast();
 
 const props = defineProps<{
     auth: {
@@ -218,4 +221,6 @@ onUnmounted(() => {
     </div>
 
     <Settings :showSettingsModal="modals.settings" @close="toggleModal('settings')" />
+
+    <Toast />
 </template>
