@@ -23,3 +23,4 @@ yarn-error.log
 /.zed
 /coverage
 laradumps.yaml
+/resources/js/ziggy.js
