@@ -1,15 +1,16 @@
 <?php declare(strict_types = 1);
 
-namespace App\Service\Http\Controllers;
+namespace App\Project\Http\Controllers;
 
 use App\Common\Http\Controllers\Controller;
-use App\Service\Http\Requests\StoreProjectRequest;
-use App\Service\Http\Requests\UpdateProjectRequest;
-use App\Service\Http\Resources\ProjectsResource;
-use App\Service\Models\Project;
-use App\Service\Services\ProjectService;
+use App\Project\Http\Requests\StoreProjectRequest;
+use App\Project\Http\Requests\UpdateProjectRequest;
+use App\Project\Http\Resources\ProjectsResource;
+use App\Project\Models\Project;
+use App\Project\Services\ProjectService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Inertia\{Inertia, Response as InertiaResponse};
 
 class ProjectController extends Controller
 {
@@ -17,7 +18,12 @@ class ProjectController extends Controller
     {
     }
 
-    public function index(): AnonymousResourceCollection
+    public function index(): InertiaResponse
+    {
+        return Inertia::render('Service/Index');
+    }
+
+    public function getProjectsByUser(): AnonymousResourceCollection
     {
         $userId = logged_in_user_id();
 

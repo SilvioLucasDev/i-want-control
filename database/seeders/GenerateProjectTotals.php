@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Service\Models\Project;
+use App\Project\Models\Project;
 use Illuminate\Database\Seeder;
 
 class GenerateProjectTotals extends Seeder

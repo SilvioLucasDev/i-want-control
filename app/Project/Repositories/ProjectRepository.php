@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace App\Service\Repositories;
+namespace App\Project\Repositories;
 
 use App\Common\Repositories\BaseRepository;
-use App\Service\Models\Project;
+use App\Project\Models\Project;
 use Illuminate\Database\Eloquent\Collection;
 
 /**

@@ -116,7 +116,7 @@ onUnmounted(() => {
                             title="Controles"
                             :links="[
                                 { label: 'Gastos', routeName: 'expenses.index' },
-                                { label: 'Serviços', routeName: 'services.index' },
+                                { label: 'Serviços', routeName: 'projects.index' },
                             ]"
                         />
                     </ul>
@@ -179,7 +179,7 @@ onUnmounted(() => {
                             title="Controles"
                             :links="[
                                 { label: 'Gastos', routeName: 'expenses.index' },
-                                { label: 'Serviços', routeName: 'services.index' },
+                                { label: 'Serviços', routeName: 'projects.index' },
                             ]"
                         />
                     </ul>

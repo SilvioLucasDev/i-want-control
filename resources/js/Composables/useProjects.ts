@@ -21,7 +21,7 @@ export function provideProjects(): void {
     const projects: Ref<Project[]> = ref([]);
 
     const fetchProjects = async (): Promise<boolean> => {
-        const { data, error } = await useFetch<ApiProject[]>(route('projects.index'));
+        const { data, error } = await useFetch<ApiProject[]>(route('projects.get-projects-by-user'));
 
         if (error.value || !data.value) {
             handleError(error.value, 'Erro ao carregar projetos.');

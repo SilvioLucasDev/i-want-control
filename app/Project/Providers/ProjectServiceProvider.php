@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace App\Service\Providers;
+namespace App\Project\Providers;
 
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
 
-class ServiceServiceProvider extends ServiceProvider
+class ProjectServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.

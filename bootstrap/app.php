@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->group($basePath . '/Auth/routes/auth-routes.php')
                 ->group($basePath . '/Dashboard/routes/dashboard-routes.php')
                 ->group($basePath . '/Expense/routes/expense-routes.php')
-                ->group($basePath . '/Service/routes/service-routes.php')
+                ->group($basePath . '/Project/routes/project-routes.php')
                 ->group($basePath . '/User/routes/user-routes.php');
         }
     )
