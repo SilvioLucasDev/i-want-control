@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import Modal from '@/Components/Modal/Modal.vue';
 import TabsWithIcons from '@/Components/Navigation/TabsWithIcons.vue';
-import { provideInvestments } from '@/Composables/useInvestments';
-import { providePaymentMethods } from '@/Composables/usePaymentMethods';
-import { provideProjects } from '@/Composables/useProjects';
 
 import Configuration from '@/Pages/Settings/Configuration.vue';
 import Export from '@/Pages/Settings/Export.vue';
@@ -12,10 +9,6 @@ import PaymentMethods from '@/Pages/Settings/PaymentMethods.vue';
 import Projects from '@/Pages/Settings/Projects.vue';
 
 import { ref } from 'vue';
-
-providePaymentMethods();
-provideInvestments();
-provideProjects();
 
 defineProps<{ showSettingsModal: boolean }>();
 

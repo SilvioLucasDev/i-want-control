@@ -16,7 +16,9 @@ import Settings from '@/Pages/Settings/Index.vue';
 
 import { useDarkMode } from '@/Composables/useDarkMode';
 import { provideEditMode } from '@/Composables/useEditMode';
-import { provideToast } from '@/Composables/useToast';
+import { provideInvestments } from '@/Composables/useInvestments';
+import { providePaymentMethods } from '@/Composables/usePaymentMethods';
+import { provideProjects } from '@/Composables/useProjects';
 
 import { Link } from '@inertiajs/vue3';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
@@ -24,7 +26,9 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 const { isDarkMode, toggleDarkMode, themeText } = useDarkMode();
 
 provideEditMode();
-provideToast();
+providePaymentMethods();
+provideInvestments();
+provideProjects();
 
 const props = defineProps<{
     auth: {
