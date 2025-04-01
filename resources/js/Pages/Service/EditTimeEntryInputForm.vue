@@ -15,7 +15,7 @@ import { PropType, ref, watch } from 'vue';
 
 const props = defineProps({
     showEditTimeEntryInputModal: Boolean,
-    item: Object as PropType<{ id: number; scope: string; description: string; start: string; end: string } | null>,
+    item: Object as PropType<{ id: number; scope: string; description: string; initialTime: string; endTime: string } | null>,
 });
 
 const emit = defineEmits(['close']);
@@ -28,8 +28,8 @@ const form = useForm({
     id: props.item?.id ?? 0,
     scope: props.item?.scope ?? '',
     description: props.item?.description ?? '',
-    start: props.item?.start ?? '',
-    end: props.item?.end ?? '',
+    initialTime: props.item?.initialTime ?? '',
+    endTime: props.item?.endTime ?? '',
 });
 
 watch(
@@ -39,8 +39,8 @@ watch(
             form.id = newItem.id ?? 0;
             form.scope = newItem.scope ?? '';
             form.description = newItem.description ?? '';
-            form.start = newItem.start ?? '';
-            form.end = newItem.end ?? '';
+            form.initialTime = newItem.initialTime ?? '';
+            form.endTime = newItem.endTime ?? '';
         }
     },
     { deep: true, immediate: true },
@@ -90,15 +90,15 @@ const deleteItem = () => {
                 </div>
 
                 <div>
-                    <InputLabel for="start" value="Início" />
-                    <TimePickerInput id="start" v-model="form.start" />
-                    <InputError class="mt-2" :message="form.errors.start" />
+                    <InputLabel for="initialTime" value="Horário Inicial" />
+                    <TimePickerInput id="initialTime" v-model="form.initialTime" />
+                    <InputError class="mt-2" :message="form.errors.initialTime" />
                 </div>
 
                 <div>
-                    <InputLabel for="time" value="Select time" />
-                    <TimePickerInput id="end" v-model="form.end" />
-                    <InputError class="mt-2" :message="form.errors.end" />
+                    <InputLabel for="endTime" value="Horário Final" />
+                    <TimePickerInput id="endTime" v-model="form.endTime" />
+                    <InputError class="mt-2" :message="form.errors.endTime" />
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">

@@ -14,6 +14,9 @@ return new class () extends Migration {
             $table->id();
             $table->string('type');
             $table->unsignedBigInteger('hourly_rate');
+            $table->time('total_hours_worked')->default('00:00:00');
+            $table->unsignedBigInteger('total_receivable')->default(0);
+
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
