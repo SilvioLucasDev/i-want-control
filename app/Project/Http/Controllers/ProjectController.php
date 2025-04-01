@@ -20,7 +20,7 @@ class ProjectController extends Controller
 
     public function index(): InertiaResponse
     {
-        return Inertia::render('Service/Index');
+        return Inertia::render('Project/Index');
     }
 
     public function getProjectsByUser(): AnonymousResourceCollection

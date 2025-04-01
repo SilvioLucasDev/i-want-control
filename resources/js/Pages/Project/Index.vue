@@ -16,8 +16,8 @@ import TdFoot from '@/Components/Table/TFoot/Td.vue';
 import ThFoot from '@/Components/Table/TFoot/Th.vue';
 import ThHead from '@/Components/Table/THead/Th.vue';
 
-import AddTimeEntryInputForm from '@/Pages/Service/AddTimeEntryInputForm.vue';
-import EditTimeEntryInputForm from '@/Pages/Service/EditTimeEntryInputForm.vue';
+import AddTimeEntryInputForm from '@/Pages/Project/AddTimeEntryInputForm.vue';
+import EditTimeEntryInputForm from '@/Pages/Project/EditTimeEntryInputForm.vue';
 
 import { useEditMode } from '@/Composables/useEditMode';
 
@@ -34,7 +34,7 @@ const fetchData = ({ month, year }: SelectDate) => {
     monthSelected.value = month;
     yearSelected.value = year;
 
-    console.log(`SERVICES :: Fetching data for: ${month} / ${year} and project: ${projectSelected.value}`);
+    console.log(`PROJECTS :: Fetching data for: ${month} / ${year} and project: ${projectSelected.value}`);
 };
 
 type AddModalType = 'addTimeEntryInput';
@@ -52,7 +52,7 @@ const toggleModal = (type: ModalType) => {
     modals.value[type] = !modals.value[type];
 };
 
-type Item = { id: number; scope: string; description: string; start: string; end: string };
+type Item = { id: number; scope: string; description: string; initialTime: string; endTime: string };
 
 const itemToEdit = ref<Item | null>(null);
 
@@ -66,7 +66,7 @@ const projectsMock = ref<string[]>(['Wakami', 'Gestione', 'MFA', 'IWantControl',
 </script>
 
 <template>
-    <Head title="Serviços" />
+    <Head title="Projetos" />
 
     <Calendar @select-date="fetchData" />
 
@@ -116,7 +116,7 @@ const projectsMock = ref<string[]>(['Wakami', 'Gestione', 'MFA', 'IWantControl',
                     <TdBody>4h</TdBody>
 
                     <TdBody v-if="isEditing" class="px-0">
-                        <TransparentButton @click="editItem('editTimeEntryInput', { id: 1, scope: 'ADM', description: 'Finalizei o fluxo de autenticação utilizando OAUTH2', start: '08:00', end: '12:00' })">
+                        <TransparentButton @click="editItem('editTimeEntryInput', { id: 1, scope: 'ADM', description: 'Finalizei o fluxo de autenticação utilizando OAUTH2', initialTime: '08:00', endTime: '12:00' })">
                             <DotsIcon />
                         </TransparentButton>
                     </TdBody>
@@ -130,7 +130,7 @@ const projectsMock = ref<string[]>(['Wakami', 'Gestione', 'MFA', 'IWantControl',
                     <TdBody>5h</TdBody>
 
                     <TdBody v-if="isEditing" class="px-0">
-                        <TransparentButton @click="editItem('editTimeEntryInput', { id: 2, scope: 'Site', description: 'Iniciei os ajustes na landing page', start: '13:00', end: '18:00' })">
+                        <TransparentButton @click="editItem('editTimeEntryInput', { id: 2, scope: 'Site', description: 'Iniciei os ajustes na landing page', initialTime: '13:00', endTime: '18:00' })">
                             <DotsIcon />
                         </TransparentButton>
                     </TdBody>
@@ -144,7 +144,7 @@ const projectsMock = ref<string[]>(['Wakami', 'Gestione', 'MFA', 'IWantControl',
                     <TdBody>3h</TdBody>
 
                     <TdBody v-if="isEditing" class="px-0">
-                        <TransparentButton @click="editItem('editTimeEntryInput', { id: 3, scope: 'Infra', description: 'Configurei o servidor EC2 na AWS', start: '19:00', end: '22:00' })">
+                        <TransparentButton @click="editItem('editTimeEntryInput', { id: 3, scope: 'Infra', description: 'Configurei o servidor EC2 na AWS', initialTime: '19:00', endTime: '22:00' })">
                             <DotsIcon />
                         </TransparentButton>
                     </TdBody>
