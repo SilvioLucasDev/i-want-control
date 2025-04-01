@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Expense\Models\Project;
 use App\Service\Models\PostingProjectActivity;
+use App\Service\Models\Project;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 

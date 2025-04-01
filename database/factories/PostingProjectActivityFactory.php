@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Expense\Models\Project;
 use App\Service\Models\PostingProjectActivity;
+use App\Service\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

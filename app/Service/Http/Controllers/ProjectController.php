@@ -1,13 +1,13 @@
 <?php declare(strict_types = 1);
 
-namespace App\Expense\Http\Controllers;
+namespace App\Service\Http\Controllers;
 
 use App\Common\Http\Controllers\Controller;
-use App\Expense\Http\Requests\StoreProjectRequest;
-use App\Expense\Http\Requests\UpdateProjectRequest;
-use App\Expense\Http\Resources\ProjectsResource;
-use App\Expense\Models\Project;
-use App\Expense\Services\ProjectService;
+use App\Service\Http\Requests\StoreProjectRequest;
+use App\Service\Http\Requests\UpdateProjectRequest;
+use App\Service\Http\Resources\ProjectsResource;
+use App\Service\Models\Project;
+use App\Service\Services\ProjectService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 

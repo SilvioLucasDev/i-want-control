@@ -1,8 +1,7 @@
 <?php declare(strict_types = 1);
 
-namespace App\Expense\Models;
+namespace App\Service\Models;
 
-use App\Service\Models\PostingProjectActivity;
 use App\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

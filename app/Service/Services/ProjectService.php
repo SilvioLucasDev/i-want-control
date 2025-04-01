@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace App\Expense\Services;
+namespace App\Service\Services;
 
 use App\Common\Services\BaseService;
-use App\Expense\Models\Project;
-use App\Expense\Repositories\ProjectRepository;
+use App\Service\Models\Project;
+use App\Service\Repositories\ProjectRepository;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;

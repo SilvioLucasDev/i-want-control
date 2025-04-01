@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace App\Expense\Http\Resources;
+namespace App\Service\Http\Resources;
 
-use App\Expense\Models\Project;
+use App\Service\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

@@ -4,7 +4,7 @@ namespace App\User\Models;
 
 use App\Expense\Models\Investment;
 use App\Expense\Models\PaymentMethod;
-use App\Expense\Models\Project;
+use App\Service\Models\Project;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;

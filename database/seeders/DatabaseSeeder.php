@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Expense\Models\Investment;
 use App\Expense\Models\PaymentMethod;
-use App\Expense\Models\Project;
+use App\Service\Models\Project;
 use App\User\Models\User;
 use Illuminate\Database\Seeder;
 
