@@ -74,7 +74,6 @@ const selectDate: () => void = debounce(() => {
 
 onMounted(() => {
     setMonthYear();
-    selectDate();
 });
 </script>
 
