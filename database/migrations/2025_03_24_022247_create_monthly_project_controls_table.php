@@ -10,16 +10,18 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('posting_project_activities', function (Blueprint $table): void {
+        Schema::create('monthly_project_controls', function (Blueprint $table): void {
             $table->id();
-            $table->string('scope');
-            $table->string('description');
-            $table->time('initial_time');
-            $table->time('final_time');
-            $table->time('duration');
+            $table->string('month');
+            $table->string('year');
+            $table->unsignedBigInteger('hourly_rate');
+            $table->time('total_hours_worked')->default('00:00:00');
+            $table->unsignedBigInteger('total_receivable')->default(0);
 
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
+            $table->unique(['month', 'year', 'project_id'], 'monthly_project_controls_unique');
             $table->timestamps();
+
         });
     }
 
@@ -28,6 +30,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('posting_project_activities');
+        Schema::dropIfExists('monthly_project_controls');
     }
 };

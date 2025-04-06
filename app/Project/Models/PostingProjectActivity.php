@@ -20,6 +20,7 @@ class PostingProjectActivity extends Model
         "final_time",
         "duration",
         "project_id",
+        "monthly_project_control_id",
     ];
 
     /**
@@ -28,5 +29,13 @@ class PostingProjectActivity extends Model
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
+    }
+
+    /**
+     * @return BelongsTo<MonthlyProjectControl, $this>
+     */
+    public function monthlyProjectControl(): BelongsTo
+    {
+        return $this->belongsTo(MonthlyProjectControl::class);
     }
 }

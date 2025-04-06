@@ -34,8 +34,16 @@ class Project extends Model
     /**
      * @return HasMany<PostingProjectActivity, $this>
      */
-    public function PostingProjectActivities(): HasMany
+    public function postingProjectActivities(): HasMany
     {
         return $this->hasMany(PostingProjectActivity::class);
+    }
+
+    /**
+     * @return HasMany<MonthlyProjectControl, $this>
+     */
+    public function monthlyProjectControls(): HasMany
+    {
+        return $this->hasMany(MonthlyProjectControl::class);
     }
 }

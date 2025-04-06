@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             PaymentMethodSeeder::class,
             InvestmentSeeder::class,
             ProjectSeeder::class,
+            MonthlyProjectControlSeeder::class,
             PostingProjectActivitySeeder::class,
             GenerateProjectTotals::class,
         ]);
