@@ -23,10 +23,10 @@ class PostingProjectActivityFactory extends Factory
     {
         $day = Carbon::today();
 
-        $initialTime = $day->copy()->setTime(random_int(6, 12), random_int(0, 59));
-        $finalTime   = $initialTime->copy()->addMinutes(random_int(120, 240)); // 2h ~ 4h
+        $startTime = $day->copy()->setTime(random_int(6, 12), random_int(0, 59));
+        $endTime   = $startTime->copy()->addMinutes(random_int(120, 240)); // 2h ~ 4h
 
-        $durationInSeconds = (int) $initialTime->diffInSeconds($finalTime);
+        $durationInSeconds = (int) $startTime->diffInSeconds($endTime);
         $durationFormatted = gmdate('H:i:s', $durationInSeconds);
 
         $project               = Project::with('monthlyProjectControls')->find($this->faker->numberBetween(1, 5));
@@ -35,8 +35,8 @@ class PostingProjectActivityFactory extends Factory
         return [
             'scope'                      => $this->faker->word,
             'description'                => $this->faker->sentence,
-            'initial_time'               => $initialTime,
-            'final_time'                 => $finalTime,
+            'start_time'                 => $startTime,
+            'end_time'                   => $endTime,
             'duration'                   => $durationFormatted,
             'project_id'                 => $project->id,
             'monthly_project_control_id' => $monthlyProjectControl->id,

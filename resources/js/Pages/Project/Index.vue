@@ -96,7 +96,7 @@ const toggleModal = (type: ModalType) => {
     modals.value[type] = !modals.value[type];
 };
 
-type Item = { id: number; scope: string; description: string; initialTime: string; endTime: string };
+type Item = { id: number; scope: string; description: string; startTime: string; endTime: string };
 
 const itemToEdit = ref<Item | null>(null);
 
@@ -168,8 +168,8 @@ onMounted(() => {
                 <TrBody withBorder v-for="item in postingProjectActivities" :key="item.id">
                     <ThBody>{{ item.scope }}</ThBody>
                     <TdBody>{{ item.description }}</TdBody>
-                    <TdBody>{{ item.initial_time }}</TdBody>
-                    <TdBody>{{ item.final_time }}</TdBody>
+                    <TdBody>{{ item.start_time }}</TdBody>
+                    <TdBody>{{ item.end_time }}</TdBody>
                     <TdBody>{{ item.duration }}</TdBody>
 
                     <TdBody v-if="isEditing" class="px-0">

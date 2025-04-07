@@ -14,8 +14,8 @@ return new class () extends Migration {
             $table->id();
             $table->string('scope');
             $table->string('description');
-            $table->time('initial_time');
-            $table->time('final_time');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->time('duration');
 
             $table->foreignId('project_id')->constrained()->onDelete('cascade');

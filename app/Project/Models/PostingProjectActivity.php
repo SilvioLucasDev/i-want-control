@@ -16,8 +16,8 @@ class PostingProjectActivity extends Model
     protected $fillable = [
         "scope",
         "description",
-        "initial_time",
-        "final_time",
+        "start_time",
+        "end_time",
         "duration",
         "project_id",
         "monthly_project_control_id",

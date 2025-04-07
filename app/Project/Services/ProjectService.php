@@ -63,8 +63,8 @@ class ProjectService
             $postingProjectActivities = $this->postingProjectActivityRepository->getPostingActivitiesByMonthlyProjectControlId($monthlyProjectControl->id);
 
             foreach ($postingProjectActivities as $postingProjectActivity) {
-                $postingProjectActivity->initial_time = Carbon::parse($postingProjectActivity->initial_time)->format("H:i");
-                $postingProjectActivity->final_time   = Carbon::parse($postingProjectActivity->final_time)->format("H:i");
+                $postingProjectActivity->start_time = Carbon::parse($postingProjectActivity->start_time)->format("H:i");
+                $postingProjectActivity->end_time   = Carbon::parse($postingProjectActivity->end_time)->format("H:i");
             }
         }
 

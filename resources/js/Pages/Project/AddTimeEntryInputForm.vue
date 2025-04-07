@@ -22,7 +22,7 @@ const close = (): void => {
 const form = useForm({
     scope: '',
     description: '',
-    initialTime: '',
+    startTime: '',
     endTime: '',
 });
 
@@ -50,9 +50,9 @@ const save = (): void => {
                 </div>
 
                 <div>
-                    <InputLabel for="initialTime" value="Horário Inicial" />
-                    <TimePickerInput id="initialTime" v-model="form.initialTime" />
-                    <InputError class="mt-2" :message="form.errors.initialTime" />
+                    <InputLabel for="startTime" value="Horário Inicial" />
+                    <TimePickerInput id="startTime" v-model="form.startTime" />
+                    <InputError class="mt-2" :message="form.errors.startTime" />
                 </div>
 
                 <div>

@@ -15,7 +15,7 @@ import { PropType, ref, watch } from 'vue';
 
 const props = defineProps({
     showEditTimeEntryInputModal: Boolean,
-    item: Object as PropType<{ id: number; scope: string; description: string; initialTime: string; endTime: string } | null>,
+    item: Object as PropType<{ id: number; scope: string; description: string; startTime: string; endTime: string } | null>,
 });
 
 const emit = defineEmits(['close']);
@@ -28,7 +28,7 @@ const form = useForm({
     id: props.item?.id ?? 0,
     scope: props.item?.scope ?? '',
     description: props.item?.description ?? '',
-    initialTime: props.item?.initialTime ?? '',
+    startTime: props.item?.startTime ?? '',
     endTime: props.item?.endTime ?? '',
 });
 
@@ -39,7 +39,7 @@ watch(
             form.id = newItem.id ?? 0;
             form.scope = newItem.scope ?? '';
             form.description = newItem.description ?? '';
-            form.initialTime = newItem.initialTime ?? '';
+            form.startTime = newItem.startTime ?? '';
             form.endTime = newItem.endTime ?? '';
         }
     },
@@ -90,9 +90,9 @@ const deleteItem = () => {
                 </div>
 
                 <div>
-                    <InputLabel for="initialTime" value="Horário Inicial" />
-                    <TimePickerInput id="initialTime" v-model="form.initialTime" />
-                    <InputError class="mt-2" :message="form.errors.initialTime" />
+                    <InputLabel for="startTime" value="Horário Inicial" />
+                    <TimePickerInput id="startTime" v-model="form.startTime" />
+                    <InputError class="mt-2" :message="form.errors.startTime" />
                 </div>
 
                 <div>
