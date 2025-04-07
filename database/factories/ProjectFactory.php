@@ -21,7 +21,7 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'type'        => $this->faker->randomElement(['Wakami', 'Gestione', 'MFA', 'IWantControl', 'ABBA']),
+            'name'        => $this->faker->randomElement(['Wakami', 'Gestione', 'MFA', 'IWantControl', 'ABBA']),
             'hourly_rate' => $this->faker->randomNumber(5),
             'user_id'     => User::factory(),
         ];

@@ -12,7 +12,7 @@ return new class () extends Migration {
     {
         Schema::create('projects', function (Blueprint $table): void {
             $table->id();
-            $table->string('type');
+            $table->string('name');
             $table->unsignedBigInteger('hourly_rate');
             $table->time('total_hours_worked')->default('00:00:00');
             $table->unsignedBigInteger('total_receivable')->default(0);

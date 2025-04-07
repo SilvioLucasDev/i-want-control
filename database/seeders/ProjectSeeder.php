@@ -11,11 +11,11 @@ class ProjectSeeder extends Seeder
     public function run(): void
     {
         $projects = [
-            ["type" => "Wakami", "hourly_rate" => 1099],
-            ["type" => "Gestione", "hourly_rate" => 1200],
-            ["type" => "MFA", "hourly_rate" => 3240],
-            ["type" => "IWantControl", "hourly_rate" => 900050],
-            ["type" => "ABBA", "hourly_rate" => 59455],
+            ["name" => "Wakami", "hourly_rate" => 1099],
+            ["name" => "Gestione", "hourly_rate" => 1200],
+            ["name" => "MFA", "hourly_rate" => 3240],
+            ["name" => "IWantControl", "hourly_rate" => 900050],
+            ["name" => "ABBA", "hourly_rate" => 59455],
         ];
 
         $user = User::first();
@@ -23,7 +23,7 @@ class ProjectSeeder extends Seeder
         foreach ($projects as $project) {
             Project::create(
                 [
-                    "type"        => $project["type"],
+                    "name"        => $project["name"],
                     "hourly_rate" => $project["hourly_rate"],
                     "user_id"     => $user ? $user->id : 1,
                 ]

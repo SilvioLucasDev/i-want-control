@@ -16,7 +16,7 @@ class Project extends Model
     protected static string $factory = \Database\Factories\ProjectFactory::class;
 
     protected $fillable = [
-        "type",
+        "name",
         "hourly_rate",
         "total_hours_worked",
         "total_receivable",

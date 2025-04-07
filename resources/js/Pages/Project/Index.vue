@@ -146,7 +146,7 @@ onMounted(() => {
             <template #header>
                 <div class="flex justify-between">
                     <div class="flex flex-col">
-                        <Select v-model="selectedProject" :options="projects.map((item) => ({ value: item.id, label: item.type }))" @change="fetchData" class="w-full sm:w-64" />
+                        <Select v-model="selectedProject" :options="projects.map((item) => ({ value: item.id, label: item.name }))" @change="fetchData" class="w-full sm:w-64" />
                     </div>
 
                     <div>

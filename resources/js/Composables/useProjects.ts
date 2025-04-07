@@ -41,7 +41,7 @@ export function provideProjects(): void {
         const { data, error } = await useFetch<ApiProject>(route('projects.store'), {
             method: 'POST',
             data: {
-                type: project.type,
+                name: project.name,
                 hourly_rate: project.hourlyRate,
             },
         });
@@ -65,7 +65,7 @@ export function provideProjects(): void {
         const { error } = await useFetch(route('projects.update', { project: project.id }), {
             method: 'PUT',
             data: {
-                type: project.type,
+                name: project.name,
                 hourly_rate: project.hourlyRate,
             },
         });

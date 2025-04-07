@@ -12,7 +12,7 @@ const { projects, addProject, updateProject, removeProject } = useProjects();
 
 export interface Project {
     id: number;
-    type: string;
+    name: string;
     hourlyRate: string;
     isEditing: boolean;
 }
@@ -23,7 +23,7 @@ const formHourlyRate = ref('');
 const save = async (): Promise<void> => {
     const result = await addProject({
         id: 0,
-        type: formType.value,
+        name: formType.value,
         hourlyRate: formHourlyRate.value,
         isEditing: false,
     });
@@ -65,9 +65,9 @@ const remove = async (projectId: number): Promise<void> => {
 
     <ul class="mt-4 divide-y divide-gray-200 rounded-lg border border-gray-300 bg-white shadow dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
         <li v-for="project in projects" :key="project.id" class="flex items-center justify-between px-4 py-3">
-            <TextInput v-if="project.isEditing" v-model="project.type" class="me-2 block w-full" />
+            <TextInput v-if="project.isEditing" v-model="project.name" class="me-2 block w-full" />
             <TextInput v-if="project.isEditing" v-model="project.hourlyRate" class="me-2 block w-full" />
-            <span v-else class="text-gray-900 dark:text-white">{{ project.type }}</span>
+            <span v-else class="text-gray-900 dark:text-white">{{ project.name }}</span>
 
             <div class="flex space-x-2">
                 <CheckIcon v-if="project.isEditing" @click="edit(project)" class="cursor-pointer" />

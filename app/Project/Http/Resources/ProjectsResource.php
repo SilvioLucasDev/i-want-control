@@ -21,7 +21,7 @@ class ProjectsResource extends JsonResource
     {
         return [
             "id"          => $this->resource->id,
-            "type"        => $this->resource->type,
+            "name"        => $this->resource->name,
             "hourly_rate" => convert_to_decimal($this->resource->hourly_rate),
         ];
     }

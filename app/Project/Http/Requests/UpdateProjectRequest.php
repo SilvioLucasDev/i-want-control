@@ -13,7 +13,7 @@ class UpdateProjectRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'type'        => 'Projeto',
+            'name'        => 'Projeto',
             'hourly_rate' => 'Valor da Hora',
         ];
     }
@@ -23,7 +23,7 @@ class UpdateProjectRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'type.unique' => 'Você já possui um :attribute com esse nome.',
+            'name.unique' => 'Você já possui um :attribute com esse nome.',
         ];
     }
 
@@ -33,11 +33,11 @@ class UpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => [
+            'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('projects', 'type')
+                Rule::unique('projects', 'name')
                     ->where('user_id', logged_in_user_id())
                     ->ignore($this->route('project')),
             ],
