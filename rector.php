@@ -1,5 +1,6 @@
 <?php declare(strict_types = 1);
 
+use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\Config\RectorConfig;
 use Rector\Strict\Rector\BooleanNot\BooleanInBooleanNotRuleFixerRector;
 
@@ -20,5 +21,6 @@ return RectorConfig::configure()
     )
     ->withSkip([
         BooleanInBooleanNotRuleFixerRector::class,
+        FlipTypeControlToUseExclusiveTypeRector::class,
     ])
     ->withPhpSets();

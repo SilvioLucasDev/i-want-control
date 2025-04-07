@@ -4,7 +4,7 @@ import TransparentButton from '@/Components/Buttons/TransparentButton.vue';
 import Calendar, { SelectDate } from '@/Components/Calendar.vue';
 import DashboardCard from '@/Components/DashboardCard.vue';
 import CashRegisterIcon from '@/Components/Icons/CashRegisterIcon.vue';
-import DolarIcon from '@/Components/Icons/DolarIcon.vue';
+import DollarIcon from '@/Components/Icons/DollarIcon.vue';
 import DotsIcon from '@/Components/Icons/DotsIcon.vue';
 import HourglassIcon from '@/Components/Icons/HourglassIcon.vue';
 import Select from '@/Components/Inputs/Select.vue';
@@ -20,21 +20,65 @@ import AddTimeEntryInputForm from '@/Pages/Project/AddTimeEntryInputForm.vue';
 import EditTimeEntryInputForm from '@/Pages/Project/EditTimeEntryInputForm.vue';
 
 import { useEditMode } from '@/Composables/useEditMode';
+import { useProjects } from '@/Composables/useProjects';
 
-import { Head } from '@inertiajs/vue3';
-import { nextTick, ref } from 'vue';
+import { Head, router } from '@inertiajs/vue3';
+import { nextTick, onMounted, ref } from 'vue';
 
 const { isEditing } = useEditMode();
+const { projects } = useProjects();
 
-const monthSelected = ref<number | null>(null);
-const yearSelected = ref<number | null>(null);
-const projectSelected = ref<string>('1');
+const props = defineProps({
+    selected_month: {
+        type: Number,
+        required: true,
+    },
+    selected_year: {
+        type: Number,
+        required: true,
+    },
+    project_id: {
+        type: Number,
+        required: true,
+    },
+    monthly_project_control: {
+        type: Object,
+        required: true,
+    },
+    posting_project_activities: {
+        type: Array,
+        required: true,
+    },
+});
+
+const selectedMonth = ref<number | null>(null);
+const selectedYear = ref<number | null>(null);
+const selectedProject = ref<number>(0);
+const postingProjectActivities = ref<any[]>([]);
+
+const hourlyRate = ref<number | null>(null);
+const totalHoursWorked = ref<number | null>(null);
+const totalReceivable = ref<number | null>(null);
 
 const fetchData = ({ month, year }: SelectDate) => {
-    monthSelected.value = month;
-    yearSelected.value = year;
+    selectedMonth.value = month ?? selectedMonth.value;
+    selectedYear.value = year ?? selectedYear.value;
 
-    console.log(`PROJECTS :: Fetching data for: ${month} / ${year} and project: ${projectSelected.value}`);
+    router.get(
+        route('projects.index'),
+        {
+            project_id: selectedProject.value,
+            selected_month: selectedMonth.value,
+            selected_year: selectedYear.value,
+        },
+        {
+            preserveState: true,
+            preserveScroll: true,
+            onSuccess: () => {
+                defineVariables();
+            },
+        },
+    );
 };
 
 type AddModalType = 'addTimeEntryInput';
@@ -62,7 +106,20 @@ const editItem = async (type: EditModalType, item: Item) => {
     toggleModal(type);
 };
 
-const projectsMock = ref<string[]>(['Wakami', 'Gestione', 'MFA', 'IWantControl', 'ABBA']);
+const defineVariables = () => {
+    selectedMonth.value = props.selected_month;
+    selectedYear.value = props.selected_year;
+    selectedProject.value = props.project_id;
+    postingProjectActivities.value = props.posting_project_activities;
+
+    hourlyRate.value = props.monthly_project_control.hourly_rate;
+    totalHoursWorked.value = props.monthly_project_control.total_hours_worked;
+    totalReceivable.value = props.monthly_project_control.total_receivable;
+};
+
+onMounted(() => {
+    defineVariables();
+});
 </script>
 
 <template>
@@ -72,15 +129,15 @@ const projectsMock = ref<string[]>(['Wakami', 'Gestione', 'MFA', 'IWantControl',
 
     <div class="grid w-full gap-10">
         <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
-            <DashboardCard title="Valor Hora" text="R$ 100,00">
-                <DolarIcon />
+            <DashboardCard title="Valor Hora" :text="hourlyRate">
+                <DollarIcon />
             </DashboardCard>
 
-            <DashboardCard title="Horas Trabalhadas" text="12H">
+            <DashboardCard title="Horas Trabalhadas" :text="totalHoursWorked">
                 <HourglassIcon />
             </DashboardCard>
 
-            <DashboardCard title="Total" text="R$ 1.200,00">
+            <DashboardCard title="Total" :text="totalReceivable">
                 <CashRegisterIcon />
             </DashboardCard>
         </div>
@@ -89,7 +146,7 @@ const projectsMock = ref<string[]>(['Wakami', 'Gestione', 'MFA', 'IWantControl',
             <template #header>
                 <div class="flex justify-between">
                     <div class="flex flex-col">
-                        <Select v-model="projectSelected" :options="projectsMock.map((type, index) => ({ value: index, label: type }))" @change="fetchData" class="w-full sm:w-64" />
+                        <Select v-model="selectedProject" :options="projects.map((item) => ({ value: item.id, label: item.type }))" @change="fetchData" class="w-full sm:w-64" />
                     </div>
 
                     <div>
@@ -108,43 +165,15 @@ const projectsMock = ref<string[]>(['Wakami', 'Gestione', 'MFA', 'IWantControl',
             </template>
 
             <template #tbody>
-                <TrBody withBorder>
-                    <ThBody>ADM</ThBody>
-                    <TdBody>Finalizei o fluxo de autenticação utilizando OAUTH2</TdBody>
-                    <TdBody>08:00</TdBody>
-                    <TdBody>12:00</TdBody>
-                    <TdBody>4h</TdBody>
+                <TrBody withBorder v-for="item in postingProjectActivities" :key="item.id">
+                    <ThBody>{{ item.scope }}</ThBody>
+                    <TdBody>{{ item.description }}</TdBody>
+                    <TdBody>{{ item.initial_time }}</TdBody>
+                    <TdBody>{{ item.final_time }}</TdBody>
+                    <TdBody>{{ item.duration }}</TdBody>
 
                     <TdBody v-if="isEditing" class="px-0">
-                        <TransparentButton @click="editItem('editTimeEntryInput', { id: 1, scope: 'ADM', description: 'Finalizei o fluxo de autenticação utilizando OAUTH2', initialTime: '08:00', endTime: '12:00' })">
-                            <DotsIcon />
-                        </TransparentButton>
-                    </TdBody>
-                </TrBody>
-
-                <TrBody withBorder>
-                    <ThBody>Site</ThBody>
-                    <TdBody>Iniciei os ajustes na landing page</TdBody>
-                    <TdBody>13:00</TdBody>
-                    <TdBody>18:00</TdBody>
-                    <TdBody>5h</TdBody>
-
-                    <TdBody v-if="isEditing" class="px-0">
-                        <TransparentButton @click="editItem('editTimeEntryInput', { id: 2, scope: 'Site', description: 'Iniciei os ajustes na landing page', initialTime: '13:00', endTime: '18:00' })">
-                            <DotsIcon />
-                        </TransparentButton>
-                    </TdBody>
-                </TrBody>
-
-                <TrBody withBorder>
-                    <ThBody>Infra</ThBody>
-                    <TdBody>Configurei o servidor EC2 na AWS</TdBody>
-                    <TdBody>19:00</TdBody>
-                    <TdBody>22:00</TdBody>
-                    <TdBody>3h</TdBody>
-
-                    <TdBody v-if="isEditing" class="px-0">
-                        <TransparentButton @click="editItem('editTimeEntryInput', { id: 3, scope: 'Infra', description: 'Configurei o servidor EC2 na AWS', initialTime: '19:00', endTime: '22:00' })">
+                        <TransparentButton @click="editItem('editTimeEntryInput', item)">
                             <DotsIcon />
                         </TransparentButton>
                     </TdBody>

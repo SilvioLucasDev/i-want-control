@@ -24,6 +24,16 @@ class ProjectRepository extends BaseRepository
         return $this->repository
             ->query()
             ->where("user_id", $userId)
+            ->latest()
             ->get();
+    }
+
+    public function getLatestProjectByUserId(int $userId): ?Project
+    {
+        return $this->repository
+            ->query()
+            ->where("user_id", $userId)
+            ->latest()
+            ->first();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Project\Http\Controllers;
 
 use App\Common\Http\Controllers\Controller;
+use App\Project\Http\Requests\IndexProjectRequest;
 use App\Project\Http\Requests\StoreProjectRequest;
 use App\Project\Http\Requests\UpdateProjectRequest;
 use App\Project\Http\Resources\ProjectsResource;
@@ -18,9 +19,23 @@ class ProjectController extends Controller
     {
     }
 
-    public function index(): InertiaResponse
+    public function index(IndexProjectRequest $request): InertiaResponse
     {
-        return Inertia::render('Project/Index');
+        $projectId     = $request->input("project_id") ? intval($request->input("project_id")) : null;
+        $selectedMonth = $request->input("selected_month") ? intval($request->input("selected_month")) : null;
+        $selectedYear  = $request->input("selected_year") ? intval($request->input("selected_year")) : null;
+
+        $userId = logged_in_user_id();
+
+        $data = $this->projectService->getProjectAndPostingActivitiesByIdAndDate($userId, $projectId, $selectedMonth, $selectedYear);
+
+        return Inertia::render('Project/Index', [
+            'selected_month'             => $data->selectedMonth,
+            'selected_year'              => $data->selectedYear,
+            'project_id'                 => $data->projectId,
+            'monthly_project_control'    => $data->monthlyProjectControl,
+            'posting_project_activities' => $data->postingProjectActivities,
+        ]);
     }
 
     public function getProjectsByUser(): AnonymousResourceCollection
