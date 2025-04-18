@@ -10,26 +10,41 @@ import TimePickerInput from '@/Components/Inputs/TimePickerInput.vue';
 import ConfirmDeleteModal from '@/Components/Modal/ConfirmDeleteModal.vue';
 import Modal from '@/Components/Modal/Modal.vue';
 
-import { useForm } from '@inertiajs/vue3';
+import { useFormFetch } from '@/Composables/useFormFetch';
+import { useToast } from '@/Composables/useToast';
+
 import { PropType, ref, watch } from 'vue';
+
+const { triggerToast } = useToast();
 
 const props = defineProps({
     showEditTimeEntryInputModal: Boolean,
-    item: Object as PropType<{ id: number; scope: string; description: string; startTime: string; endTime: string } | null>,
+    item: Object as PropType<{ id: number; scope: string; description: string; start_time: string; end_time: string } | null>,
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'refresh']);
 
 const close = (): void => {
+    reset();
     emit('close');
 };
 
-const form = useForm({
+const refresh = (): void => {
+    emit('refresh');
+};
+
+const { form, errors, processing, reset, submit } = useFormFetch<{
+    id: number;
+    scope: string;
+    description: string;
+    start_time: string;
+    end_time: string;
+}>({
     id: props.item?.id ?? 0,
     scope: props.item?.scope ?? '',
     description: props.item?.description ?? '',
-    startTime: props.item?.startTime ?? '',
-    endTime: props.item?.endTime ?? '',
+    start_time: props.item?.start_time ?? '',
+    end_time: props.item?.end_time ?? '',
 });
 
 watch(
@@ -39,15 +54,23 @@ watch(
             form.id = newItem.id ?? 0;
             form.scope = newItem.scope ?? '';
             form.description = newItem.description ?? '';
-            form.startTime = newItem.startTime ?? '';
-            form.endTime = newItem.endTime ?? '';
+            form.start_time = newItem.start_time ?? '';
+            form.end_time = newItem.end_time ?? '';
         }
     },
     { deep: true, immediate: true },
 );
 
-const edit = (): void => {
-    console.log('DASHBOARD :: Edit Time Entry Input', form);
+const edit = async (): Promise<void> => {
+    const { ok, type, error } = await submit('put', route('posting-project-activities.update', form.id));
+
+    if (ok) {
+        triggerToast('success', 'Entrada de horário editada com sucesso!');
+        close();
+        refresh();
+    } else if (type === 'generic') {
+        triggerToast('error', error || 'Erro ao editar entrada de horário!');
+    }
 };
 
 const modals = ref({
@@ -58,10 +81,17 @@ const toggleModal = (type: 'confirmDeleteModal') => {
     modals.value[type] = !modals.value[type];
 };
 
-const deleteItem = () => {
-    console.log(`Deletar item: ${form.id}`);
-
+const deleteItem = async (): Promise<void> => {
     toggleModal('confirmDeleteModal');
+
+    const { ok, type, error } = await submit('delete', route('posting-project-activities.destroy', form.id));
+    if (ok) {
+        triggerToast('success', 'Entrada de horário excluída com sucesso!');
+        close();
+        refresh();
+    } else if (type === 'generic') {
+        triggerToast('error', error || 'Erro ao excluir entrada de horário!');
+    }
 };
 </script>
 
@@ -80,29 +110,29 @@ const deleteItem = () => {
                 <div>
                     <InputLabel for="scope" value="Escopo" />
                     <TextInput id="scope" v-model="form.scope" type="text" class="mt-1 block w-full" />
-                    <InputError class="mt-2" :message="form.errors.scope" />
+                    <InputError class="mt-2" :message="errors.scope" />
                 </div>
 
                 <div>
                     <InputLabel for="description" value="Descrição" />
                     <TextInput id="description" v-model="form.description" type="text" class="mt-1 block w-full" />
-                    <InputError class="mt-2" :message="form.errors.description" />
+                    <InputError class="mt-2" :message="errors.description" />
                 </div>
 
                 <div>
                     <InputLabel for="startTime" value="Horário Inicial" />
-                    <TimePickerInput id="startTime" v-model="form.startTime" />
-                    <InputError class="mt-2" :message="form.errors.startTime" />
+                    <TimePickerInput id="startTime" v-model="form.start_time" />
+                    <InputError class="mt-2" :message="errors.start_time" />
                 </div>
 
                 <div>
                     <InputLabel for="endTime" value="Horário Final" />
-                    <TimePickerInput id="endTime" v-model="form.endTime" />
-                    <InputError class="mt-2" :message="form.errors.endTime" />
+                    <TimePickerInput id="endTime" v-model="form.end_time" />
+                    <InputError class="mt-2" :message="errors.end_time" />
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
-                    <PrimaryButton class="mb-2 me-2 px-5" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Salvar </PrimaryButton>
+                    <PrimaryButton class="mb-2 me-2 px-5" :class="{ 'opacity-25': processing }" :disabled="processing"> Salvar </PrimaryButton>
 
                     <SecondaryButton @click="close"> Cancelar </SecondaryButton>
                 </div>

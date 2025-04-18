@@ -56,14 +56,12 @@ const selectedYear = ref<number | null>(null);
 const selectedProject = ref<number>(0);
 const postingProjectActivities = ref<any[]>([]);
 
+const monthlyProjectControlId = ref<number | null>(null);
 const hourlyRate = ref<number | null>(null);
 const totalHoursWorked = ref<number | null>(null);
 const totalReceivable = ref<number | null>(null);
 
-const fetchData = ({ month, year }: SelectDate) => {
-    selectedMonth.value = month ?? selectedMonth.value;
-    selectedYear.value = year ?? selectedYear.value;
-
+const fetchData = () => {
     router.get(
         route('projects.index'),
         {
@@ -81,6 +79,13 @@ const fetchData = ({ month, year }: SelectDate) => {
     );
 };
 
+const selectedDate = ({ month, year }: SelectDate) => {
+    selectedMonth.value = month ?? selectedMonth.value;
+    selectedYear.value = year ?? selectedYear.value;
+
+    fetchData();
+};
+
 type AddModalType = 'addTimeEntryInput';
 
 type EditModalType = 'editTimeEntryInput';
@@ -96,7 +101,7 @@ const toggleModal = (type: ModalType) => {
     modals.value[type] = !modals.value[type];
 };
 
-type Item = { id: number; scope: string; description: string; startTime: string; endTime: string };
+type Item = { id: number; scope: string; description: string; start_time: string; end_time: string };
 
 const itemToEdit = ref<Item | null>(null);
 
@@ -112,9 +117,10 @@ const defineVariables = () => {
     selectedProject.value = props.project_id;
     postingProjectActivities.value = props.posting_project_activities;
 
-    hourlyRate.value = props.monthly_project_control.hourly_rate;
-    totalHoursWorked.value = props.monthly_project_control.total_hours_worked;
-    totalReceivable.value = props.monthly_project_control.total_receivable;
+    monthlyProjectControlId.value = props.monthly_project_control?.id ?? null;
+    hourlyRate.value = props.monthly_project_control?.hourly_rate ?? null;
+    totalHoursWorked.value = props.monthly_project_control?.total_hours_worked ?? null;
+    totalReceivable.value = props.monthly_project_control?.total_receivable ?? null;
 };
 
 onMounted(() => {
@@ -125,7 +131,7 @@ onMounted(() => {
 <template>
     <Head title="Projetos" />
 
-    <Calendar @select-date="fetchData" />
+    <Calendar @select-date="selectedDate" />
 
     <div class="grid w-full gap-10">
         <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
@@ -146,7 +152,7 @@ onMounted(() => {
             <template #header>
                 <div class="flex justify-between">
                     <div class="flex flex-col">
-                        <Select v-model="selectedProject" :options="projects.map((item) => ({ value: item.id, label: item.name }))" @change="fetchData" class="w-full sm:w-64" />
+                        <Select v-model="selectedProject" :options="projects.map((item) => ({ value: item.id, label: item.name }))" @change="selectedDate" class="w-full sm:w-64" />
                     </div>
 
                     <div>
@@ -191,6 +197,6 @@ onMounted(() => {
         </Table>
     </div>
 
-    <AddTimeEntryInputForm :showAddTimeEntryInputModal="modals.addTimeEntryInput" @close="toggleModal('addTimeEntryInput')" />
-    <EditTimeEntryInputForm :showEditTimeEntryInputModal="modals.editTimeEntryInput" @close="toggleModal('editTimeEntryInput')" :item="itemToEdit" />
+    <AddTimeEntryInputForm :showAddTimeEntryInputModal="modals.addTimeEntryInput" :projectId="selectedProject" :monthlyProjectControlId="monthlyProjectControlId" @close="toggleModal('addTimeEntryInput')" @refresh="fetchData" />
+    <EditTimeEntryInputForm :showEditTimeEntryInputModal="modals.editTimeEntryInput" :item="itemToEdit" @close="toggleModal('editTimeEntryInput')" @refresh="fetchData" />
 </template>

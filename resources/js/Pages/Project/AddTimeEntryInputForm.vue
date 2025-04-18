@@ -7,27 +7,63 @@ import TextInput from '@/Components/Inputs/TextInput.vue';
 import TimePickerInput from '@/Components/Inputs/TimePickerInput.vue';
 import Modal from '@/Components/Modal/Modal.vue';
 
-import { useForm } from '@inertiajs/vue3';
+import { useFormFetch } from '@/Composables/useFormFetch';
+import { useToast } from '@/Composables/useToast';
 
-defineProps({
+const { triggerToast } = useToast();
+
+const props = defineProps({
+    projectId: {
+        type: Number,
+        required: true,
+    },
+    monthlyProjectControlId: {
+        type: [Number, null],
+        required: true,
+    },
     showAddTimeEntryInputModal: Boolean,
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'refresh']);
 
 const close = (): void => {
+    reset();
     emit('close');
 };
 
-const form = useForm({
+const refresh = (): void => {
+    emit('refresh');
+};
+
+const { form, errors, processing, reset, submit } = useFormFetch<{
+    project_id: number | null;
+    monthly_project_control_id: number | null;
+    scope: string;
+    description: string;
+    start_time: string;
+    end_time: string;
+}>({
+    project_id: null,
+    monthly_project_control_id: null,
     scope: '',
     description: '',
-    startTime: '',
-    endTime: '',
+    start_time: '',
+    end_time: '',
 });
 
-const save = (): void => {
-    console.log('DASHBOARD :: Save Time Entry Input', form);
+const save = async (): Promise<void> => {
+    form.project_id = props.projectId;
+    form.monthly_project_control_id = props.monthlyProjectControlId;
+
+    const { ok, type, error } = await submit('post', route('posting-project-activities.store'));
+
+    if (ok) {
+        triggerToast('success', 'Entrada de horário adicionada com sucesso!');
+        close();
+        refresh();
+    } else if (type === 'generic') {
+        triggerToast('error', error || 'Erro ao adicionar entrada de horário!');
+    }
 };
 </script>
 
@@ -40,29 +76,29 @@ const save = (): void => {
                 <div>
                     <InputLabel for="scope" value="Escopo" />
                     <TextInput id="scope" v-model="form.scope" type="text" class="mt-1 block w-full" />
-                    <InputError class="mt-2" :message="form.errors.scope" />
+                    <InputError class="mt-2" :message="errors.scope" />
                 </div>
 
                 <div>
                     <InputLabel for="description" value="Descrição" />
                     <TextInput id="description" v-model="form.description" type="text" class="mt-1 block w-full" />
-                    <InputError class="mt-2" :message="form.errors.description" />
+                    <InputError class="mt-2" :message="errors.description" />
                 </div>
 
                 <div>
                     <InputLabel for="startTime" value="Horário Inicial" />
-                    <TimePickerInput id="startTime" v-model="form.startTime" />
-                    <InputError class="mt-2" :message="form.errors.startTime" />
+                    <TimePickerInput id="startTime" v-model="form.start_time" />
+                    <InputError class="mt-2" :message="errors.start_time" />
                 </div>
 
                 <div>
                     <InputLabel for="endTime" value="Horário Final" />
-                    <TimePickerInput id="endTime" v-model="form.endTime" />
-                    <InputError class="mt-2" :message="form.errors.endTime" />
+                    <TimePickerInput id="endTime" v-model="form.end_time" />
+                    <InputError class="mt-2" :message="errors.end_time" />
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
-                    <PrimaryButton class="mb-2 me-2 px-5" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Salvar </PrimaryButton>
+                    <PrimaryButton class="mb-2 me-2 px-5" :class="{ 'opacity-25': processing }" :disabled="processing"> Salvar </PrimaryButton>
 
                     <SecondaryButton @click="close"> Cancelar </SecondaryButton>
                 </div>
