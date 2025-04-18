@@ -2,7 +2,6 @@
 
 namespace App\Project\Services;
 
-use App\Project\Models\MonthlyProjectControl;
 use App\Project\Models\PostingProjectActivity;
 use App\Project\Models\Project;
 use App\Project\Repositories\MonthlyProjectControlRepository;
@@ -56,6 +55,7 @@ class ProjectService
         $monthlyProjectControl = $this->monthlyProjectControlRepository->getMonthlyProjectControlByProjectIdAndDate($project->id, $selectedMonth, $selectedYear);
 
         if ($monthlyProjectControl !== null) {
+            $formattedMonthlyProjectControl->id                 = $monthlyProjectControl->id;
             $formattedMonthlyProjectControl->hourly_rate        = convert_to_decimal($monthlyProjectControl->hourly_rate);
             $formattedMonthlyProjectControl->total_receivable   = convert_to_decimal($monthlyProjectControl->total_receivable);
             $formattedMonthlyProjectControl->total_hours_worked = Carbon::parse($monthlyProjectControl->total_hours_worked)->format("H:i");

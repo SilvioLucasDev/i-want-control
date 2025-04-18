@@ -2,16 +2,22 @@
 
 namespace App\Project\Http\Requests;
 
+use App\Common\Rules\EndTimeMustBeGreaterThanStartTime;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdatePostingProjectActivityRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * @return array<string, string>
      */
-    public function authorize(): bool
+    public function attributes(): array
     {
-        return false;
+        return [
+            'scope'       => 'Escopo',
+            'description' => 'Descrição',
+            'start_time'  => 'Horário Inicial',
+            'end_time'    => 'Horário Final',
+        ];
     }
 
     /**
@@ -22,7 +28,25 @@ class UpdatePostingProjectActivityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'scope' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'description' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'start_time' => [
+                'required',
+                'date_format:H:i',
+            ],
+            'end_time' => [
+                'required',
+                'date_format:H:i',
+                new EndTimeMustBeGreaterThanStartTime(),
+            ],
         ];
     }
 }

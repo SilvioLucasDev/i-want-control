@@ -20,6 +20,7 @@ class MonthlyProjectControl extends Model
         'hourly_rate',
         'total_hours_worked',
         'total_receivable',
+        'project_id',
     ];
 
     /**
