@@ -41,7 +41,8 @@
         },
         "files": [
             "app\\User\\Helpers\\LoggedInUserHelper.php",
-            "app\\Common\\Helpers\\MonetaryHelper.php"
+            "app\\Common\\Helpers\\MonetaryHelper.php",
+            "app\\Common\\Helpers\\DateTimeHelper.php"
         ]
     },
     "autoload-dev": {
