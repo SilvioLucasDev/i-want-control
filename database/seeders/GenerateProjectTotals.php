@@ -15,8 +15,8 @@ class GenerateProjectTotals extends Seeder
                 ->map(fn ($item): int => strtotime((string) $item->duration) - strtotime('TODAY'))
                 ->sum();
 
-            $totalHoursTime  = gmdate('H:i:s', $totalSeconds);
             $totalReceivable = ($totalSeconds / 3600) * $monthlyProjectControl->hourly_rate;
+            $totalHoursTime  = gmdate('H:i:s', $totalSeconds);
 
             $monthlyProjectControl->update([
                 'total_hours_worked' => $totalHoursTime,
@@ -29,8 +29,8 @@ class GenerateProjectTotals extends Seeder
                 ->map(fn ($item): int => strtotime((string) $item->total_hours_worked) - strtotime('TODAY'))
                 ->sum();
 
-            $totalHoursTime  = gmdate('H:i:s', $totalSeconds);
             $totalReceivable = ($totalSeconds / 3600) * $project->hourly_rate;
+            $totalHoursTime  = gmdate('H:i:s', $totalSeconds);
 
             $project->update([
                 'total_hours_worked' => $totalHoursTime,

@@ -90,6 +90,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function query(): Builder
     {
-        return $this->model->newQuery();
+        /** @var Builder<T> $builder */
+        $builder = $this->model->newQuery();
+
+        return $builder;
     }
 }
