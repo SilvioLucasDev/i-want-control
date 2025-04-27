@@ -19,8 +19,8 @@ class MonthlyProjectControlSeeder extends Seeder
             MonthlyProjectControl::factory(
                 [
                     "project_id"  => $project->id,
-                    "month"       => now()->format("m"),
-                    "year"        => now()->format("Y"),
+                    "month"       => (int) now()->format("m"),
+                    "year"        => (int) now()->format("Y"),
                     "hourly_rate" => $project->hourly_rate,
                 ]
             )->create();

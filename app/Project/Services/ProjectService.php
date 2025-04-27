@@ -100,27 +100,42 @@ class ProjectService
     /**
      * @param array<string, mixed> $data
      */
-    public function update(int $userId, int $paymentMethodId, array $data): void
+    public function update(int $userId, int $projectId, array $data): void
     {
-        $paymentMethod = $this->projectRepository->find($paymentMethodId);
+        $project = $this->projectRepository->find($projectId);
 
-        if ($userId !== $paymentMethod->user_id) {
+        if ($userId !== $project->user_id) {
             throw new AuthorizationException("Você não tem permissão para realizar essa operação.");
         }
 
         $data["hourly_rate"] = convert_to_cents($data["hourly_rate"]);
 
-        $this->projectRepository->update($paymentMethodId, $data);
+        if ($project->hourly_rate !== $data["hourly_rate"]) {
+            $monthlyProjectControls = $this->monthlyProjectControlRepository->getMonthlyProjectControlsByProjectId($projectId);
+
+            foreach ($monthlyProjectControls as $monthlyProjectControl) {
+                $totalReceivable = calculate_total_receivable($data["hourly_rate"], $monthlyProjectControl->total_hours_worked);
+
+                $this->monthlyProjectControlRepository->update($monthlyProjectControl->id, [
+                    "hourly_rate"      => $data["hourly_rate"],
+                    "total_receivable" => $totalReceivable,
+                ]);
+            }
+
+            $data["total_receivable"] = calculate_total_receivable($data["hourly_rate"], $project->total_hours_worked);
+        }
+
+        $this->projectRepository->update($projectId, $data);
     }
 
-    public function delete(int $userId, int $paymentMethodId): void
+    public function delete(int $userId, int $projectId): void
     {
-        $paymentMethod = $this->projectRepository->find($paymentMethodId);
+        $project = $this->projectRepository->find($projectId);
 
-        if ($userId !== $paymentMethod->user_id) {
+        if ($userId !== $project->user_id) {
             throw new AuthorizationException("Você não tem permissão para realizar essa operação.");
         }
 
-        $this->projectRepository->delete($paymentMethodId);
+        $this->projectRepository->delete($projectId);
     }
 }

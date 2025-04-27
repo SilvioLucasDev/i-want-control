@@ -27,6 +27,35 @@ class PostingProjectActivityService
         $monthlyProjectControlId = $data['monthly_project_control_id'] ?? null;
 
         if (!$monthlyProjectControlId) {
+            $selectedMonth = (int) now()->format('m');
+            $selectedYear  = (int) now()->format('Y');
+
+            $monthlyProjectControlId = $this->monthlyProjectControlRepository->getMonthlyProjectControlByProjectIdAndDate(
+                $data['project_id'],
+                $selectedMonth,
+                $selectedYear
+            )->id;
+        }
+
+        if ($monthlyProjectControlId) {
+            $monthlyProjectControl = $this->monthlyProjectControlRepository->find($monthlyProjectControlId);
+
+            $monthlyProjectControl->total_hours_worked = add_up_times(
+                [
+                    $monthlyProjectControl->total_hours_worked,
+                    $data['duration'],
+                ]
+            );
+
+            $totalReceivable = calculate_total_receivable($monthlyProjectControl->hourly_rate, $data['duration']);
+
+            $this->monthlyProjectControlRepository->update($monthlyProjectControlId, [
+                'total_hours_worked' => $monthlyProjectControl->total_hours_worked,
+                'total_receivable'   => $monthlyProjectControl->total_receivable + $totalReceivable,
+            ]);
+
+            $data['monthly_project_control_id'] = $monthlyProjectControlId;
+        } else {
             $project = $this->projectRepository->find($data['project_id']);
 
             $totalReceivable = calculate_total_receivable($project->hourly_rate, $data['duration']);
@@ -44,22 +73,6 @@ class PostingProjectActivityService
             ]);
 
             $data['monthly_project_control_id'] = $createdMonthlyProjectControl->id;
-        } else {
-            $monthlyProjectControl = $this->monthlyProjectControlRepository->find($monthlyProjectControlId);
-
-            $monthlyProjectControl->total_hours_worked = add_up_times(
-                [
-                    $monthlyProjectControl->total_hours_worked,
-                    $data['duration'],
-                ]
-            );
-
-            $totalReceivable = calculate_total_receivable($monthlyProjectControl->hourly_rate, $data['duration']);
-
-            $this->monthlyProjectControlRepository->update($monthlyProjectControlId, [
-                'total_hours_worked' => $monthlyProjectControl->total_hours_worked,
-                'total_receivable'   => $monthlyProjectControl->total_receivable + $totalReceivable,
-            ]);
         }
 
         return $this->postingProjectActivityRepository->create($data);

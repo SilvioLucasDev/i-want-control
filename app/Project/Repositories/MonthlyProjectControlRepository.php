@@ -4,6 +4,7 @@ namespace App\Project\Repositories;
 
 use App\Common\Repositories\BaseRepository;
 use App\Project\Models\MonthlyProjectControl;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @extends BaseRepository<MonthlyProjectControl>
@@ -23,5 +24,16 @@ class MonthlyProjectControlRepository extends BaseRepository
             ->where("month", $selectedMonth)
             ->where("year", $selectedYear)
             ->first();
+    }
+
+    /**
+     * @return Collection<int, MonthlyProjectControl>|Collection<never, never>
+     */
+    public function getMonthlyProjectControlsByProjectId(int $projectId): Collection
+    {
+        return $this->repository
+            ->query()
+            ->where("project_id", $projectId)
+            ->get();
     }
 }
