@@ -4,79 +4,52 @@ import CheckIcon from '@/Components/Icons/CheckIcon.vue';
 import PencilIcon from '@/Components/Icons/PencilIcon.vue';
 import PlusIcon from '@/Components/Icons/PlusIcon.vue';
 import TrashIcon from '@/Components/Icons/TrashIcon.vue';
-import InputError from '@/Components/Inputs/InputError.vue';
 import TextInput from '@/Components/Inputs/TextInput.vue';
+import { useInvestments } from '@/Composables/useInvestments';
 
-import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-interface Investment {
+const { investments, addInvestment, updateInvestment, removeInvestment } = useInvestments();
+
+export interface Investment {
     id: number;
     type: string;
-    income: string | null;
+    income: string;
     isEditing: boolean;
 }
 
-const form = useForm({
-    type: '',
-});
+const formType = ref('');
+const formIncome = ref('');
 
-const investments = ref<Investment[]>([
-    { id: 1, type: 'FII', income: '1%', isEditing: false },
-    { id: 2, type: 'Criptomoeda', income: null, isEditing: false },
-    { id: 3, type: 'Renda Fixa', income: '0.9%', isEditing: false },
-    { id: 4, type: 'Tesouro', income: '2%', isEditing: false },
-]);
+const save = async (): Promise<void> => {
+    const result = await addInvestment({ id: 0, type: formType.value, income: formIncome.value, isEditing: false });
 
-const submit = (): void => {
-    console.log('Adicionando novo investimento:', form.type);
-    // if (!form.type.trim()) return;
+    if (result) {
+        formType.value = '';
+        formIncome.value = '';
+    }
+};
 
-    // form.post('/investments', {
-    //     onSuccess: () => {
-    //         investments.value.push({
-    //             id: Date.now(),
-    //             type: form.type.trim(),
-    //             isEditing: false,
-    //         });
-    //         form.type = ''; // Limpa o input
-    //     },
-    // });
+const edit = async (investment: Investment): Promise<void> => {
+    await updateInvestment(investment);
 };
 
 const toggleEdit = (investment: Investment): void => {
     investment.isEditing = !investment.isEditing;
 };
 
-const saveEdit = (investment: Investment): void => {
-    investment.isEditing = false;
-
-    console.log('Salvando edição do investimento:', investment.type);
-
-    // form.put(`/investments/${investment.id}`, {
-    //     type: investment.type,
-    //     onSuccess: () => {
-    //         console.log('Método atualizado com sucesso!');
-    //     },
-    // });
-};
-
-const removeInvestment = (investmentId: number): void => {
-    console.log('Removendo investmento:', investmentId);
-
-    // form.delete(`/investments/${investmentId}`, {
-    //     onSuccess: () => {
-    //         investments.value = investments.value.filter((investment) => investment.id !== investmentId);
-    //     },
-    // });
+const remove = async (investmentId: number): Promise<void> => {
+    await removeInvestment(investmentId);
 };
 </script>
 
 <template>
-    <form @submit.prevent="submit" class="mx-auto flex items-center">
+    <form @submit.prevent="save" class="mx-auto flex items-center">
         <div class="relative w-full pe-2">
-            <TextInput id="type" v-model="form.type" type="text" class="block w-full" placeholder="Tipo de Investimento" />
-            <InputError class="mt-2" :message="form.errors.type" />
+            <TextInput v-model="formType" type="text" class="block w-full" placeholder="Nome do Investimento" />
+        </div>
+        <div class="relative w-full pe-2">
+            <TextInput v-model="formIncome" type="text" class="block w-full" placeholder="Rendimento" />
         </div>
 
         <PrimaryButton type="submit" class="flex h-10 items-center sm:px-5">
@@ -88,12 +61,13 @@ const removeInvestment = (investmentId: number): void => {
     <ul class="mt-4 divide-y divide-gray-200 rounded-lg border border-gray-300 bg-white shadow dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
         <li v-for="investment in investments" :key="investment.id" class="flex items-center justify-between px-4 py-3">
             <TextInput v-if="investment.isEditing" v-model="investment.type" class="me-2 block w-full" />
+            <TextInput v-if="investment.isEditing" v-model="investment.income" class="me-2 block w-full" />
             <span v-else class="text-gray-900 dark:text-white">{{ investment.type }}</span>
 
             <div class="flex space-x-2">
-                <CheckIcon v-if="investment.isEditing" @click="saveEdit(investment)" class="cursor-pointer" />
+                <CheckIcon v-if="investment.isEditing" @click="edit(investment)" class="cursor-pointer" />
                 <PencilIcon v-else @click="toggleEdit(investment)" class="cursor-pointer" />
-                <TrashIcon @click="removeInvestment(investment.id)" class="cursor-pointer" />
+                <TrashIcon @click="remove(investment.id)" class="cursor-pointer" />
             </div>
         </li>
     </ul>

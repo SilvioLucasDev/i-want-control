@@ -8,7 +8,7 @@ import debounce from 'lodash/debounce';
 import { defineProps, onMounted, ref } from 'vue';
 
 export type SelectDate = {
-    month?: number;
+    month: number | null;
     year: number;
 };
 
@@ -69,12 +69,11 @@ const setMonthYear = (): void => {
 };
 
 const selectDate: () => void = debounce(() => {
-    emit('selectDate', props.onlyYear ? { year: currentYear.value } : { month: currentMonth.value + 1, year: currentYear.value });
+    emit('selectDate', props.onlyYear ? { month: null, year: currentYear.value } : { month: currentMonth.value + 1, year: currentYear.value });
 }, 500);
 
 onMounted(() => {
     setMonthYear();
-    selectDate();
 });
 </script>
 

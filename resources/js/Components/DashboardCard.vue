@@ -3,7 +3,10 @@ import { defineProps } from 'vue';
 
 defineProps({
     title: String,
-    text: String,
+    text: {
+        type: [String, Number, null],
+        required: false,
+    },
 });
 </script>
 

@@ -5,6 +5,6 @@ return [
     App\Auth\Providers\AuthServiceProvider::class,
     App\Dashboard\Providers\DashboardServiceProvider::class,
     App\Expense\Providers\ExpenseServiceProvider::class,
-    App\Service\Providers\ServiceServiceProvider::class,
+    App\Project\Providers\ProjectServiceProvider::class,
     App\User\Providers\UserServiceProvider::class,
 ];

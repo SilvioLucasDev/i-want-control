@@ -22,3 +22,5 @@ yarn-error.log
 /.vscode
 /.zed
 /coverage
+laradumps.yaml
+/resources/js/ziggy.js

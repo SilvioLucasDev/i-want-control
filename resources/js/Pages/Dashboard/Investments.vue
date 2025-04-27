@@ -3,8 +3,8 @@ import ColumnChart from '@/Components/ColumnChart.vue';
 import DashboardCard from '@/Components/DashboardCard.vue';
 import ArrowUpRightIcon from '@/Components/Icons/ArrowUpRightIcon.vue';
 import CashRegisterIcon from '@/Components/Icons/CashRegisterIcon.vue';
-import ChartDolarIcon from '@/Components/Icons/ChartDolarIcon.vue';
-import DolarIcon from '@/Components/Icons/DolarIcon.vue';
+import ChartDollarIcon from '@/Components/Icons/ChartDollarIcon.vue';
+import DollarIcon from '@/Components/Icons/DollarIcon.vue';
 import Table from '@/Components/Table/Table.vue';
 import TdBody from '@/Components/Table/TBody/Td.vue';
 import ThBody from '@/Components/Table/TBody/Th.vue';
@@ -18,11 +18,11 @@ import ThHead from '@/Components/Table/THead/Th.vue';
     <div class="grid w-full gap-10">
         <div class="grid grid-cols-1 gap-10 lg:grid-cols-4">
             <DashboardCard title="Total Investido" text="R$ 1.200,00">
-                <DolarIcon />
+                <DollarIcon />
             </DashboardCard>
 
             <DashboardCard title="Total de Rendimentos" text="R$ 1.200,00">
-                <ChartDolarIcon />
+                <ChartDollarIcon />
             </DashboardCard>
 
             <DashboardCard title="Total Resgatado" text="R$ 1.200,00">
