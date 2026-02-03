@@ -17,6 +17,7 @@ class UpdateInvestmentRequest extends FormRequest
             'income' => 'Rendimento',
         ];
     }
+
     /**
      * @return array<string, string>
      */

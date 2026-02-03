@@ -17,6 +17,7 @@ class StoreProjectRequest extends FormRequest
             'hourly_rate' => 'Valor da Hora',
         ];
     }
+
     /**
      * @return array<string, string>
      */

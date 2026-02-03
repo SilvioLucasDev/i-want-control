@@ -33,15 +33,15 @@ class PostingProjectActivityController extends Controller
             DB::commit();
 
             return new PostingProjectActivityResource($createdPostingProjectActivity);
-        } catch (\Throwable $th) {
+        } catch (\Throwable $throwable) {
             DB::rollBack();
 
             Log::error('Error creating posting project activity', [
-                'error' => $th->getMessage(),
+                'error' => $throwable->getMessage(),
                 'data'  => $data,
             ]);
 
-            throw $th;
+            throw $throwable;
         }
     }
 
@@ -59,15 +59,15 @@ class PostingProjectActivityController extends Controller
             DB::commit();
 
             return response()->noContent();
-        } catch (\Throwable $th) {
+        } catch (\Throwable $throwable) {
             DB::rollBack();
 
             Log::error('Error updating posting project activity', [
-                'error' => $th->getMessage(),
+                'error' => $throwable->getMessage(),
                 'data'  => $data,
             ]);
 
-            throw $th;
+            throw $throwable;
         }
     }
 
@@ -83,15 +83,15 @@ class PostingProjectActivityController extends Controller
             DB::commit();
 
             return response()->noContent();
-        } catch (\Throwable $th) {
+        } catch (\Throwable $throwable) {
             DB::rollBack();
 
             Log::error('Error deleting posting project activity', [
-                'error' => $th->getMessage(),
+                'error' => $throwable->getMessage(),
                 'data'  => $postingProjectActivity,
             ]);
 
-            throw $th;
+            throw $throwable;
         }
     }
 }

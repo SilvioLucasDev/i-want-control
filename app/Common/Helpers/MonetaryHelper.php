@@ -22,7 +22,7 @@ if (!function_exists('convert_to_decimal')) {
      */
     function convert_to_decimal(?int $value = null, bool $decimal = true): string
     {
-        if ($decimal == true) {
+        if ($decimal) {
             return number_format($value / 100, 2, '.', ',');
         }
 
