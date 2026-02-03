@@ -5,12 +5,9 @@ import Select from '@/Components/Inputs/Select.vue';
 import Modal from '@/Components/Modal/Modal.vue';
 
 import debounce from 'lodash/debounce';
-import { defineProps, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
-export type SelectDate = {
-    month: number | null;
-    year: number;
-};
+export type SelectDate = { month: number | null; year: number };
 
 const props = defineProps<{ onlyYear?: boolean }>();
 

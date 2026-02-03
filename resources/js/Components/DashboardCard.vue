@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
-
-defineProps({
-    title: String,
-    text: {
-        type: [String, Number, null],
-        required: false,
-    },
-});
+defineProps({ title: String, text: { type: [String, Number, null], required: false } });
 </script>
 
 <template>
