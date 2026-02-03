@@ -34,7 +34,7 @@ class PostingProjectActivityService
                 $data['project_id'],
                 $selectedMonth,
                 $selectedYear
-            )->id;
+            )?->id;
         }
 
         if ($monthlyProjectControlId) {

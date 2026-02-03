@@ -21,6 +21,8 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+/build
 /coverage
 laradumps.yaml
 /resources/js/ziggy.js
+/public/coverage

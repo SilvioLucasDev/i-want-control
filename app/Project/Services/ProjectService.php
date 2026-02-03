@@ -39,7 +39,7 @@ class ProjectService
             $project = $this->projectRepository->find($projectId);
         }
 
-        if ($userId !== $project->user_id) {
+        if ($project && $project->user_id !== $userId) {
             throw new AuthorizationException("Você não tem permissão para realizar essa operação.");
         }
 
@@ -49,29 +49,33 @@ class ProjectService
             $selectedYear  = intval($currentDate->format("Y"));
         }
 
+        $projectId                      = null;
         $formattedMonthlyProjectControl = new stdClass();
         $postingProjectActivities       = collect();
 
-        $monthlyProjectControl = $this->monthlyProjectControlRepository->getMonthlyProjectControlByProjectIdAndDate($project->id, $selectedMonth, $selectedYear);
+        if ($project !== null) {
+            $projectId             = $project->id;
+            $monthlyProjectControl = $this->monthlyProjectControlRepository->getMonthlyProjectControlByProjectIdAndDate($project->id, $selectedMonth, $selectedYear);
 
-        if ($monthlyProjectControl !== null) {
-            $formattedMonthlyProjectControl->id                 = $monthlyProjectControl->id;
-            $formattedMonthlyProjectControl->hourly_rate        = convert_to_decimal($monthlyProjectControl->hourly_rate);
-            $formattedMonthlyProjectControl->total_receivable   = convert_to_decimal($monthlyProjectControl->total_receivable);
-            $formattedMonthlyProjectControl->total_hours_worked = Carbon::parse($monthlyProjectControl->total_hours_worked)->format("H:i");
+            if ($monthlyProjectControl !== null) {
+                $formattedMonthlyProjectControl->id                 = $monthlyProjectControl->id;
+                $formattedMonthlyProjectControl->hourly_rate        = convert_to_decimal($monthlyProjectControl->hourly_rate);
+                $formattedMonthlyProjectControl->total_receivable   = convert_to_decimal($monthlyProjectControl->total_receivable);
+                $formattedMonthlyProjectControl->total_hours_worked = Carbon::parse($monthlyProjectControl->total_hours_worked)->format("H:i");
 
-            $postingProjectActivities = $this->postingProjectActivityRepository->getPostingActivitiesByMonthlyProjectControlId($monthlyProjectControl->id);
+                $postingProjectActivities = $this->postingProjectActivityRepository->getPostingActivitiesByMonthlyProjectControlId($monthlyProjectControl->id);
 
-            foreach ($postingProjectActivities as $postingProjectActivity) {
-                $postingProjectActivity->start_time = Carbon::parse($postingProjectActivity->start_time)->format("H:i");
-                $postingProjectActivity->end_time   = Carbon::parse($postingProjectActivity->end_time)->format("H:i");
+                foreach ($postingProjectActivities as $postingProjectActivity) {
+                    $postingProjectActivity->start_time = Carbon::parse($postingProjectActivity->start_time)->format("H:i");
+                    $postingProjectActivity->end_time   = Carbon::parse($postingProjectActivity->end_time)->format("H:i");
+                }
             }
         }
 
         return (object) [
             "selectedMonth"            => $selectedMonth,
             "selectedYear"             => $selectedYear,
-            "projectId"                => $project->id,
+            "projectId"                => $projectId,
             "monthlyProjectControl"    => $formattedMonthlyProjectControl,
             "postingProjectActivities" => $postingProjectActivities,
         ];
